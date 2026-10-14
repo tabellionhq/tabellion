@@ -11,5 +11,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Drill down on `022318b` (main exit code) and record the answers
 - [x] Fix quiz format: 1–2 code blocks, 3 questions easy → hard, code shown inline, no running code, no looking outside the shown function
 - [x] Create repo with README, first quiz, first session
+- [x] Record types: APR (owner principles), ADR (owner decisions), AgDR (agent decisions pending review)
+- [x] APR-0001 free and open, in the owner's words
+- [ ] Owner reviews AgDR-0001 to AgDR-0003
 - [ ] Next quizzes on pp_rust_tracer commits
 - [ ] Exercise types beyond quiz: interactive, definition, input → output

@@ -4,6 +4,10 @@ Checks that a developer can explain code they merged from agent-written commits.
 
 Exercises are generated from real commits of a project and target the developer's level.
 
+## Principles
+
+Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).
+
 ## Exercise types
 
 | Type | The developer… | Status |
@@ -25,6 +29,9 @@ Exercises are generated from real commits of a project and target the developer'
 ```text
 quizzes/<project>/<commit>-<topic>.md   one quiz per commit topic
 sessions/<developer>/<date>-<commit>.md answers given and verdicts
+docs/apr/                               Architecture Principle Records
+docs/adr/                               Architecture Decision Records
+docs/agdr/                              Agent Decision Records, pending review
 ```
 
 ## Usage

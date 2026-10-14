@@ -56,5 +56,7 @@ Unless asked for, ALWAYS apply these rules
 # Project workflow
 
 - Tasks are tracked in `.tasks/yyyymmdd-(subject).md`.
-- Decisions are tracked in ADR `docs/adr/ADR-000x-(subject).md`.
+- Principles are tracked in APR `docs/apr/APR-000x-(subject).md`: the owner's words only.
+- Decisions are tracked in ADR `docs/adr/ADR-000x-(subject).md`: the owner's decisions only.
+- Decisions an agent makes on its own are tracked in AgDR `docs/agdr/AgDR-000x-(subject).md`, status Proposed until the owner accepts (becomes an ADR) or rejects them.
 - README, comments, all user facing docs must not be poisoned with context and agent thoughts.
