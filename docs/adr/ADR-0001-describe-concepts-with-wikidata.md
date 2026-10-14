@@ -10,13 +10,15 @@ Concepts are identified by their Wikidata ID (e.g. `wd:Q1071360` publish–subsc
 A skill combines an action, a concept and a context:
 (designing) a (pubsub) in (rust) → design · `wd:Q1071360` · `wd:Q575650`
 
+We don't need to map everything in every language: basic language features (e.g. Rust's block value) are not concepts of their own.
+
 ## Alternatives
 
 1. Wikidata.
 2. Build our own taxonomy.
 3. Use a more generic one (e.g. ESCO).
 
-Wikidata is best: open source, reputable, complete, maintained.
+Wikidata is best: open data (CC0), reputable, broad, maintained.
 
 ## Open
 
