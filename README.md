@@ -32,6 +32,7 @@ sessions/<developer>/<date>-<commit>.md answers given and verdicts
 docs/apr/                               Architecture Principle Records
 docs/adr/                               Architecture Decision Records
 docs/agdr/                              Agent Decision Records, pending review
+docs/research/                          benchmarks and studies
 ```
 
 ## Usage
