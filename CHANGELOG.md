@@ -11,3 +11,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - APR-0001 free and open.
 - Agent Decision Records AgDR-0001 to AgDR-0003, pending review.
 - Skills standards benchmark.
+- ADR-0001 describe concepts with Wikidata.

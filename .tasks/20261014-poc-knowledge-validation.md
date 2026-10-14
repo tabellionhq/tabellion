@@ -14,6 +14,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Record types: APR (owner principles), ADR (owner decisions), AgDR (agent decisions pending review)
 - [x] APR-0001 free and open, in the owner's words
 - [x] Benchmark open skills standards: `docs/research/skills-standards-benchmark.md`
+- [x] ADR-0001: concepts identified by Wikidata ID; skill = action · concept · context
+- [ ] Tag quiz questions and session results with concept IDs
 - [ ] Owner decides stack, level scale, concept licence, evidence in credentials
 - [ ] Owner reviews AgDR-0001 to AgDR-0003
 - [ ] Next quizzes on pp_rust_tracer commits
