@@ -1,38 +1,26 @@
+---
+id: AgDR-000x
+timestamp: yyyy-mm-ddThh:mm:ssZ
+agent: (tool)
+model: (model id)
+trigger: (task file or request)
+status: executed | superseded
+---
+
 # AgDR-000x: (subject)
 
-- Status: Proposed | Accepted | Rejected | Withdrawn
-- Date: yyyy-mm-dd
-- Agent: (tool, model)
-- Task: `.tasks/yyyymmdd-(subject).md`
+> In the context of (situation), facing (concern), I decided (decision) to achieve (goal), accepting (trade-off).
 
-## Context
+## Options considered
 
-What is about to be implemented, and which pattern or method is not determined yet.
+- A:
+- B:
 
-## Options
+## Decision
 
-| Option | Description |
-|---|---|
-| A | |
-| B | |
-
-## Issues
-
-Risks, unknowns, constraints (APR, ADR) per option.
-
-## Impacts
-
-Files, interfaces, data, dependencies, reversibility per option.
-
-## Recommendation
-
-Option and one-line reason.
-
-## Next steps
-
-What happens once decided.
+## Consequences
 
 ## Review
 
 - Reviewer sub-agent: OK | Warning | Refused: (one line)
-- Owner: (decision, date)
+- Owner: kept | changed | pushed up to ADR-000x (date)

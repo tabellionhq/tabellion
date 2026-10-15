@@ -57,14 +57,29 @@ Unless asked for, ALWAYS apply these rules
 
 - Tasks are tracked in `.tasks/yyyymmdd-(subject).md`.
 - Principles are tracked in APR `docs/apr/APR-000x-(subject).md`: the owner's words only.
-- Decisions are tracked in ADR `docs/adr/ADR-000x-(subject).md`: the owner's decisions only, including previsions and eventualities.
-- Implementation decisions are prepared by agents in AgDR `docs/agdr/AgDR-000x-(subject).md`, from `docs/agdr/TEMPLATE.md`.
-  - What: a decision to be made because an implementation is required.
-  - When: about to code something whose pattern or method has not been determined yet.
-  - How:
-    1. The agent writes the AgDR: context, options, issues, impacts, recommendation, next steps. Status Proposed.
-    2. The agent spawns an honest reviewer sub-agent with a short, low-cost prompt; it answers OK, Warning or Refused with one line of reason, recorded in the AgDR.
-    3. The agent helps the owner validate: summary, recommendation, reviewer warnings or refusals only.
-    4. The owner accepts, picks another option, or rejects. Status Accepted or Rejected; Withdrawn if the need disappears.
-  - Code that depends on an AgDR waits for step 4.
+- Decisions are tracked in ADR `docs/adr/ADR-000x-(subject).md`, from `docs/adr/TEMPLATE.md`. The owner writes the decision and the reason; an agent may draft context, options, issues, impacts and recommendation.
+- Decisions agents make while implementing are tracked in AgDR `docs/agdr/AgDR-000x-(subject).md`, from `docs/agdr/TEMPLATE.md` (format: <https://github.com/me2resh/agent-decision-record>).
 - README, comments, all user facing docs must not be poisoned with context and agent thoughts.
+
+## Agent decisions
+
+Direct by default: the agent decides, writes the AgDR, commits it with the code.
+
+- Direct (AgDR): new tests, new adapters, new interfaces, editing a method, adding a step to CI, and similar changes that are easy to reverse.
+- Escalate (ADR) when the decision has a strong impact on the future of the project:
+  - adding or upgrading a dependency (including its licence),
+  - defining a storage method or data format,
+  - changing the way software is built or delivered (release, deploy, publish steps),
+  - breaking changes (public API, config, data already written),
+  - security (permissions, secrets, disabled checks), personal data, paid services.
+- Tie-breaker: a change that touches any escalation item escalates, whatever its size or form (an adapter that brings a new vendor, a CI step that publishes).
+- Doubt: escalate.
+- Escalated decisions follow the ADR process: the agent drafts the ADR (status Proposed) with options, issues, impacts, recommendation, next steps; the owner decides. Code that depends on it waits; the agent works on something else meanwhile.
+
+## Post-commit review
+
+When chatting with the owner, every AgDR committed since the last review is presented to the owner:
+
+1. A sub-agent dedicated to reviewing spawns with a short, low-cost prompt. It reads the AgDRs and their diffs and answers per AgDR: OK, Warning or Refused, with one line of reason, and flags any AgDR that should have been escalated.
+2. The agent presents every AgDR to the owner: one line each, with the reviewer verdict; details only for warnings and refusals.
+3. The owner keeps it, asks for a change, or pushes it up to an ADR. The AgDR records the owner's answer in its Review section.
