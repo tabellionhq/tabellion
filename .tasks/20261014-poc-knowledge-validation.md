@@ -21,9 +21,9 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Review AgDR-0001 to AgDR-0003 with the reviewer sub-agent: 0001 accepted; 0002, 0003 withdrawn (storage not asked for, later behind a port)
 - [ ] Owner: list of actions (ADR-0001 open point)
 - [ ] Owner: concepts missing from Wikidata, where and under which licence (ADR-0001)
-- [ ] Owner: how evidence becomes a level 1–5
+- [x] Owner: how evidence becomes a level 1–5 → out of scope (ADR-0004)
 - [ ] Owner: what a CV line shows (ESCO skill, Wikidata context, level)
-- [ ] Owner: whether evidence (code snippets, possibly employer IP) is exported with the skills
+- [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)
 - [ ] (low priority, exercise) Tag quiz questions and session results with concept IDs and levels
