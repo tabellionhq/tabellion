@@ -16,6 +16,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Benchmark open skills standards: `docs/research/skills-standards-benchmark.md`
 - [x] ADR-0001: concepts identified by Wikidata ID; skill = action · concept · context
 - [x] ADR-0002: skill level scale 1–5 (basic → expert)
+- [x] ADR-0003: ESCO as professional skills referential, Wikidata for gaps
 - [ ] Tag quiz questions and session results with concept IDs
 - [ ] Owner decides stack, level scale, concept licence, evidence in credentials
 - [ ] Owner reviews AgDR-0001 to AgDR-0003

@@ -13,3 +13,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Skills standards benchmark.
 - ADR-0001 describe concepts with Wikidata.
 - ADR-0002 skill level scale, 1 to 5.
+- ADR-0003 professional skills referential: ESCO.
