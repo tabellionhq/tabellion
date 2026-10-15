@@ -20,9 +20,12 @@ We don't need to map everything in every language: basic language features (e.g.
 
 Wikidata is best: open data (CC0), reputable, broad, maintained.
 
+## Notes
+
+No action list: the action is the ESCO skill (ADR-0003).
+
 ## Open
 
-- The list of actions.
 - Concepts missing from Wikidata.
 
 ## References

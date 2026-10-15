@@ -36,7 +36,15 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
   recorded: datetime
 ```
 
+## Uses
+
+- CV: ESCO skill + level is simple enough. ESCO is very coarse, level is approximate.
+- Day-to-day teaching: Wikidata concepts are very useful, though overly complex for some contexts.
+- Graphs of a person's progress.
+
 ## Rules
+
+- No action list: the action is the ESCO skill.
 
 - `level` is always an integer from 1 to 5, or null.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
@@ -44,4 +52,4 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
 
 ## Open
 
-- Action (ADR-0001) vs ESCO skill: ESCO skills are already phrased as actions ("utilise machine learning"); is a separate action list still needed?
+- How the data is searched.
