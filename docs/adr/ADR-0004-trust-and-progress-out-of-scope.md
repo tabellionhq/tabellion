@@ -2,11 +2,21 @@
 
 - Status: Accepted
 - Date: 2026-10-15
-- Drafted by: owner
+- Drafted by: owner; options drafted by agent (Claude Code, claude-opus-5-5)
 
 ## Context
 
 How evidence becomes a skill level (1 to 5, ADR-0002).
+
+## Options
+
+| Option | How a level is reached | Issue |
+|---|---|---|
+| A. Self-declared | the developer states it, evidence attached when it exists | free and simple, weak for a CV |
+| B. Highest level passed | passing an exercise at level N proves level N | one lucky pass counts |
+| C. Repeated proof | N passes at level N, spread over time | slower, more credible |
+| D. Peer or AI review | a reviewer confirms from the evidence | reviewer time; closer to monitoring |
+| E. Out of scope | the system provides assessment, not trust | chosen |
 
 ## Decision
 
