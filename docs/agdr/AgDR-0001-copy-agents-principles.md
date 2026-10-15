@@ -1,6 +1,6 @@
 # AgDR-0001: Copy agent principles from pp_rust_tracer
 
-- Status: Proposed
+- Status: Accepted (agent review)
 - Date: 2026-10-14
 - Agent: Claude Code, Claude Opus 5.5 (claude-opus-5-5)
 

@@ -17,8 +17,15 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0001: concepts identified by Wikidata ID; skill = action · concept · context
 - [x] ADR-0002: skill level scale 1–5 (basic → expert)
 - [x] ADR-0003: ESCO as professional skills referential, Wikidata for gaps
-- [ ] Tag quiz questions and session results with concept IDs
-- [ ] Owner decides stack, level scale, concept licence, evidence in credentials
-- [ ] Owner reviews AgDR-0001 to AgDR-0003
-- [ ] Next quizzes on pp_rust_tracer commits
-- [ ] Exercise types beyond quiz: interactive, definition, input → output
+- [x] AgDR cycle: agent reviewer sub-agent, only warnings and refusals reach the owner
+- [x] Review AgDR-0001 to AgDR-0003 with the reviewer sub-agent: 0001, 0002 accepted; 0003 warning
+- [ ] Owner: list of actions (ADR-0001 open point)
+- [ ] Owner: concepts missing from Wikidata, where and under which licence (ADR-0001)
+- [ ] Owner: how evidence becomes a level 1–5
+- [ ] Owner: what a CV line shows (ESCO skill, Wikidata context, level)
+- [ ] Owner: whether evidence (code snippets, possibly employer IP) is exported with the skills
+- [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
+- [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)
+- [ ] (low priority, exercise) Tag quiz questions and session results with concept IDs and levels
+- [ ] (low priority, exercise) Next quizzes on pp_rust_tracer commits
+- [ ] (low priority, exercise) Exercise types beyond quiz: interactive, definition, input → output

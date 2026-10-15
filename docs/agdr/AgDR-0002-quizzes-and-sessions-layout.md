@@ -1,6 +1,6 @@
 # AgDR-0002: Quizzes and sessions layout
 
-- Status: Proposed
+- Status: Accepted (agent review)
 - Date: 2026-10-14
 - Agent: Claude Code, Claude Opus 5.5 (claude-opus-5-5)
 

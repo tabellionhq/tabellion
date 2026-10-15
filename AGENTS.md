@@ -58,5 +58,8 @@ Unless asked for, ALWAYS apply these rules
 - Tasks are tracked in `.tasks/yyyymmdd-(subject).md`.
 - Principles are tracked in APR `docs/apr/APR-000x-(subject).md`: the owner's words only.
 - Decisions are tracked in ADR `docs/adr/ADR-000x-(subject).md`: the owner's decisions only.
-- Decisions an agent makes on its own are tracked in AgDR `docs/agdr/AgDR-000x-(subject).md`, status Proposed until the owner accepts (becomes an ADR) or rejects them.
+- Decisions an agent makes on its own are tracked in AgDR `docs/agdr/AgDR-000x-(subject).md`.
+  - Cycle: the agent writes the AgDR (status Proposed), then spawns an honest reviewer sub-agent with a short, low-cost prompt.
+  - The reviewer answers OK, Warning or Refused, with one line of reason.
+  - OK: status becomes Accepted (agent review). Warning or Refused: status says so with the reason, and only these are reported to the owner.
 - README, comments, all user facing docs must not be poisoned with context and agent thoughts.
