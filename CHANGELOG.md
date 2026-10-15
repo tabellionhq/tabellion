@@ -12,3 +12,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Agent Decision Records AgDR-0001 to AgDR-0003, pending review.
 - Skills standards benchmark.
 - ADR-0001 describe concepts with Wikidata.
+- ADR-0002 skill level scale, 1 to 5.
