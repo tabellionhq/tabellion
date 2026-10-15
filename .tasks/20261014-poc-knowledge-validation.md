@@ -17,7 +17,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0001: concepts identified by Wikidata ID; skill = action · concept · context
 - [x] ADR-0002: skill level scale 1–5 (basic → expert)
 - [x] ADR-0003: ESCO as professional skills referential, Wikidata for gaps
-- [x] AgDR cycle: agent reviewer sub-agent, only warnings and refusals reach the owner
+- [x] AgDR lifecycle: implementation decisions; agent prepares, reviewer sub-agent checks, owner validates; template
 - [x] Review AgDR-0001 to AgDR-0003 with the reviewer sub-agent: 0001 accepted; 0002, 0003 withdrawn (storage not asked for, later behind a port)
 - [ ] Owner: list of actions (ADR-0001 open point)
 - [ ] Owner: concepts missing from Wikidata, where and under which licence (ADR-0001)
