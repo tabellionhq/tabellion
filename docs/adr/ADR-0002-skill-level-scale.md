@@ -27,6 +27,12 @@ Progression from executing to discovering: first you are given orders and tools 
 
 Levels 3 and 4 follow that order: solving a given problem comes before defining one.
 
+Alternatives rejected:
+
+- Bloom is thinking; we want practice.
+- DigComp has 4 levels, with an uncertainty between 2 and 3.
+- Humans give marks in multiples of 5 (A to F, base 10 or base 30); 5 levels fit that habit.
+
 ## References
 
 - DigComp 3.0: <https://joint-research-centre.ec.europa.eu/scientific-activities/key-competences-lifelong-learning/digital-competence-framework-digcomp/digcomp-30_en>
