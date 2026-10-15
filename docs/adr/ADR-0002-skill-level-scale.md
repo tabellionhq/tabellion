@@ -31,7 +31,7 @@ Alternatives rejected:
 
 - Bloom is thinking; we want practice.
 - DigComp has 4 levels, with an uncertainty between 2 and 3.
-- Humans give marks in multiples of 5 (A to F, base 10 or base 30); 5 levels fit that habit.
+- Humans give marks in multiples of 5 (A to F, base 10 or base 20); 5 levels fit that habit.
 
 ## References
 
