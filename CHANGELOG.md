@@ -15,3 +15,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0002 skill level scale, 1 to 5.
 - ADR-0003 professional skills referential: ESCO.
 - ADR-0004 trust and progress are out of scope.
+- ADR-0005 scope is the assessment method: interfaces and data model.
