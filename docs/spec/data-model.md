@@ -42,6 +42,16 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
 - Day-to-day teaching: Wikidata concepts are very useful, though overly complex for some contexts.
 - Graphs of a person's progress.
 
+## Pros and cons
+
+| Pros | Cons |
+|---|---|
+| Open, shared identifiers (ESCO, Wikidata) | Searching is messy: Wikidata's hierarchy is crowd-edited, with shortcuts and cycles |
+| Multilingual for free (labels in ESCO and Wikidata) | ESCO is very coarse; level is approximate |
+| Every fact carries its author and date | Free text (commits, training descriptions) must be mapped to identifiers |
+| Agnostic of organisation and storage | Identifiers are external: Wikidata items can be merged or redirected |
+| Progress graphs are plain aggregations over facts | Trust in a fact is left to the reader (ADR-0004) |
+
 ## Rules
 
 - No action list: the action is the ESCO skill.
@@ -52,4 +62,4 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
 
 ## Open
 
-- How the data is searched.
+- None yet.
