@@ -55,7 +55,6 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
 ## Rules
 
 - No action list: the action is the ESCO skill.
-
 - `level` is always an integer from 1 to 5, or null.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.
