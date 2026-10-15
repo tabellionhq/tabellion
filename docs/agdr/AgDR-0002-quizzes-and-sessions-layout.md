@@ -1,6 +1,6 @@
 # AgDR-0002: Quizzes and sessions layout
 
-- Status: Accepted (agent review)
+- Status: Withdrawn: storage was not asked for; it will sit behind a port (databases, subsystems, vendors), decided much later
 - Date: 2026-10-14
 - Agent: Claude Code, Claude Opus 5.5 (claude-opus-5-5)
 

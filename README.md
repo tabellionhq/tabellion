@@ -22,20 +22,13 @@ Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).
 - 1 or 2 code blocks taken from one commit.
 - 3 questions, easy to hard.
 - Everything needed to answer is in the code blocks: no running code, no reading other files or functions.
-- An answer key sits in a collapsed section under the questions.
 
 ## Layout
 
 ```text
-quizzes/<project>/<commit>-<topic>.md   one quiz per commit topic
-sessions/<developer>/<date>-<commit>.md answers given and verdicts
-docs/apr/                               Architecture Principle Records
-docs/adr/                               Architecture Decision Records
-docs/agdr/                              Agent Decision Records, pending review
-docs/research/                          benchmarks and studies
+docs/apr/       Architecture Principle Records
+docs/adr/       Architecture Decision Records
+docs/agdr/      Agent Decision Records
+docs/research/  benchmarks and studies
+quizzes/, sessions/  sample exercises; storage is not decided
 ```
-
-## Usage
-
-1. Open a quiz, answer the 3 questions without opening the answer key.
-2. Record answers and verdicts in `sessions/<developer>/`.
