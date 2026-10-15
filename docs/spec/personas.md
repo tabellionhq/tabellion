@@ -14,23 +14,10 @@ Uses the system to check that what is committed is understood, and wants to use 
 
 Its role in the system is to help create valuable skills assessments and record them.
 
-## Scenarios (draft)
+## Use cases
 
-### Anne
+### UC1: Recent commits understood
 
-- **A1. Did I get it?** Anne merged agent commits on a project. Between two tasks, they ask to check. They get a few questions on the code they merged, answer in a few minutes, get corrections. A Practice is recorded.
-- **A2. I forgot.** Weeks later, the same concept comes back in a short check, because Anne forgets quickly.
-- **A3. Learn more.** From a concept Anne struggled with, they get a next step to learn it, not only a verdict.
-- **A4. Many projects.** Anne's open source, charitable and professional projects feed one track record; professional code may not leave its project.
-- **A5. My progress.** Anne sees a graph of their progress per skill and concept.
+Claude is fired as a sub-agent, with a task to help Anne make sure all the recent commits in a project are well understood and mastered.
 
-### Claude
-
-- **C1. Read the work.** Claude reads commits and decision records of a project and proposes ESCO skills and Wikidata concepts they involve. Being sometimes very wrong, each proposal points to the code and to an existing identifier.
-- **C2. Assess.** Claude generates questions at Anne's level, grades the answers, and proposes a Practice with level and evidence (questions, answers, verdicts). Anne accepts or rejects it.
-- **C3. Start from the record.** Having no memory of Anne, Claude reads Anne's track record before assessing: levels, concepts forgotten, targets.
-
-## Risks
-
-- Anne, in a rush, accepts a wrong assessment from Claude.
-- Claude proposes an identifier that does not exist or does not match the code.
+The commit list is a source of data. The skills assessment database is a real help: without it there is no way to provide an insightful assessment.

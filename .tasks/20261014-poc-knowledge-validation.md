@@ -25,7 +25,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Owner: what a CV line shows → out of scope (ADR-0005)
 - [x] ADR-0006: model agnostic of the human organisation (git-like)
 - [ ] Data model: draft in `docs/spec/data-model.md`
-- [x] Personas: Anne (developer), Claude (agent); scenarios draft in `docs/spec/personas.md`
+- [x] Personas: Anne (developer), Claude (agent); first use case UC1 in `docs/spec/personas.md`
 - [ ] Interfaces, from persona scenarios
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
