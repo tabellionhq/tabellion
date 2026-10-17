@@ -20,3 +20,5 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Data model draft.
 - Personas and use cases.
 - ADR-0007 the person decides what is exposed.
+- Design note: data first.
+- Use cases in/out analysis.

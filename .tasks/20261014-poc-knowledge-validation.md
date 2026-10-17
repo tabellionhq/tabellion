@@ -26,7 +26,10 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0006: model agnostic of the human organisation (git-like)
 - [ ] Data model: draft in `docs/spec/data-model.md`
 - [x] Personas: Anne (developer), Claude (agent); first use case UC1 in `docs/spec/personas.md`
-- [ ] Interfaces, from persona scenarios
+- [x] Use cases UC1–UC11, personas Ismael and Michaela
+- [x] Data-first design note; use cases in/out draft
+- [ ] Owner reviews in/out and missing data (assessment, requirements, session preferences, proposed facts)
+- [ ] Interfaces, from the in/out analysis
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)
