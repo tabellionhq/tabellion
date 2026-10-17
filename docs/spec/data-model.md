@@ -61,4 +61,4 @@ Target:                   # I want <level> in <skill> on <concept> in <context>
 
 ## Open
 
-- None yet.
+- Views (ADR-0007): a person exposes a filtered view of their record (by occupation, skill domain, dates, etc.).

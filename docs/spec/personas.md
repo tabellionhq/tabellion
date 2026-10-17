@@ -20,7 +20,7 @@ Its role in the system is to help create valuable skills assessments and record 
 
 ## P4: Michaela
 
-51, HR at Anne's company. Not so great with computers, but loves people and seeing them grow professionally. Has read-only access to everyone's profile.
+51, HR at Anne's company. Not so great with computers, but loves people and seeing them grow professionally. Has read-only access to the views each person exposes (ADR-0007).
 
 ## Use cases
 

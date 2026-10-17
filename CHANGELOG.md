@@ -18,3 +18,5 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0005 scope is the assessment method: interfaces and data model.
 - ADR-0006 model agnostic of the human organisation.
 - Data model draft.
+- Personas and use cases.
+- ADR-0007 the person decides what is exposed.
