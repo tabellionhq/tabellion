@@ -1,7 +1,65 @@
-# Use cases: data in, data out
+# User stories
 
 - Status: Draft
-- Sources: [personas and use cases](personas.md), [data model](data-model.md)
+- Sources: [personas](../personas.md), [data model](../data-model.md)
+
+Detailed stories: [US-01 import from a CV](US-01-import-cv.md).
+
+
+## Catalogue
+
+### UC1: Recent commits understood
+
+Claude is fired as a sub-agent, with a task to help Anne make sure all the recent commits in a project are well understood and mastered.
+
+The commit list is a source of data. The skills assessment database is a real help: without it there is no way to provide an insightful assessment.
+
+### UC2: Learn something new
+
+Anne wants to learn about Kafka, for example, because why not.
+
+### UC3: Prerequisites
+
+Ismael wants to know if Anne matches the prerequisites of a training.
+
+### UC4: During training
+
+During the session, Ismael wants to assess Anne's understanding and create practical work (travaux pratiques) closely related to her capacities.
+
+### UC5: Training completed
+
+Post training, Ismael wants to assess that Anne has completed her progress.
+
+### UC6: Signed skills
+
+Post training, Ismael can assess with a signature the new skills gained by Anne, which she can integrate into her curriculum.
+
+### UC7: Bootstrap from a CV
+
+Anne wants to bootstrap her curriculum by uploading her CV.
+
+### UC8: New CV
+
+Anne wants to create a new CV based on her curriculum.
+
+### UC9: Strategic analysis
+
+Anne's company integrates her with her coworkers into a strategic analysis. They want to assess:
+
+- a. if their workforce is ready to work on embedded systems;
+- b. who would already be fit to work on embedded systems;
+- c. who would be fit to receive professional education in embedded systems, based on their skills track;
+- d. to orient Anne to learn about embedded systems for strategic purposes.
+
+### UC10: Yearly HR assessment
+
+Anne's company wants to track who has progressed this year, and how, for a yearly HR assessment.
+
+### UC11: Recruitment
+
+Michaela looks on the market for new potential recruits who can do Rust, Kafka and embedded systems, and wants to use the skills assessment system to filter job applications.
+
+## Data in, data out
 
 "Record" is the person's facts (Practice, Target). "View" is what a person exposes of their record (ADR-0007).
 

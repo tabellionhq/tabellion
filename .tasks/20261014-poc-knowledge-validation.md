@@ -24,12 +24,15 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Owner: how evidence becomes a level 1–5 → out of scope (ADR-0004)
 - [x] Owner: what a CV line shows → out of scope (ADR-0005)
 - [x] ADR-0006: model agnostic of the human organisation (git-like)
-- [ ] Data model: draft in `docs/spec/data-model.md`
-- [x] Personas: Anne (developer), Claude (agent); first use case UC1 in `docs/spec/personas.md`
+- [ ] Data model: draft in `docs/design/data-model.md`
+- [x] Personas: Anne (developer), Claude (agent); first use case UC1 in `docs/design/personas.md`
 - [x] Use cases UC1–UC11, personas Ismael and Michaela
 - [x] Data-first design note; use cases in/out draft
 - [ ] Owner reviews in/out and missing data (assessment, requirements, session preferences, proposed facts)
-- [ ] Interfaces, from the in/out analysis
+- [x] Design dir: personas, user stories, data model, functions
+- [ ] US-01 import from a CV: owner review
+- [ ] US-02 search
+- [ ] Interfaces, from the user stories
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)

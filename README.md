@@ -30,7 +30,6 @@ docs/apr/       Architecture Principle Records
 docs/adr/       Architecture Decision Records
 docs/agdr/      Agent Decision Records
 docs/research/  benchmarks and studies
-docs/spec/      specifications
-docs/design/    design notes
+docs/design/    personas, user stories, data model, functions, design notes
 quizzes/, sessions/  sample exercises; storage is not decided
 ```

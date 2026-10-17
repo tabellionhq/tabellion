@@ -1,0 +1,17 @@
+# Design
+
+Functional design, data first.
+
+| Document | Holds |
+|---|---|
+| [personas.md](personas.md) | who uses the system |
+| [user-stories/](user-stories/README.md) | catalogue, data in/out, detailed stories |
+| [data-model.md](data-model.md) | objects, facts and dimensions |
+| [functions.md](functions.md) | functions, traced to stories |
+| [data-first.md](data-first.md) | design position and its lineage |
+
+## Method
+
+1. Take one user story.
+2. State what it requires abstractly: data in, data out, functions, data model impacts, open questions.
+3. Update the data model and the functions with what the story requires.

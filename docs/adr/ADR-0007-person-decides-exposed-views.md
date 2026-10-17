@@ -16,4 +16,4 @@ Anne decides to expose a view of her curriculum / skills tracking: it's her data
 
 - [APR-0001: Free and open](../apr/APR-0001-free-and-open.md)
 - [ADR-0006: The model is agnostic of the human organisation](ADR-0006-model-agnostic-of-organisation.md)
-- [Personas and use cases](../spec/personas.md)
+- [Personas and use cases](../design/personas.md)

@@ -28,4 +28,4 @@ Domain-driven design (Eric Evans, Martin Fowler) calls data without behaviour an
 
 ## Method
 
-For each use case, state which data goes in and which comes out ([use cases in/out](../spec/use-cases-io.md)). Missing data found this way goes to the [data model](../spec/data-model.md).
+For each use case, state which data goes in and which comes out ([use cases in/out](user-stories/README.md)). Missing data found this way goes to the [data model](data-model.md).
