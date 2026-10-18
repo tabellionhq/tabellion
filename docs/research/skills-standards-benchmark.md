@@ -48,6 +48,17 @@ Avoid: SFIA, e-CF, Lightcast. Their licences forbid distribution or commercial u
 | 1EdTech CASE 1.1 | ⚠️ limited-permission specification | frameworks, rubrics; schools and higher education | ⚠️ |
 | W3C VC 2.0 + Open Badges 3.0 | ✅ open specifications | signed claims held by the developer | ✅ claim |
 
+## CASE 1.1, checked 2026-10-18
+
+1EdTech Competencies and Academic Standards Exchange (CASE) 1.1 (<https://www.imsglobal.org/spec/case/v1p1>):
+
+- Publishes competency frameworks (CFDocument, CFItem, CFAssociation, rubrics) through a REST/JSON API, providers to consumers.
+- No learner records: frameworks only.
+- Sectors: K-12, higher education, workforce.
+- Use under a 1EdTech licence; certification for paid members only.
+
+Fit: a framework format, like ESCO's role, not a curriculum format. Useful at most as an import adapter on the requester side (e.g. a training provider publishing its objectives in CASE). Not a candidate for the curriculum model or exchange (APR-0003).
+
 ## Open decisions
 
 1. Stack: EU (ELM) or global (CTDL-ASN + Open Badges 3.0).

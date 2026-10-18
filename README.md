@@ -6,7 +6,9 @@ Exercises are generated from real commits of a project and target the developer'
 
 ## Principles
 
-Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).
+- Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).
+- Simple adoption curve: see [APR-0002](docs/apr/APR-0002-simple-adoption-curve.md).
+- Skills curriculum standard, existing standards for the rest: see [APR-0003](docs/apr/APR-0003-curriculum-standard-defer-the-rest.md).
 
 ## Exercise types
 

@@ -15,7 +15,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0002 skill level scale, 1 to 5.
 - ADR-0003 professional skills referential: ESCO.
 - ADR-0004 trust and progress are out of scope.
-- ADR-0005 scope is the assessment method: interfaces and data model.
+- ADR-0005 scope is skill curriculum recording: interfaces and data model.
 - ADR-0006 model agnostic of the human organisation.
 - Data model draft.
 - Personas and use cases.
@@ -23,3 +23,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Design note: data first.
 - Use cases in/out analysis.
 - Design directory; US-01 import from a CV; functions F01–F03.
+- User stories US-02 to US-07; functions F04 to F10; data model: occupations held, periods, status, identities, views, grants, reference data.
+- APR-0002 simple adoption curve; APR-0003 skills curriculum standard, existing standards for the rest.
+- ADR-0008 append-only normalised facts; ADR-0009 track skills, not assessments; ADR-0010 person identifier; ADR-0011 view freshness; ADR-0012 HTTP API; ADR-0013 access control; ADR-0014 Go.
+- Design note: CV standards. Roadmap: glossary, CV round trip.

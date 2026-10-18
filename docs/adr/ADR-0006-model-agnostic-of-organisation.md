@@ -17,4 +17,4 @@ The git analogy is about organisation only: storage is probably a database, and 
 ## References
 
 - [ADR-0004: Trust and progress are out of scope](ADR-0004-trust-and-progress-out-of-scope.md)
-- [ADR-0005: Scope is the assessment method](ADR-0005-scope-assessment-method.md)
+- [ADR-0005: Scope is skill curriculum recording](ADR-0005-scope-assessment-method.md)

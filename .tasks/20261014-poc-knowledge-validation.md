@@ -19,20 +19,21 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0003: ESCO as professional skills referential, Wikidata for gaps
 - [x] Agent decisions: direct AgDR by default, escalate to ADR on strong impact; post-commit review of every AgDR with the owner; templates
 - [x] Review AgDR-0001 to AgDR-0003 with the reviewer sub-agent: 0001 accepted; 0002, 0003 withdrawn (storage not asked for, later behind a port)
-- [ ] Owner: list of actions (ADR-0001 open point)
+- [x] Owner: list of actions → none, the action is the ESCO skill (ADR-0001)
 - [ ] Owner: concepts missing from Wikidata, where and under which licence (ADR-0001)
 - [x] Owner: how evidence becomes a level 1–5 → out of scope (ADR-0004)
 - [x] Owner: what a CV line shows → out of scope (ADR-0005)
 - [x] ADR-0006: model agnostic of the human organisation (git-like)
-- [ ] Data model: draft in `docs/design/data-model.md`
+- [x] Data model: `docs/design/data-model.md`, confronted with US-01 to US-07
 - [x] Personas: Anne (developer), Claude (agent); first use case UC1 in `docs/design/personas.md`
 - [x] Use cases UC1–UC11, personas Ismael and Michaela
 - [x] Data-first design note; use cases in/out draft
-- [ ] Owner reviews in/out and missing data (assessment, requirements, session preferences, proposed facts)
+- [x] In/out missing data settled by the detailed stories
 - [x] Design dir: personas, user stories, data model, functions
-- [ ] US-01 import from a CV: owner review
-- [ ] US-02 search
-- [ ] Interfaces, from the user stories
+- [x] US-01 to US-07 reviewed against data model and functions; UC1–UC11 covered or marked outside
+- [x] APR-0002, APR-0003; ADR-0008 to ADR-0014
+- [ ] Resources exposed by the HTTP API, from the data model
+- [ ] ADR: API maturity, Richardson level 3
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)

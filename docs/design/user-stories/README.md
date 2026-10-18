@@ -3,7 +3,7 @@
 - Status: Draft
 - Sources: [personas](../personas.md), [data model](../data-model.md)
 
-Detailed stories: [US-01 import from a CV](US-01-import-cv.md).
+Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md).
 
 
 ## Catalogue
@@ -17,6 +17,8 @@ The commit list is a source of data. The skills assessment database is a real he
 ### UC2: Learn something new
 
 Anne wants to learn about Kafka, for example, because why not.
+
+Outside the curriculum: the learning system uses it (ADR-0009).
 
 ### UC3: Prerequisites
 
@@ -40,7 +42,7 @@ Anne wants to bootstrap her curriculum by uploading her CV.
 
 ### UC8: New CV
 
-Anne wants to create a new CV based on her curriculum.
+Anne wants to create a new CV based on her curriculum, up to date and filtered according to a specific job offer.
 
 ### UC9: Strategic analysis
 
@@ -50,6 +52,8 @@ Anne's company integrates her with her coworkers into a strategic analysis. They
 - b. who would already be fit to work on embedded systems;
 - c. who would be fit to receive professional education in embedded systems, based on their skills track;
 - d. to orient Anne to learn about embedded systems for strategic purposes.
+
+Covered: a–c by US-06 and US-07, inside the organisation; aggregation, fit and training decisions are the company's side (ADR-0004), and results only include what employees shared (ADR-0007). d is outside the curriculum: goals belong to learning systems (ADR-0009).
 
 ### UC10: Yearly HR assessment
 
@@ -61,7 +65,7 @@ Michaela looks on the market for new potential recruits who can do Rust, Kafka a
 
 ## Data in, data out
 
-"Record" is the person's facts (Practice, Target). "View" is what a person exposes of their record (ADR-0007).
+"Record" is the person's facts. "View" is what a person exposes of their record (ADR-0007).
 
 | UC | Actor | In | Reads | Out |
 |---|---|---|---|---|
@@ -80,6 +84,8 @@ Michaela looks on the market for new potential recruits who can do Rust, Kafka a
 
 ## Data missing from the data model
 
+First analysis, before the detailed stories. Since then: requirements and assessments stay with the requester (US-04, ADR-0009); targets belong to learning systems (ADR-0009); proposed facts are covered by status (US-01).
+
 - **Assessment**: questions or practical work, each tied to an ESCO skill, a Wikidata concept and a level aimed, with its sources (e.g. commit references). UC1, UC2, UC4.
 - **Requirements**: a set of skill, concept, level not tied to a person (training prerequisites and objectives, company needs, job requirements). Target is tied to a person. UC3, UC5, UC9, UC11.
 - **Session preferences**: time available, difficulty, preferences. UC1, UC2, UC4.
@@ -89,4 +95,4 @@ Derived, not stored: gaps, readiness, progress, matches. They are reads over rec
 
 ## Open
 
-- UC11: candidates' views come from outside the company; exchange between systems is not covered yet.
+- None: exchange between systems is covered by US-07.
