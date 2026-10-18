@@ -10,7 +10,7 @@ A person's track record is a set of facts. How facts are proposed, reviewed, acc
 
 ### Facts
 
-Facts are append-only: a fact is never changed; a correction is a new fact. A person's progress is the list of their facts (ADR-0008).
+Facts are append-only: once accepted, a fact SHALL NOT be mutated; a correction is a new fact. A proposed fact changes status once, to accepted or rejected, then is frozen. A person's progress is the list of their facts (ADR-0008).
 
 ```yaml
 Person:
@@ -23,6 +23,7 @@ Identity:                 # how a person presents themself to a reader; several 
   contact: string | null  # one email, a phone…
 
 OccupationHeld:           # Anne was a backend developer at ACME from 2021 to 2024
+  id: uuid
   person: Person.id
   occupation: uri | null  # ESCO occupation
   label: string           # as stated, e.g. "Backend developer, ACME"
@@ -34,6 +35,7 @@ OccupationHeld:           # Anne was a backend developer at ACME from 2021 to 20
   status: proposed | accepted | rejected
 
 Practice:                 # I practiced <skill> on <concept> in <context> at <occupation> over <period>
+  id: uuid
   person: Person.id
   skill: uri              # ESCO skill, e.g. esco:skill/…
   concept: uri            # Wikidata item, e.g. wd:Q1071360 publish–subscribe pattern
@@ -147,6 +149,7 @@ ConceptVector:            # for semantic search; tied to the model that computed
 - `level` is always an integer from 1 to 5, or null.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.
+- Status moves once: `proposed` → `accepted` | `rejected`. An accepted or rejected fact SHALL NOT be mutated.
 
 ## Open
 

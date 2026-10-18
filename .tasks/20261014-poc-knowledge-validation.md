@@ -32,8 +32,10 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Design dir: personas, user stories, data model, functions
 - [x] US-01 to US-07 reviewed against data model and functions; UC1–UC11 covered or marked outside
 - [x] APR-0002, APR-0003; ADR-0008 to ADR-0014
-- [ ] Resources exposed by the HTTP API, from the data model
-- [ ] ADR: API maturity, Richardson level 3
+- [x] Resources exposed by the HTTP API: `docs/design/resources.md` (draft)
+- [x] ADR-0015 API maturity: Richardson level 3, JSON-LD, schema.org actions
+- [ ] Owner: ADR-0016 GUI in the main binary (proposed, to be considered)
+- [ ] Check that an agent completes a task by following JSON-LD actions alone (ADR-0015)
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)

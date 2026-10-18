@@ -26,4 +26,6 @@ All notable changes to this project are documented here. Versions follow [Semant
 - User stories US-02 to US-07; functions F04 to F10; data model: occupations held, periods, status, identities, views, grants, reference data.
 - APR-0002 simple adoption curve; APR-0003 skills curriculum standard, existing standards for the rest.
 - ADR-0008 append-only normalised facts; ADR-0009 track skills, not assessments; ADR-0010 person identifier; ADR-0011 view freshness; ADR-0012 HTTP API; ADR-0013 access control; ADR-0014 Go.
+- ADR-0015 API maturity: Richardson level 3, JSON-LD with schema.org actions; ADR-0016 GUI in the binary (proposed).
+- Design: resources exposed by the HTTP API; fact identifiers; accepted facts are never mutated.
 - Design note: CV standards. Roadmap: glossary, CV round trip.
