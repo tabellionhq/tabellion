@@ -1,12 +1,12 @@
 # ADR-0016: GUI in the main binary
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-18
-- Drafted by: agent (Claude Code, claude-opus-5-5); scope set by owner
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
-Anne edits her views, reviews proposed facts and accepts changes. She needs a graphical interface, which may later be augmented by an agent. APR-0002 asks for one install, nothing to configure, and a fast bootstrap.
+The server exposes a limited set of core features. Adapters make them useful: mainly inputs (CV import) and outputs (CV export). Without a GUI to unite them, adapters are pretty useless to a person. Anne edits her views, reviews proposed facts and accepts changes; the GUI may later be augmented by an agent. APR-0002 asks for one install, nothing to configure, and a fast bootstrap.
 
 ## Options
 
@@ -22,14 +22,20 @@ A: `skills-track ui` starts the server if needed and opens the browser. The GUI 
 
 ## Decision
 
-Owner's words.
+A: we provide a core web UI in the main binary. It exposes the adapters (inputs such as CV import, outputs such as CV export) and the core features, such as reviewing facts.
 
 ## Reason
 
-Owner's words.
+The server exposes a limited set of core features, made useful by adapters. Without a GUI to unite them, the adapters are pretty useless.
+
+## Consequences
+
+- The web UI is a client of the public HTTP API, driven by its actions (ADR-0015): an adapter the server offers appears in the UI as an action, with no UI change.
+- How the UI authenticates is still open.
 
 ## References
 
 - [APR-0002: Simple adoption curve](../apr/APR-0002-simple-adoption-curve.md)
 - [ADR-0012: HTTP API](ADR-0012-http-api.md)
 - [ADR-0013: Access control](ADR-0013-access-control.md)
+- [ADR-0015: API maturity, Richardson level 3](ADR-0015-api-maturity-richardson-level-3.md)
