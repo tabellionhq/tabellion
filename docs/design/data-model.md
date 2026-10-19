@@ -1,7 +1,7 @@
 # Data model
 
 - Status: Draft
-- Decisions: ADR-0001 (Wikidata concepts), ADR-0002 (levels 1–5), ADR-0003 (ESCO), ADR-0004 to ADR-0007 (scope, views); ADR-0008 (append-only facts), ADR-0009 (skills, not assessments), ADR-0010 (person identifier)
+- Decisions: ADR-0001 (Wikidata concepts), ADR-0002 (levels 1–5), ADR-0003 (ESCO), ADR-0004 to ADR-0007 (scope, views); ADR-0008 (append-only facts), ADR-0009 (skills, not assessments), ADR-0010 (person identifier), ADR-0018 (composed concepts)
 - Stories: US-01 to US-07
 
 A person's track record is a set of facts. How facts are proposed, reviewed, accepted and stored is outside the model (ADR-0006).
@@ -38,7 +38,10 @@ Practice:                 # I practiced <skill> on <concept> in <context> at <oc
   id: uuid
   person: Person.id
   skill: uri              # ESCO skill, e.g. esco:skill/…
-  concept: uri            # Wikidata item, e.g. wd:Q1071360 publish–subscribe pattern
+  concept:                # composed of Wikidata items (ADR-0018)
+    is: uri               # genus, e.g. wd:Q1071360 publish–subscribe pattern
+    with: [uri]           # what sets it apart; empty when the genus is the concept
+    label: string | null  # e.g. "block value", for display
   context: uri | null     # Wikidata item, e.g. wd:Q575650 Rust
   occupation: OccupationHeld | null
   from: date
@@ -105,7 +108,7 @@ Label:                    # labels and descriptions, all languages
   label: string
   description: string | null
 
-ConceptVector:            # for semantic search; tied to the model that computed it
+ConceptVector:            # for semantic search on Wikidata concepts; tied to the model that computed it
   id: uri
   model: string
   vector: [float]
@@ -146,6 +149,7 @@ ConceptVector:            # for semantic search; tied to the model that computed
 - Views are applied by a deterministic filter, never by an agent at query time.
 
 - No action list: the action is the ESCO skill.
+- Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs.
 - `level` is always an integer from 1 to 5, or null.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.

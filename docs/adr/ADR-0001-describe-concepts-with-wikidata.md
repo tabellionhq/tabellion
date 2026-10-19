@@ -26,7 +26,7 @@ No action list: the action is the ESCO skill (ADR-0003).
 
 ## Open
 
-- Concepts missing from Wikidata.
+- Concepts missing from Wikidata: composed of Wikidata concepts (ADR-0018).
 
 ## References
 

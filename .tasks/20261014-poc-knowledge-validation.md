@@ -20,7 +20,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Agent decisions: direct AgDR by default, escalate to ADR on strong impact; post-commit review of every AgDR with the owner; templates
 - [x] Review AgDR-0001 to AgDR-0003 with the reviewer sub-agent: 0001 accepted; 0002, 0003 withdrawn (storage not asked for, later behind a port)
 - [x] Owner: list of actions → none, the action is the ESCO skill (ADR-0001)
-- [ ] Owner: concepts missing from Wikidata, where and under which licence (ADR-0001)
+- [x] Concepts missing from Wikidata: composed of Wikidata concepts, with roles (ADR-0018)
 - [x] Owner: how evidence becomes a level 1–5 → out of scope (ADR-0004)
 - [x] Owner: what a CV line shows → out of scope (ADR-0005)
 - [x] ADR-0006: model agnostic of the human organisation (git-like)

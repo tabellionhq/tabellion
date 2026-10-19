@@ -58,7 +58,7 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
   "@id": "/practices/7d2c…",
   "@type": "Practice",
   "skill": "http://data.europa.eu/esco/skill/…",
-  "concept": "http://www.wikidata.org/entity/Q1071360",
+  "concept": {"is": "http://www.wikidata.org/entity/Q1071360", "with": [], "label": null},
   "context": "http://www.wikidata.org/entity/Q575650",
   "from": "2024-03-01",
   "level": 3,
