@@ -38,9 +38,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] UI authentication: one-time token swapped for a session cookie; exposed requires auth (ADR-0016)
 - [x] ADR-0017 where a feature belongs: core, adapter or external system; no plugins
 - [x] Agent capability check: out of scope (ADR-0015)
-- [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
-- [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
-- [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)
-- [ ] (low priority, exercise) Tag quiz questions and session results with concept IDs and levels
-- [ ] (low priority, exercise) Next quizzes on pp_rust_tracer commits
-- [ ] (low priority, exercise) Exercise types beyond quiz: interactive, definition, input → output
+- [x] Closed: evidence export, chosen per view by `show.evidence`
+- [x] Closed: ESCO–O*NET crosswalk, no impact on the model
+- [x] Closed: exchange stack, signed credentials out of scope (ADR-0004)
+- [x] Closed: quiz exercises, starting exercise only
