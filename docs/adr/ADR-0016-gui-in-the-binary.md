@@ -31,7 +31,9 @@ The server exposes a limited set of core features, made useful by adapters. With
 ## Consequences
 
 - The web UI is a client of the public HTTP API, driven by its actions (ADR-0015): an adapter the server offers appears in the UI as an action, with no UI change.
-- How the UI authenticates is still open.
+- Authentication, by the owner:
+  - Local: `skills-track ui` opens the browser with a one-time token (single use, short-lived), swapped for a session cookie (`HttpOnly`, `SameSite=Strict`) that ends with the server. Any website in the browser can call localhost, so localhost alone is not a protection.
+  - Exposed: requires an auth adapter (ADR-0013).
 
 ## References
 
