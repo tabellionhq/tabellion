@@ -9,6 +9,7 @@ Functional design, data first.
 | [data-model.md](data-model.md) | objects, facts and dimensions |
 | [functions.md](functions.md) | functions, traced to stories |
 | [resources.md](resources.md) | resources exposed by the HTTP API |
+| [adapters.md](adapters.md) | adapters by port |
 | [data-first.md](data-first.md) | design position and its lineage |
 | [cv-standards.md](cv-standards.md) | CV import and export through existing standards |
 

@@ -38,6 +38,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] UI authentication: one-time token swapped for a session cookie; exposed requires auth (ADR-0016)
 - [x] ADR-0017 where a feature belongs: core, adapter or external system; no plugins
 - [x] Agent capability check: out of scope (ADR-0015)
+- [x] Adapters by port: `docs/design/adapters.md` (draft)
+- [ ] Owner: MVP priorities
 - [x] Closed: evidence export, chosen per view by `show.evidence`
 - [x] Closed: ESCO–O*NET crosswalk, no impact on the model
 - [x] Closed: exchange stack, signed credentials out of scope (ADR-0004)
