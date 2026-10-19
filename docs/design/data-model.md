@@ -142,7 +142,7 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 
 ## Rules
 
-- A reader reads a record only through a view, under a grant.
+- A reader reads a record only through a view, under a grant. The owner needs no grant: she reads her whole record, or any of her views.
 - The view filters facts first; search and derived data use the filtered facts only. Never search first and filter afterwards: scores, counts or a truncated result list would reveal hidden facts.
 - Derived data seen through a view (e.g. competency) is computed from the visible facts only.
 - Fields hidden by `show` are removed from results.

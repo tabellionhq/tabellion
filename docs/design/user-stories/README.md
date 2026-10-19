@@ -3,7 +3,7 @@
 - Status: Draft
 - Sources: [personas](../personas.md), [data model](../data-model.md)
 
-Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md).
+Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md), [US-08 new CV filtered for an offer](US-08-new-cv.md).
 
 
 ## Catalogue
@@ -43,6 +43,8 @@ Anne wants to bootstrap her curriculum by uploading her CV.
 ### UC8: New CV
 
 Anne wants to create a new CV based on her curriculum, up to date and filtered according to a specific job offer.
+
+Detailed in US-08.
 
 ### UC9: Strategic analysis
 

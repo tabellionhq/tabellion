@@ -27,4 +27,4 @@ Adapters connect the core to people, systems and standards. All are compiled int
 
 ## Open
 
-- Priorities for the MVP.
+- MVP: the adapters US-01 and US-08 require.
