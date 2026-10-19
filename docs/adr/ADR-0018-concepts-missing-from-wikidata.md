@@ -37,7 +37,7 @@ Practice:
   concept:
     is: uri               # genus, Wikidata, e.g. wd:Q… expression
     with: [uri]           # what sets it apart, Wikidata, e.g. wd:Q… block; empty when the genus is the concept
-    label: string | null  # "block value", for display
+    label: string | null  # "block value", for display; may be fed to the embedding engine
   context: uri | null     # e.g. wd:Q575650 Rust
 ```
 
@@ -55,7 +55,7 @@ Simple, only Wikidata IDs.
 
 ## Consequences
 
-- Search is unchanged: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over their Wikidata IDs' vectors. How a search adapter combines the vectors of `is` and `with` is the adapter's choice.
+- Search is unchanged: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over their Wikidata IDs' vectors and their label, which may be fed to the embedding engine. How a search adapter combines these vectors is the adapter's choice.
 
 ## To check
 

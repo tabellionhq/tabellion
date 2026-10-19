@@ -41,7 +41,7 @@ Practice:                 # I practiced <skill> on <concept> in <context> at <oc
   concept:                # composed of Wikidata items (ADR-0018)
     is: uri               # genus, e.g. wd:Q1071360 publish–subscribe pattern
     with: [uri]           # what sets it apart; empty when the genus is the concept
-    label: string | null  # e.g. "block value", for display
+    label: string | null  # e.g. "block value", for display; may be fed to the embedding engine
   context: uri | null     # Wikidata item, e.g. wd:Q575650 Rust
   occupation: OccupationHeld | null
   from: date
@@ -149,7 +149,7 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 - Views are applied by a deterministic filter, never by an agent at query time.
 
 - No action list: the action is the ESCO skill.
-- Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs.
+- Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs and of their label. Label vectors belong to the search adapter (ADR-0008).
 - `level` is always an integer from 1 to 5, or null.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.
