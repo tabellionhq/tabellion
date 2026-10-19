@@ -37,7 +37,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0016 core web UI in the main binary
 - [x] UI authentication: one-time token swapped for a session cookie; exposed requires auth (ADR-0016)
 - [x] ADR-0017 where a feature belongs: core, adapter or external system; no plugins
-- [ ] Check that an agent completes a task by following JSON-LD actions alone (ADR-0015)
+- [x] Agent capability check: out of scope (ADR-0015)
 - [ ] Deferred: whether evidence (code snippets, possibly employer IP) is exported with the skills
 - [ ] Check whether the ESCO–O*NET crosswalk maps skills (ADR-0003)
 - [ ] Deferred: exchange stack (ELM or CTDL-ASN + Open Badges)

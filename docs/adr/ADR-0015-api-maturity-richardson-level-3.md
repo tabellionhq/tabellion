@@ -32,9 +32,9 @@ D: Richardson level 3, oriented for agentic use. JSON-LD 1.1 as the format, sche
 
 Richardson level 3 needs to be oriented for agentic use. JSON-LD is more robust than Siren. MCP is not guaranteed to stay: we want a robust API and not depend 100% on MCP.
 
-## Next steps
+## Out of scope
 
-- Check on a few resources that an agent completes a task (review proposed facts, share a view) by following the actions alone.
+- What an agent can or cannot do with the API: a moving target, and a good prompt can teach it.
 
 ## References
 

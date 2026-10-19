@@ -87,4 +87,3 @@ Once accepted, the same resource has no action that changes it.
 
 - Later, not needed yet: others (Ismael, Claude) proposing facts to a person's record, through a grant with write rights or an inbox. The model allows it: facts arrive as `proposed` and the person reviews them.
 - Whether `/persons/{id}` stays in the path when a server holds one person only (level 1).
-- How well agents use these actions in practice: not checked.
