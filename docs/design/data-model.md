@@ -10,7 +10,7 @@ A person's track record is a set of facts. How facts are proposed, reviewed, acc
 
 ### Facts
 
-Facts are append-only: once accepted, a fact SHALL NOT be mutated; a correction is a new fact. A proposed fact can be edited until it is reviewed; its status then changes once, to accepted or rejected, and it is frozen. A person's progress is the list of their facts (ADR-0008).
+We work by adding facts: once accepted, a fact SHALL NOT be mutated; a correction is a new fact. Deleting facts is allowed: the owner deletes facts, e.g. by a filter (ADR-0008). A proposed fact can be edited until it is reviewed; its status then changes once, to accepted or rejected, and it is frozen. A person's progress is the list of their facts (ADR-0008).
 
 ```yaml
 Person:

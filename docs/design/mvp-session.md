@@ -39,7 +39,7 @@ curl $API/
  ]}
 ```
 
-## 1. Identity for the CV
+## 1. Identity for the CV, when first needed
 
 | | |
 |---|---|
@@ -145,8 +145,8 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 2. Import in the data model: a Task; facts it proposes have it as author.
 3. Labels in responses: embedded, in the requested language.
 4. Correcting a proposed fact: edited until reviewed (US-09).
-5. Rejected occupation, proposed practices: what happens to practices pointing to an occupation Anne rejects. Open.
-6. Raw CV text: stored with the task or not; it holds personal data. Excerpts are kept as evidence either way. Open.
-7. Socket path: `$XDG_RUNTIME_DIR/skills-track.sock` is assumed, not decided. Open.
-8. Identity from the CV: Anne types it; the extraction could propose it instead. Open.
-9. Review screen: follows US-09. Open.
+5. Rejected occupation: its practices stay. Removing them is Anne's manual action, deleting facts by a filter; deleting facts is allowed (ADR-0008).
+6. Raw CV text: not kept once the task ends. Each fact keeps its excerpt, the file name and the position in the file.
+7. Socket path: `$XDG_RUNTIME_DIR/<name>/` on Linux; macOS and Windows: ADR on target platforms. `<name>`: the project name, not decided.
+8. Identity: not asked at start. Asked when first needed: after a CV import, proposed from the CV; or at the first export or share, typed by Anne. Can be changed or aliased later.
+9. Review screen: wireframes, and an ADR for the frontend framework. A task of its own.

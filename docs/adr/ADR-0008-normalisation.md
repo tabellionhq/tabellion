@@ -28,6 +28,8 @@ A: append-only facts are the source of truth, in a normalised model; denormalisa
 
 The skill curriculum may provide events, as an event stream for a larger system at company level.
 
+Clarification, 2026-10-21: we work by adding facts, but deleting facts is not wrong. It's not a doubly linked list or a blockchain.
+
 ## Reason
 
 Best data model for vast and manageable volumes.
