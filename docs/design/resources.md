@@ -9,6 +9,7 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 ## Rules
 
 - Clients start at `/` and follow links and actions; they never build URLs.
+- The contract: [api/openapi.yaml](../../api/openapi.yaml), with the actions each resource carries (`x-actions`), and the JSON-LD context [api/contexts/curriculum.jsonld](../../api/contexts/curriculum.jsonld). Paths are informative.
 - Every response says what can be done next, as actions with method, target, expected input and a title in plain words (ADR-0015).
 - The core returns structured data only. Human formats (CV, PDF, page) are adapters outside the core.
 - Readers reach a record only through `/views/{id}/facts`, under a grant (ADR-0013).

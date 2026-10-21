@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://skills-track.invalid/vocab#",
+    "schema": "https://schema.org/",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "esco": "http://data.europa.eu/esco/",
+    "wd": "http://www.wikidata.org/entity/",
+
+    "potentialAction": {"@id": "schema:potentialAction", "@container": "@set"},
+    "name": "schema:name",
+    "target": "schema:target",
+    "object": "schema:object",
+    "httpMethod": "schema:httpMethod",
+    "urlTemplate": "schema:urlTemplate",
+    "contentType": "schema:contentType",
+    "EntryPoint": "schema:EntryPoint",
+    "ViewAction": "schema:ViewAction",
+    "SearchAction": "schema:SearchAction",
+    "CreateAction": "schema:CreateAction",
+    "UpdateAction": "schema:UpdateAction",
+    "AcceptAction": "schema:AcceptAction",
+    "RejectAction": "schema:RejectAction",
+
+    "items": {"@container": "@set"},
+    "person": {"@type": "@id"},
+    "view": {"@type": "@id"},
+    "proposed": {"@type": "@id", "@container": "@set"},
+    "occupation": {"@type": "@id"},
+    "skill": {"@type": "@id"},
+    "context": {"@id": "practiceContext", "@type": "@id"},
+    "is": {"@type": "@id"},
+    "with": {"@type": "@id", "@container": "@set"},
+    "skill_under": {"@type": "@id", "@container": "@set"},
+    "include_facts": {"@type": "@id", "@container": "@set"},
+    "exclude_facts": {"@type": "@id", "@container": "@set"},
+    "evidence": {"@type": "@json"},
+    "from": {"@type": "xsd:date"},
+    "to": {"@type": "xsd:date"},
+    "recorded": {"@type": "xsd:dateTime"},
+    "level": {"@type": "xsd:integer"},
+
+    "Identity": {
+      "@id": "vcard:Individual",
+      "@context": {
+        "label": "vcard:fn",
+        "contact": "vcard:hasEmail"
+      }
+    }
+  }
+}

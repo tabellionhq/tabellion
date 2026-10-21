@@ -1,0 +1,792 @@
+openapi: 3.1.0
+info:
+  title: skills-track
+  version: 0.1.0-draft
+  summary: HTTP API of skills-track.
+  description: |
+    Stores occupations held, practices (an ESCO skill on a Wikidata concept, at an occupation,
+    over a period, with an optional level from 1 to 5) and views (filters on them).
+
+    Start with `GET /`. Each response lists the possible next requests in `potentialAction`:
+    a name, an HTTP method, a URL template. The paths below may change; the actions do not.
+    The actions of each schema are listed in its `x-actions`.
+
+    Accepted or rejected facts cannot be modified. A correction is a new fact.
+
+    Responses are JSON-LD; the context is `/contexts/curriculum.jsonld`. JSON clients can
+    ignore fields starting with `@`.
+
+    Errors follow RFC 9457.
+  license:
+    name: To be decided
+servers:
+  - url: http://localhost
+    description: Local server
+
+x-actions-format: |
+  Each `x-actions` entry is rendered in responses as a schema.org Action in `potentialAction`:
+  `type` → `@type`, `name` → `name`, `method` → `target.httpMethod`, `target` → `target.urlTemplate`
+  (`@id` means the resource itself), `body` → `object`.
+  `when` is the condition for the action to appear; without it, the action always appears.
+
+tags:
+  - name: entry
+  - name: import
+  - name: facts
+  - name: views
+  - name: identities
+  - name: reference
+
+paths:
+  /:
+    get:
+      tags: [entry]
+      summary: Entry point
+      operationId: getEntry
+      responses:
+        "200":
+          description: Links to what the caller may reach
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Entry"}
+
+  /persons/{personId}:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [entry]
+      summary: A person's record, as links to its parts
+      operationId: getPerson
+      responses:
+        "200":
+          description: The person
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Person"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /imports:
+    post:
+      tags: [import]
+      summary: Import a CV as plain text. Extracted occupations and practices are created with status proposed
+      operationId: createImport
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema: {type: string}
+      responses:
+        "202":
+          description: Import accepted; extraction runs in the background
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Import"}
+        "400": {$ref: "#/components/responses/Problem"}
+        "413": {$ref: "#/components/responses/Problem"}
+
+  /imports/{importId}:
+    parameters:
+      - {$ref: "#/components/parameters/importId"}
+    get:
+      tags: [import]
+      summary: Import status and the facts it proposed
+      operationId: getImport
+      responses:
+        "200":
+          description: The import
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Import"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/occupations:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [facts]
+      summary: List occupations held, optionally by status
+      operationId: listOccupations
+      parameters:
+        - {$ref: "#/components/parameters/status"}
+      responses:
+        "200":
+          description: Occupations held
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/OccupationList"}
+    post:
+      tags: [facts]
+      summary: Create an occupation held, status proposed
+      operationId: createOccupation
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/OccupationHeldInput"}
+      responses:
+        "201":
+          description: Created, status proposed
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/OccupationHeld"}
+        "400": {$ref: "#/components/responses/Problem"}
+
+  /occupations/{factId}:
+    parameters:
+      - {$ref: "#/components/parameters/factId"}
+    get:
+      tags: [facts]
+      summary: One occupation held
+      operationId: getOccupation
+      responses:
+        "200":
+          description: The occupation held
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/OccupationHeld"}
+        "404": {$ref: "#/components/responses/Problem"}
+    patch:
+      tags: [facts]
+      summary: Accept or reject a proposed occupation
+      operationId: reviewOccupation
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema: {$ref: "#/components/schemas/Review"}
+      responses:
+        "200":
+          description: Reviewed; now frozen
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/OccupationHeld"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/practices:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [facts]
+      summary: List practices, optionally by status
+      operationId: listPractices
+      parameters:
+        - {$ref: "#/components/parameters/status"}
+      responses:
+        "200":
+          description: Practices
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/PracticeList"}
+    post:
+      tags: [facts]
+      summary: Create a practice, status proposed
+      operationId: createPractice
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/PracticeInput"}
+      responses:
+        "201":
+          description: Created, status proposed
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Practice"}
+        "400": {$ref: "#/components/responses/Problem"}
+
+  /practices/{factId}:
+    parameters:
+      - {$ref: "#/components/parameters/factId"}
+    get:
+      tags: [facts]
+      summary: One practice
+      operationId: getPractice
+      responses:
+        "200":
+          description: The practice
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Practice"}
+        "404": {$ref: "#/components/responses/Problem"}
+    patch:
+      tags: [facts]
+      summary: Accept or reject a proposed practice
+      operationId: reviewPractice
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema: {$ref: "#/components/schemas/Review"}
+      responses:
+        "200":
+          description: Reviewed; now frozen
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Practice"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/identities:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [identities]
+      summary: Identities the person presents
+      operationId: listIdentities
+      responses:
+        "200":
+          description: Identities
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/IdentityList"}
+    post:
+      tags: [identities]
+      summary: Add an identity, e.g. the name and contact on a CV
+      operationId: createIdentity
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/IdentityInput"}
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Identity"}
+        "400": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/views:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [views]
+      summary: Views of the record
+      operationId: listViews
+      responses:
+        "200":
+          description: Views
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/ViewList"}
+    post:
+      tags: [views]
+      summary: Create a view
+      operationId: createView
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/ViewInput"}
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/View"}
+        "400": {$ref: "#/components/responses/Problem"}
+
+  /views/{viewId}:
+    parameters:
+      - {$ref: "#/components/parameters/viewId"}
+    get:
+      tags: [views]
+      summary: One view
+      operationId: getView
+      responses:
+        "200":
+          description: The view
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/View"}
+        "404": {$ref: "#/components/responses/Problem"}
+    put:
+      tags: [views]
+      summary: Edit a view; views are not facts
+      operationId: replaceView
+      parameters:
+        - {$ref: "#/components/parameters/ifMatch"}
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/ViewInput"}
+      responses:
+        "200":
+          description: Replaced
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/View"}
+        "400": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "412": {$ref: "#/components/responses/Problem"}
+
+  /views/{viewId}/facts:
+    parameters:
+      - {$ref: "#/components/parameters/viewId"}
+    get:
+      tags: [views]
+      summary: Facts selected by the view, with its fields only
+      operationId: getViewFacts
+      parameters:
+        - {$ref: "#/components/parameters/ifNoneMatch"}
+      responses:
+        "200":
+          description: Visible facts
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+            Last-Modified: {$ref: "#/components/headers/LastModified"}
+            Cache-Control: {$ref: "#/components/headers/CacheControl"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/ViewFacts"}
+        "304":
+          description: Not modified
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /views/{viewId}/resume:
+    parameters:
+      - {$ref: "#/components/parameters/viewId"}
+    get:
+      tags: [views]
+      summary: Facts selected by the view, as a JSON Resume document
+      operationId: getViewResume
+      parameters:
+        - name: identity
+          in: query
+          required: true
+          description: The identity whose name and contact go on the CV
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: A JSON Resume document; render it with any JSON Resume theme
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+          content:
+            application/json:
+              schema:
+                description: JSON Resume schema, https://jsonresume.org/schema
+                type: object
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /reference/skills:
+    get:
+      tags: [reference]
+      summary: Search ESCO skills and skill groups
+      operationId: searchSkills
+      parameters:
+        - {$ref: "#/components/parameters/q"}
+        - {$ref: "#/components/parameters/language"}
+      responses:
+        "200":
+          description: Ranked candidates
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/SkillCandidateList"}
+
+  /reference/concepts:
+    get:
+      tags: [reference]
+      summary: Search Wikidata concepts
+      operationId: searchConcepts
+      parameters:
+        - {$ref: "#/components/parameters/q"}
+        - {$ref: "#/components/parameters/language"}
+      responses:
+        "200":
+          description: Ranked candidates
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/ConceptCandidateList"}
+
+components:
+  parameters:
+    personId: {name: personId, in: path, required: true, schema: {type: string, format: uuid}}
+    factId: {name: factId, in: path, required: true, schema: {type: string, format: uuid}}
+    viewId: {name: viewId, in: path, required: true, schema: {type: string, format: uuid}}
+    importId: {name: importId, in: path, required: true, schema: {type: string, format: uuid}}
+    status:
+      name: status
+      in: query
+      schema: {$ref: "#/components/schemas/Status"}
+    q:
+      name: q
+      in: query
+      required: true
+      schema: {type: string, minLength: 1}
+    language:
+      name: language
+      in: query
+      description: BCP 47 language tag of the words
+      schema: {type: string, default: en}
+    ifMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema: {type: string}
+    ifNoneMatch:
+      name: If-None-Match
+      in: header
+      schema: {type: string}
+
+  headers:
+    Location:
+      schema: {type: string, format: uri-reference}
+    ETag:
+      schema: {type: string}
+    LastModified:
+      schema: {type: string}
+    CacheControl:
+      schema: {type: string}
+
+  responses:
+    Problem:
+      description: RFC 9457 problem details
+      content:
+        application/problem+json:
+          schema: {$ref: "#/components/schemas/Problem"}
+
+  schemas:
+    Status:
+      type: string
+      enum: [proposed, accepted, rejected]
+
+    Uri:
+      type: string
+      format: uri
+
+    Level:
+      description: 1 basic, 2 intermediate, 3 average, 4 advanced, 5 expert; null when unknown
+      oneOf:
+        - {type: integer, minimum: 1, maximum: 5}
+        - {type: "null"}
+
+    Resource:
+      description: Every resource has an identifier, a type and the actions available next
+      type: object
+      required: ["@id", "@type", potentialAction]
+      properties:
+        "@context": {type: string, format: uri-reference}
+        "@id": {type: string, format: uri-reference}
+        "@type": {type: string}
+        potentialAction:
+          type: array
+          items: {$ref: "#/components/schemas/Action"}
+
+    Action:
+      description: A possible next request, as a schema.org Action
+      type: object
+      required: ["@type", name, target]
+      properties:
+        "@type":
+          type: string
+          examples: [AcceptAction, RejectAction, CreateAction, UpdateAction, ViewAction, SearchAction]
+        name:
+          type: string
+          description: What the action does, in plain words
+        target: {$ref: "#/components/schemas/EntryPoint"}
+        object:
+          description: Body to send, when fixed
+          type: object
+
+    EntryPoint:
+      type: object
+      required: [httpMethod, urlTemplate]
+      properties:
+        "@type": {const: EntryPoint}
+        httpMethod: {type: string, enum: [GET, POST, PUT, PATCH]}
+        urlTemplate: {type: string, description: RFC 6570 URL template}
+        contentType: {type: string}
+
+    Entry:
+      x-actions:
+        - {type: ViewAction, name: My record, method: GET, target: "/persons/{personId}"}
+        - {type: CreateAction, name: Import a CV, method: POST, target: /imports, contentType: text/plain}
+        - {type: SearchAction, name: Review proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed"}
+        - {type: SearchAction, name: Review proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed"}
+        - {type: ViewAction, name: My views, method: GET, target: "/persons/{personId}/views"}
+        - {type: ViewAction, name: My identities, method: GET, target: "/persons/{personId}/identities"}
+        - {type: SearchAction, name: Find an ESCO skill, method: GET, target: "/reference/skills{?q,language}"}
+        - {type: SearchAction, name: Find a Wikidata concept, method: GET, target: "/reference/concepts{?q,language}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            person: {type: string, format: uri-reference}
+
+    Person:
+      x-actions:
+        - {type: ViewAction, name: Occupations held, method: GET, target: "/persons/{personId}/occupations"}
+        - {type: ViewAction, name: Practices, method: GET, target: "/persons/{personId}/practices"}
+        - {type: ViewAction, name: Identities, method: GET, target: "/persons/{personId}/identities"}
+        - {type: ViewAction, name: Views, method: GET, target: "/persons/{personId}/views"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+
+    Concept:
+      description: Wikidata concept (`is`), refined by other Wikidata concepts (`with`), with an optional label
+      type: object
+      required: [is]
+      properties:
+        is: {$ref: "#/components/schemas/Uri"}
+        with:
+          type: array
+          items: {$ref: "#/components/schemas/Uri"}
+          default: []
+        label: {type: [string, "null"]}
+
+    FactFields:
+      type: object
+      required: [author, recorded, status]
+      properties:
+        author: {type: string}
+        recorded: {type: string, format: date-time}
+        status: {$ref: "#/components/schemas/Status"}
+        evidence:
+          description: Any JSON, e.g. a CV excerpt or a certificate link; stored and returned unchanged
+
+    OccupationHeldInput:
+      type: object
+      required: [label, kind, from]
+      properties:
+        occupation:
+          description: ESCO occupation
+          oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]
+        label: {type: string}
+        kind: {type: string, enum: [work, pleasure, study]}
+        from: {type: string, format: date}
+        to: {type: [string, "null"], format: date}
+        evidence: {}
+
+    OccupationHeld:
+      x-actions:
+        - {type: AcceptAction, name: Accept this occupation, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
+        - {type: RejectAction, name: Reject this occupation, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
+        - {type: CreateAction, name: Add a practice at this occupation, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/OccupationHeldInput"
+        - $ref: "#/components/schemas/FactFields"
+
+    PracticeInput:
+      type: object
+      required: [skill, concept, from]
+      properties:
+        skill:
+          description: ESCO skill
+          allOf: [{$ref: "#/components/schemas/Uri"}]
+        concept: {$ref: "#/components/schemas/Concept"}
+        context:
+          description: Wikidata item, e.g. a language
+          oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]
+        occupation:
+          description: The occupation held, by its @id
+          type: [string, "null"]
+          format: uri-reference
+        from: {type: string, format: date}
+        to: {type: [string, "null"], format: date}
+        level: {$ref: "#/components/schemas/Level"}
+        evidence: {}
+
+    Practice:
+      x-actions:
+        - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
+        - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
+        - {type: CreateAction, name: Record a correction as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/PracticeInput"
+        - $ref: "#/components/schemas/FactFields"
+
+    Review:
+      description: Moves a proposed fact to accepted or rejected, once
+      type: object
+      required: [status]
+      properties:
+        status: {type: string, enum: [accepted, rejected]}
+
+    IdentityInput:
+      type: object
+      required: [label]
+      properties:
+        label: {type: string}
+        contact: {type: [string, "null"]}
+
+    Identity:
+      x-actions:
+        - {type: ViewAction, name: Back to my record, method: GET, target: "/persons/{personId}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/IdentityInput"
+
+    ViewInput:
+      type: object
+      properties:
+        label: {type: string, description: e.g. the job offer it is for}
+        include:
+          type: object
+          properties:
+            occupation_kind:
+              type: [array, "null"]
+              items: {type: string, enum: [work, pleasure, study]}
+            occupation:
+              type: [array, "null"]
+              items: {type: string, format: uri-reference}
+            period:
+              type: [object, "null"]
+              properties:
+                from: {type: [string, "null"], format: date}
+                to: {type: [string, "null"], format: date}
+            skill_under:
+              description: ESCO skill groups
+              type: [array, "null"]
+              items: {$ref: "#/components/schemas/Uri"}
+        include_facts:
+          type: array
+          items: {type: string, format: uri-reference}
+          default: []
+        exclude_facts:
+          type: array
+          items: {type: string, format: uri-reference}
+          default: []
+        show:
+          type: object
+          properties:
+            level: {type: boolean, default: true}
+            evidence: {type: boolean, default: false}
+
+    View:
+      x-actions:
+        - {type: ViewAction, name: See the facts this view shows, method: GET, target: "/views/{viewId}/facts"}
+        - {type: ViewAction, name: Export as a CV (JSON Resume), method: GET, target: "/views/{viewId}/resume{?identity}"}
+        - {type: UpdateAction, name: Edit this view, method: PUT, target: "@id", header: If-Match}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/ViewInput"
+
+    ViewFacts:
+      x-actions:
+        - {type: ViewAction, name: The view, method: GET, target: "/views/{viewId}"}
+        - {type: ViewAction, name: Export as a CV (JSON Resume), method: GET, target: "/views/{viewId}/resume{?identity}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            view: {type: string, format: uri-reference}
+            occupations:
+              type: array
+              items: {$ref: "#/components/schemas/OccupationHeld"}
+            practices:
+              type: array
+              items: {$ref: "#/components/schemas/Practice"}
+
+    Import:
+      x-actions:
+        - {type: ViewAction, name: Refresh, method: GET, target: "@id", when: state is running}
+        - {type: SearchAction, name: Review the proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed", when: state is done}
+        - {type: SearchAction, name: Review the proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed", when: state is done}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          required: [state]
+          properties:
+            state: {type: string, enum: [running, done, failed]}
+            proposed:
+              description: The facts this import proposed
+              type: array
+              items: {type: string, format: uri-reference}
+            unresolved:
+              description: Terms that could not be resolved to identifiers
+              type: array
+              items:
+                type: object
+                properties:
+                  term: {type: string}
+                  excerpt: {type: string}
+
+    Candidate:
+      type: object
+      required: [id, label, source]
+      properties:
+        id: {$ref: "#/components/schemas/Uri"}
+        label: {type: string}
+        description: {type: [string, "null"]}
+        source: {type: string, enum: [esco, wikidata]}
+        why: {type: string, description: Why it matches}
+
+    OccupationList:
+      x-actions:
+        - {type: CreateAction, name: Add an occupation, method: POST, target: "/persons/{personId}/occupations"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/OccupationHeld"}}
+    PracticeList:
+      x-actions:
+        - {type: CreateAction, name: Add a practice, method: POST, target: "/persons/{personId}/practices"}
+        - {type: SearchAction, name: Filter by status, method: GET, target: "/persons/{personId}/practices{?status}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Practice"}}
+    IdentityList:
+      x-actions:
+        - {type: CreateAction, name: Add an identity, method: POST, target: "/persons/{personId}/identities"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Identity"}}
+    ViewList:
+      x-actions:
+        - {type: CreateAction, name: Write a view, method: POST, target: "/persons/{personId}/views"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/View"}}
+    SkillCandidateList:
+      x-actions:
+        - {type: SearchAction, name: Search ESCO skills again, method: GET, target: "/reference/skills{?q,language}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Candidate"}}
+    ConceptCandidateList:
+      x-actions:
+        - {type: SearchAction, name: Search Wikidata concepts again, method: GET, target: "/reference/concepts{?q,language}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Candidate"}}
+
+    Problem:
+      description: RFC 9457
+      type: object
+      properties:
+        type: {type: string, format: uri-reference}
+        title: {type: string}
+        status: {type: integer}
+        detail: {type: string}
+        instance: {type: string, format: uri-reference}
