@@ -11,7 +11,7 @@ info:
     a name, an HTTP method, a URL template. The paths below may change; the actions do not.
     The actions of each schema are listed in its `x-actions`.
 
-    Accepted or rejected facts cannot be modified. A correction is a new fact.
+    Proposed facts can be edited. Accepted or rejected facts cannot be modified; a correction is a new fact.
 
     Responses are JSON-LD; the context is `/contexts/curriculum.jsonld`. JSON clients can
     ignore fields starting with `@`.
@@ -77,28 +77,43 @@ paths:
             schema: {type: string}
       responses:
         "202":
-          description: Import accepted; extraction runs in the background
+          description: Import accepted; a task runs the extraction. `Location` is the task
           headers:
             Location: {$ref: "#/components/headers/Location"}
           content:
             application/ld+json:
-              schema: {$ref: "#/components/schemas/Import"}
+              schema: {$ref: "#/components/schemas/Task"}
         "400": {$ref: "#/components/responses/Problem"}
         "413": {$ref: "#/components/responses/Problem"}
 
-  /imports/{importId}:
+  /tasks/{taskId}:
     parameters:
-      - {$ref: "#/components/parameters/importId"}
+      - {$ref: "#/components/parameters/taskId"}
     get:
       tags: [import]
-      summary: Import status and the facts it proposed
-      operationId: getImport
+      summary: Task state and result
+      operationId: getTask
       responses:
         "200":
-          description: The import
+          description: The task
           content:
             application/ld+json:
-              schema: {$ref: "#/components/schemas/Import"}
+              schema: {$ref: "#/components/schemas/Task"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /tasks/{taskId}/rejections:
+    parameters:
+      - {$ref: "#/components/parameters/taskId"}
+    post:
+      tags: [import]
+      summary: Reject every fact still proposed by this task
+      operationId: rejectTaskFacts
+      responses:
+        "200":
+          description: The task, its proposed facts now rejected
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Task"}
         "404": {$ref: "#/components/responses/Problem"}
 
   /persons/{personId}/occupations:
@@ -153,16 +168,16 @@ paths:
         "404": {$ref: "#/components/responses/Problem"}
     patch:
       tags: [facts]
-      summary: Accept or reject a proposed occupation
+      summary: Edit a proposed occupation, or accept or reject it
       operationId: reviewOccupation
       requestBody:
         required: true
         content:
           application/merge-patch+json:
-            schema: {$ref: "#/components/schemas/Review"}
+            schema: {$ref: "#/components/schemas/OccupationReview"}
       responses:
         "200":
-          description: Reviewed; now frozen
+          description: Edited, or reviewed and now frozen
           content:
             application/ld+json:
               schema: {$ref: "#/components/schemas/OccupationHeld"}
@@ -221,16 +236,16 @@ paths:
         "404": {$ref: "#/components/responses/Problem"}
     patch:
       tags: [facts]
-      summary: Accept or reject a proposed practice
+      summary: Edit a proposed practice, or accept or reject it
       operationId: reviewPractice
       requestBody:
         required: true
         content:
           application/merge-patch+json:
-            schema: {$ref: "#/components/schemas/Review"}
+            schema: {$ref: "#/components/schemas/PracticeReview"}
       responses:
         "200":
-          description: Reviewed; now frozen
+          description: Edited, or reviewed and now frozen
           content:
             application/ld+json:
               schema: {$ref: "#/components/schemas/Practice"}
@@ -421,7 +436,7 @@ components:
     personId: {name: personId, in: path, required: true, schema: {type: string, format: uuid}}
     factId: {name: factId, in: path, required: true, schema: {type: string, format: uuid}}
     viewId: {name: viewId, in: path, required: true, schema: {type: string, format: uuid}}
-    importId: {name: importId, in: path, required: true, schema: {type: string, format: uuid}}
+    taskId: {name: taskId, in: path, required: true, schema: {type: string, format: uuid}}
     status:
       name: status
       in: query
@@ -554,11 +569,15 @@ components:
 
     FactFields:
       type: object
-      required: [author, recorded, status]
+      required: [author, recorded, status, fidelity]
       properties:
         author: {type: string}
         recorded: {type: string, format: date-time}
         status: {$ref: "#/components/schemas/Status"}
+        fidelity:
+          description: How closely the fact matches its source; 1 low, 2 average, 3 good; 3 once reviewed
+          type: integer
+          enum: [1, 2, 3]
         evidence:
           description: Any JSON, e.g. a CV excerpt or a certificate link; stored and returned unchanged
 
@@ -577,6 +596,7 @@ components:
 
     OccupationHeld:
       x-actions:
+        - {type: UpdateAction, name: Edit this occupation, method: PATCH, target: "@id", when: status is proposed}
         - {type: AcceptAction, name: Accept this occupation, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
         - {type: RejectAction, name: Reject this occupation, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
         - {type: CreateAction, name: Add a practice at this occupation, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
@@ -607,6 +627,7 @@ components:
 
     Practice:
       x-actions:
+        - {type: UpdateAction, name: Edit this practice, method: PATCH, target: "@id", when: status is proposed}
         - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
         - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
         - {type: CreateAction, name: Record a correction as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
@@ -616,11 +637,35 @@ components:
         - $ref: "#/components/schemas/FactFields"
 
     Review:
-      description: Moves a proposed fact to accepted or rejected, once
+      description: Moves a proposed fact to accepted or rejected, once; without it, the fact is edited and stays proposed
       type: object
-      required: [status]
       properties:
         status: {type: string, enum: [accepted, rejected]}
+
+    OccupationReview:
+      description: Merge patch on a proposed occupation; fields edited, status optional
+      allOf:
+        - $ref: "#/components/schemas/Review"
+        - type: object
+          properties:
+            occupation: {oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]}
+            label: {type: string}
+            kind: {type: string, enum: [work, pleasure, study]}
+            from: {type: string, format: date}
+            to: {type: [string, "null"], format: date}
+
+    PracticeReview:
+      description: Merge patch on a proposed practice; fields edited, status optional
+      allOf:
+        - $ref: "#/components/schemas/Review"
+        - type: object
+          properties:
+            skill: {$ref: "#/components/schemas/Uri"}
+            concept: {$ref: "#/components/schemas/Concept"}
+            context: {oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]}
+            from: {type: string, format: date}
+            to: {type: [string, "null"], format: date}
+            level: {$ref: "#/components/schemas/Level"}
 
     IdentityInput:
       type: object
@@ -658,6 +703,10 @@ components:
               description: ESCO skill groups
               type: [array, "null"]
               items: {$ref: "#/components/schemas/Uri"}
+            status:
+              description: "Default: proposed and accepted; a view with a grant: accepted only"
+              type: [array, "null"]
+              items: {type: string, enum: [proposed, accepted]}
         include_facts:
           type: array
           items: {type: string, format: uri-reference}
@@ -697,29 +746,34 @@ components:
               type: array
               items: {$ref: "#/components/schemas/Practice"}
 
-    Import:
+    Task:
       x-actions:
-        - {type: ViewAction, name: Refresh, method: GET, target: "@id", when: state is running}
-        - {type: SearchAction, name: Review the proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed", when: state is done}
-        - {type: SearchAction, name: Review the proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed", when: state is done}
+        - {type: ViewAction, name: Refresh, method: GET, target: "@id", when: state is queued or running}
+        - {type: SearchAction, name: Review the proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed", when: kind is cv-import and state is done}
+        - {type: SearchAction, name: Review the proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed", when: kind is cv-import and state is done}
+        - {type: RejectAction, name: Reject all facts proposed by this task, method: POST, target: "@id/rejections", when: state is failed}
       allOf:
         - $ref: "#/components/schemas/Resource"
         - type: object
-          required: [state]
+          required: [kind, state, started]
           properties:
-            state: {type: string, enum: [running, done, failed]}
-            proposed:
-              description: The facts this import proposed
-              type: array
-              items: {type: string, format: uri-reference}
-            unresolved:
-              description: Terms that could not be resolved to identifiers
-              type: array
-              items:
-                type: object
-                properties:
-                  term: {type: string}
-                  excerpt: {type: string}
+            kind: {type: string, enum: [cv-import]}
+            state: {type: string, enum: [queued, running, done, failed]}
+            started: {type: string, format: date-time}
+            ended: {type: [string, "null"], format: date-time}
+            result:
+              description: "Per kind. cv-import: terms that could not be resolved"
+              type: [object, "null"]
+              properties:
+                unresolved:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      term: {type: string}
+                      excerpt: {type: string}
+            problem:
+              oneOf: [{$ref: "#/components/schemas/Problem"}, {type: "null"}]
 
     Candidate:
       type: object

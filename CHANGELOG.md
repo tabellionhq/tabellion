@@ -29,4 +29,5 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0015 API maturity: Richardson level 3, JSON-LD with schema.org actions; ADR-0016 core web UI in the main binary, one-time token swapped for a session cookie; ADR-0017 where a feature belongs: core, adapter or external system, no plugins; ADR-0018 concepts composed of Wikidata concepts.
 - Design: resources exposed by the HTTP API; fact identifiers; accepted facts are never mutated.
 - API contract draft for the MVP: `api/openapi.yaml` (OpenAPI 3.1, actions per resource), JSON-LD context `api/contexts/curriculum.jsonld`.
+- APR-0004 international. US-08 new CV, US-09 review imported facts; MVP session map. Data model: tasks, fidelity, proposed facts editable until reviewed, views filter by status. ADR-0019 internationalisation (proposed).
 - Design note: CV standards. Roadmap: glossary, CV round trip.

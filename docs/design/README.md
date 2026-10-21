@@ -10,6 +10,7 @@ Functional design, data first.
 | [functions.md](functions.md) | functions, traced to stories |
 | [resources.md](resources.md) | resources exposed by the HTTP API |
 | [adapters.md](adapters.md) | adapters by port |
+| [mvp-session.md](mvp-session.md) | the MVP session, request by request |
 | [data-first.md](data-first.md) | design position and its lineage |
 | [cv-standards.md](cv-standards.md) | CV import and export through existing standards |
 

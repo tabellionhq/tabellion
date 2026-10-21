@@ -34,8 +34,9 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 | `/views/{id}/grants` | GET, POST | Grant | |
 | `/grants/{id}` | GET; PATCH `status: revoked` | Grant | |
 | `/grants/{id}/access-log` | GET | AccessLog | |
-| `/imports` | POST | a document (CV) to extract; returns `202 Accepted` and an import | F01, F03 |
-| `/imports/{id}` | GET | import status; links to the facts it proposed | F01 |
+| `/imports` | POST | a document (CV) to extract; returns `202 Accepted` and a task | F01, F03 |
+| `/tasks/{id}` | GET | task state and result | F01 |
+| `/tasks/{id}/rejections` | POST | reject every fact still proposed by the task | F04 |
 | `/reference/skills?q=` | GET | ESCO skills | F02 |
 | `/reference/skills/{id}/ancestors` | GET | ESCO categories above a skill | F02 |
 | `/reference/concepts?q=` | GET | Wikidata concepts | F02 |
@@ -44,7 +45,7 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 
 | Object | From | To | Who |
 |---|---|---|---|
-| OccupationHeld, Practice | proposed | accepted, rejected | the person |
+| OccupationHeld, Practice | proposed | proposed (edited), accepted, rejected | the person |
 | OccupationHeld, Practice | accepted, rejected | none, frozen | |
 | Grant | active | revoked | the person |
 | View | any | any, edited freely; not a fact | the person |

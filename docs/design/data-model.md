@@ -2,7 +2,7 @@
 
 - Status: Draft
 - Decisions: ADR-0001 (Wikidata concepts), ADR-0002 (levels 1–5), ADR-0003 (ESCO), ADR-0004 to ADR-0007 (scope, views); ADR-0008 (append-only facts), ADR-0009 (skills, not assessments), ADR-0010 (person identifier), ADR-0018 (composed concepts)
-- Stories: US-01 to US-07
+- Stories: US-01 to US-09
 
 A person's track record is a set of facts. How facts are proposed, reviewed, accepted and stored is outside the model (ADR-0006).
 
@@ -10,7 +10,7 @@ A person's track record is a set of facts. How facts are proposed, reviewed, acc
 
 ### Facts
 
-Facts are append-only: once accepted, a fact SHALL NOT be mutated; a correction is a new fact. A proposed fact changes status once, to accepted or rejected, then is frozen. A person's progress is the list of their facts (ADR-0008).
+Facts are append-only: once accepted, a fact SHALL NOT be mutated; a correction is a new fact. A proposed fact can be edited until it is reviewed; its status then changes once, to accepted or rejected, and it is frozen. A person's progress is the list of their facts (ADR-0008).
 
 ```yaml
 Person:
@@ -30,9 +30,10 @@ OccupationHeld:           # Anne was a backend developer at ACME from 2021 to 20
   kind: work | pleasure | study   # study: student, trainee, training
   from: date
   to: date | null
-  author: string
+  author: string          # a person, or the task that proposed it (/tasks/{id})
   recorded: datetime
   status: proposed | accepted | rejected
+  fidelity: 1 | 2 | 3     # how closely it matches its source: 1 low, 2 average, 3 good; 3 once reviewed
 
 Practice:                 # I practiced <skill> on <concept> in <context> at <occupation> over <period>
   id: uuid
@@ -67,6 +68,7 @@ View:
     occupation: [OccupationHeld] | null
     period: {from: date | null, to: date | null} | null
     skill_under: [uri] | null     # ESCO categories
+    status: [proposed | accepted]  # default: both; a view with a grant: accepted only
   include_facts: [fact id]        # allow list
   exclude_facts: [fact id]        # deny list
   show:
@@ -92,6 +94,22 @@ AccessLog:                # who read which view, when
 Semantics: (rules OR include_facts) AND NOT exclude_facts, then the projection given by `show`. The deny list wins.
 
 Rules may be written by an agent from the owner's words; the owner confirms them.
+
+### Tasks
+
+Slow work run by the server, e.g. a CV import (US-01). A task is not a fact. Facts it proposes have the task as `author`: a failed task's facts can be rejected together (US-09).
+
+```yaml
+Task:
+  id: uuid
+  person: Person.id
+  kind: cv-import
+  state: queued | running | done | failed
+  started: datetime
+  ended: datetime | null
+  result: object | null   # per kind; cv-import: {unresolved: [{term, excerpt}]}
+  problem: object | null  # RFC 9457 problem details, when failed
+```
 
 ### Reference data
 
@@ -154,6 +172,9 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.
 - Status moves once: `proposed` → `accepted` | `rejected`. An accepted or rejected fact SHALL NOT be mutated.
+- Status, kind, state and fidelity are named values in the model and the API. How a store encodes them (e.g. small integers) is the store adapter's choice; the UI translates their names for display (ADR-0019).
+- Responses embed the label of each referenced skill, occupation and concept, in the requested language; the store keeps identifiers only.
+- Reference data: ESCO is shipped with the release; Wikidata items are looked up online and cached.
 
 ## Open
 
