@@ -150,3 +150,41 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 7. Socket path: `$XDG_RUNTIME_DIR/<name>/` on Linux; macOS and Windows: ADR on target platforms. `<name>`: the project name, not decided.
 8. Identity: not asked at start. Asked when first needed: after a CV import, proposed from the CV; or at the first export or share, typed by Anne. Can be changed or aliased later.
 9. Review screen: wireframes, and an ADR for the frontend framework. A task of its own.
+
+## Required for the MVP
+
+### Decided
+
+| Part | Decision |
+|---|---|
+| Contract | [api/openapi.yaml](../../api/openapi.yaml): entry point, imports and tasks, occupations, practices, identities, views, resume, reference lookups |
+| Server | Go (ADR-0014); one person per server, started on first call, exits when idle (ADR-0012) |
+| Authentication | Unix socket for the command line; one-time token swapped for a session cookie for the web UI (ADR-0016) |
+| Facts | proposed, accepted, rejected; proposed facts editable until reviewed; deleting allowed (ADR-0008); fidelity 1 to 3; author is the import task |
+| Views | proposed and accepted facts by default |
+| Reference data | ESCO shipped with the release; Wikidata looked up online and cached |
+| Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `skills-track` |
+| Platforms | Windows, macOS, Linux; `CGO_ENABLED=0` (ADR-0020) |
+
+### To decide before code, in order
+
+1. Go HTTP stack: Gin with `oapi-codegen`; licences to check.
+2. Store engine: SQLite in pure Go (`modernc.org/sqlite` or `ncruces/go-sqlite3`). It also keeps an encrypted store per hosted instance possible (APR-0005).
+3. Test data: a fictional CV and the facts expected from it. Fixes the shape of the evidence: `{excerpt, file, position}`.
+4. Extraction model: a small local language model, tested on the test data; then an ADR.
+5. Frontend framework: review screen wireframes, then an ADR.
+
+### Open
+
+- Concept search in the MVP: Wikidata online search instead of local embeddings. One engine less to choose and ship; departs from the search split (data model) for the MVP.
+
+### Not blocking
+
+- Project name; `skills-track` until decided.
+- Messages in English only, kept apart from the code; ADR-0019 after the frontend framework.
+- Later: vocabulary IRI, grants, MCP, accepting a group in one request, deleting facts by a filter, CV formats other than JSON Resume.
+
+### Covered by the contract
+
+- Split: edit the proposed fact, then add facts with the same evidence.
+- Expand: add facts with the same evidence.

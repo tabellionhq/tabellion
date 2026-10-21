@@ -47,5 +47,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Closed: quiz exercises, starting exercise only
 - [ ] Owner: project name (name conflicts, IP, domain); `skills-track` is the working name
 - [x] ADR-0020 target platforms: Windows, macOS, Linux; full builds on release
+- [x] APR-0005 hosted service possible
+- [x] MVP requirements: `docs/design/mvp-session.md`
+- [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [ ] Review screen: wireframes, then ADR frontend framework (task of its own)
 - [ ] Owner: ADR-0019 internationalisation, after the frontend framework
