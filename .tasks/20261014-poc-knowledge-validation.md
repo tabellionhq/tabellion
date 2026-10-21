@@ -46,6 +46,6 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Closed: exchange stack, signed credentials out of scope (ADR-0004)
 - [x] Closed: quiz exercises, starting exercise only
 - [ ] Owner: project name (name conflicts, IP, domain); `skills-track` is the working name
-- [ ] ADR: target platforms (Windows, macOS, Linux): socket path, data directories
+- [x] ADR-0020 target platforms: Windows, macOS, Linux; full builds on release
 - [ ] Review screen: wireframes, then ADR frontend framework (task of its own)
 - [ ] Owner: ADR-0019 internationalisation, after the frontend framework
