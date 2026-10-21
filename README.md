@@ -1,4 +1,6 @@
-# ia-upskilling
+# Tabellion
+
+Code: [github.com/tabellionhq](https://github.com/tabellionhq) · open source: [tabellion.app](https://tabellion.app) · hosted service: [tabellion.com](https://tabellion.com)
 
 Checks that a developer can explain code they merged from agent-written commits.
 

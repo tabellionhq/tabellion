@@ -45,7 +45,9 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Closed: ESCO–O*NET crosswalk, no impact on the model
 - [x] Closed: exchange stack, signed credentials out of scope (ADR-0004)
 - [x] Closed: quiz exercises, starting exercise only
-- [ ] Owner: project name (name conflicts, IP, domain); `skills-track` is the working name
+- [x] Project name: Tabellion; GitHub `tabellionhq`, tabellion.app (open source), tabellion.com (service)
+- [ ] Owner: register tabellion.app, acquire tabellion.com, create GitHub `tabellionhq`; manual trademark check
+- [ ] Rename `skills-track` to `tabellion` in docs, contract and paths
 - [x] ADR-0020 target platforms: Windows, macOS, Linux; full builds on release
 - [x] APR-0005 hosted service possible
 - [x] MVP requirements: `docs/design/mvp-session.md`

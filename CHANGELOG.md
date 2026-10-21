@@ -33,3 +33,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0008 clarified: deleting facts is allowed. ADR-0020 target platforms: Windows, macOS, Linux.
 - Design note: CV standards. Roadmap: glossary, CV round trip.
 - APR-0005 hosted service possible. MVP requirements: decided, to decide, open.
+- Project name: Tabellion. ADR-0021 frontend framework (proposed).
