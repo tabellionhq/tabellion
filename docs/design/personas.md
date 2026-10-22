@@ -8,6 +8,8 @@ User stories are written from these personas ([user stories](user-stories/README
 
 Uses the system to check that what is committed is understood, and wants to use it to learn more.
 
+An early adopter: runs the system on her own laptop, and on her own servers in the long run.
+
 ## P2: Claude
 
 5, agent. Knows approximately a lot, has no personality, has no memory of other people. Can synthesise and generate a lot very fast, and sometimes very wrong.
@@ -21,3 +23,7 @@ Its role in the system is to help create valuable skills assessments and record 
 ## P4: Michaela
 
 51, HR at Anne's company. Not so great with computers, but loves people and seeing them grow professionally. Has read-only access to the views each person exposes ([ADR-0007](../adr/ADR-0007-person-decides-exposed-views.md)).
+
+## P5: Thomas
+
+34, JavaScript developer. Likes managed services, doesn't have time. Wants to use an app; would adopt the system if it is a service ([APR-0005](../apr/APR-0005-hosted-service-possible.md)).

@@ -11,6 +11,7 @@ Functional design, data first.
 | [resources.md](resources.md) | resources exposed by the HTTP API |
 | [adapters.md](adapters.md) | adapters by port |
 | [mvp-session.md](mvp-session.md) | the MVP session, request by request |
+| [ui-functions.md](ui-functions.md) | what the web UI does itself, and the server actions it shows |
 | [data-first.md](data-first.md) | design position and its lineage |
 | [cv-standards.md](cv-standards.md) | CV import and export through existing standards |
 

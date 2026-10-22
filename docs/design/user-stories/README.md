@@ -3,7 +3,7 @@
 - Status: Draft
 - Sources: [personas](../personas.md), [data model](../data-model.md)
 
-Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md), [US-08 new CV filtered for an offer](US-08-new-cv.md), [US-09 review imported facts](US-09-review-imported-facts.md).
+Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md), [US-08 new CV filtered for an offer](US-08-new-cv.md), [US-09 review imported facts](US-09-review-imported-facts.md), [US-10 install an app, run no server](US-10-hosted-mobile.md).
 
 
 ## Catalogue
@@ -46,6 +46,12 @@ Anne wants to create a new CV based on her curriculum, up to date and filtered a
 
 Detailed in US-08.
 
+### UC12: Use as a service
+
+Thomas installs an app and uses the hosted service, so that he runs no server.
+
+Detailed in US-10.
+
 ### UC9: Strategic analysis
 
 Anne's company integrates her with her coworkers into a strategic analysis. They want to assess:
@@ -83,6 +89,7 @@ Michaela looks on the market for new potential recruits who can do Rust, Kafka a
 | UC9d orientation | Anne's company | embedded-systems requirements | Anne's view | Target proposed to Anne |
 | UC10 yearly HR | Michaela | a period | coworkers' views | progress per person |
 | UC11 recruitment | Michaela | Rust, Kafka, embedded-systems requirements | candidates' views | matching candidates |
+| UC12 use as a service | Thomas | his actions in the app | his record | his record, on his hosted instance |
 
 ## Data missing from the data model
 

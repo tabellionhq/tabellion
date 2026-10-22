@@ -16,6 +16,7 @@ Constraints:
 - Easy maintenance; code that people and agents already know well.
 - Few dependencies (APR-0002); the server is in Go (ADR-0014).
 - Messages translated (APR-0004, ADR-0019).
+- Online only. Apps that work offline, e.g. on a phone, are separate clients of the API (US-10).
 
 ## Options
 
@@ -29,7 +30,7 @@ Constraints:
 
 ## Recommendation
 
-A, HTMX with server-rendered HTML.
+A, HTMX with server-rendered HTML. The UI functions ([ui-functions.md](../design/ui-functions.md)) are mostly server actions; its own functions are access, presentation, sequences of actions and language.
 
 - It follows the API: an action is a link or a form, rendered by one template, so a new action needs no UI change (ADR-0016).
 - The binary and CI stay Go only (ADR-0020).
@@ -57,4 +58,5 @@ Owner's words.
 - [ADR-0019: Internationalisation](ADR-0019-internationalisation.md)
 - [ADR-0020: Target platforms](ADR-0020-target-platforms.md)
 - [US-09: Review imported facts](../design/user-stories/US-09-review-imported-facts.md)
+- [US-10: Install an app, run no server](../design/user-stories/US-10-hosted-mobile.md)
 - HTMX: <https://htmx.org>
