@@ -37,7 +37,7 @@ This solves many problems, and we want it to be really open. An RFC is presumptu
 - Order of precedence: the specification, then the OpenAPI contract, then the code. A conflict is a bug in the lower one.
 - The specification holds the data model, the rules (statuses, frozen facts, deleting, view semantics, completing a proposed fact) and the vocabulary; the JSON-LD context implements the vocabulary.
 - The design notes become its draft; once in the specification, a rule is no longer restated in them, only linked.
-- Next step: name and place of the specification, and its own version.
+- The specification is [docs/RFC.md](../RFC.md), named and numbered as an Internet-Draft (`draft-tabellion-curriculum-00`): it is not an RFC, and RFCs are not versioned with semantic versions. Licence: CC BY 4.0.
 - Conformance: the test data ([testdata](../../testdata/README.md)) becomes the start of a conformance suite for servers and clients.
 
 ## References

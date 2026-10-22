@@ -38,3 +38,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Data model: human languages and undated skills are practices completed in review; a proposed practice may miss its start date; evidence line; view periods match by overlap.
 - Persona Thomas; US-10 install an app, run no server: apps are separate clients, the server is the authority. UI functions.
 - ADR-0024: a specification is the source of truth for the model and the rules; the OpenAPI contract interprets it.
+- Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0.

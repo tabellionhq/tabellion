@@ -1,0 +1,357 @@
+```
+Document source: Tabellion project                          A. Crommer
+Document: draft-tabellion-curriculum-00                     October 2026
+Category: Beta specification, not an RFC
+```
+
+# Tabellion Skills Curriculum: Data Model and Rules
+
+## Abstract
+
+This document specifies a data model and rules for recording the skills a person has practised over time: the occupations held, the practices of a skill on a concept at an occupation over a period, and the views through which the person exposes part of this record to others. Skills are identified by the European Skills, Competences, Qualifications and Occupations classification (ESCO); concepts and contexts by Wikidata items. The document defines what a server keeping a record and a client using it must do to interoperate.
+
+## Status of This Memo
+
+This document is a beta specification published by the Tabellion project. It is not an RFC. It has not been submitted to any RFC stream, and has not been reviewed by the IETF, the IAB, the IRTF or the Independent Submissions Editor.
+
+Its name follows the Internet-Draft naming convention; the number at the end increases with each published revision. This document may be updated, replaced or obsoleted by other documents at any time.
+
+## Copyright Notice
+
+Copyright (c) 2026 Alban Crommer and the Tabellion authors. This document is licensed under the Creative Commons Attribution 4.0 International licence (CC BY 4.0), <https://creativecommons.org/licenses/by/4.0/>.
+
+## Table of Contents
+
+1. [Introduction](#1-introduction)
+   1. [Requirements Language](#11-requirements-language)
+2. [Terminology](#2-terminology)
+3. [Data Model](#3-data-model)
+4. [Rules](#4-rules)
+5. [Vocabulary](#5-vocabulary)
+6. [HTTP Binding](#6-http-binding)
+7. [Conformance](#7-conformance)
+8. [Internationalization Considerations](#8-internationalization-considerations)
+9. [Security Considerations](#9-security-considerations)
+10. [Privacy Considerations](#10-privacy-considerations)
+11. [IANA Considerations](#11-iana-considerations)
+12. [References](#12-references)
+
+Author's Address
+
+## 1. Introduction
+
+A person's skills are usually recorded in documents written for one reader at a time: a CV, an application form, a yearly review. Each is rewritten from memory, and none can be reused by another system.
+
+This document specifies a record kept for one person and owned by that person. The record is a set of facts: occupations held, and practices of a skill on a concept, in a context, at an occupation, over a period. Facts are added, reviewed by the person, and frozen once reviewed. The person exposes part of the record through views, read by others under a grant.
+
+The record does not assess the person. How a level is evaluated, and whether a reader trusts a fact, are outside this document.
+
+### 1.1. Requirements Language
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all capitals, as shown here.
+
+## 2. Terminology
+
+Person
+: The subject of a record, identified by a UUID.
+
+Owner
+: The person, acting on their own record.
+
+Record
+: The set of facts about one person.
+
+Fact
+: An occupation held or a practice. A fact has an author, a recording time and a status.
+
+Occupation held
+: An occupation the person held over a period: work, pleasure or study.
+
+Practice
+: The statement that the person practised a skill on a concept, in an optional context, at an optional occupation, over a period, at an optional level.
+
+Skill
+: An ESCO skill, identified by its URI.
+
+Concept
+: What a skill was practised on, identified by one Wikidata item, or composed of several (Section 4.4).
+
+Context
+: An optional Wikidata item framing a practice, such as a programming language.
+
+Level
+: An integer from 1 to 5 (Section 4.3).
+
+Status
+: The review state of a fact: proposed, accepted or rejected.
+
+Fidelity
+: How closely a proposed fact matches its source: 1 low, 2 average, 3 good.
+
+Evidence
+: Data supporting a fact, such as an excerpt of a CV. Opaque to this specification.
+
+View
+: A stored selection of facts and of the fields shown, written by the owner.
+
+Reader
+: A person, an organisation or a system that reads a record through a view.
+
+Grant
+: The permission given by the owner to a reader to read one view.
+
+Task
+: Slow work run by a server for the owner, such as importing a CV. Not a fact.
+
+Server
+: A system that keeps records and enforces the rules of this document.
+
+Client
+: A system that reads or changes a record through a server.
+
+## 3. Data Model
+
+Types: `uuid` is a UUID [RFC9562]; `date` is a full-date and `datetime` a date-time [RFC3339]; `uri` is an absolute URI [RFC3986]. A field marked optional MAY be absent or null.
+
+### 3.1. Person
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | uuid, version 4 | required |
+
+A person has no other field. Names and contacts are identities (Section 3.2).
+
+### 3.2. Identity
+
+How a person presents themself to a reader. A person MAY have several identities.
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | string | required |
+| person | Person id | required |
+| label | string | required; a name or a pseudonym |
+| contact | string | optional; e.g. an email address |
+
+### 3.3. Common fields of facts
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | uuid | required |
+| person | Person id | required |
+| author | string | required; who states the fact: the person, another person, or the task that proposed it |
+| recorded | datetime | required |
+| status | proposed, accepted, rejected | required |
+| fidelity | 1, 2, 3 | optional |
+| evidence | any JSON value [RFC8259] | optional |
+
+### 3.4. Occupation held
+
+| Field | Type | Requirement |
+|---|---|---|
+| occupation | uri | optional; an ESCO occupation |
+| label | string | required; as stated, e.g. "Backend developer, ACME" |
+| kind | work, pleasure, study | required |
+| from | date | required |
+| to | date | optional; absent: ongoing |
+
+### 3.5. Practice
+
+| Field | Type | Requirement |
+|---|---|---|
+| skill | uri | required; an ESCO skill |
+| concept | Concept (Section 3.6) | required |
+| context | uri | optional; a Wikidata item |
+| occupation | Occupation held id | optional |
+| from | date | required to accept; MAY be absent while proposed (Section 4.1) |
+| to | date | optional; absent: a single date, or ongoing |
+| level | integer, 1 to 5 | optional |
+
+### 3.6. Concept
+
+| Field | Type | Requirement |
+|---|---|---|
+| is | uri | required; a Wikidata item, the genus |
+| with | list of uri | required, MAY be empty; Wikidata items that set the concept apart |
+| label | string | optional; a name for display |
+
+### 3.7. View
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | string | required |
+| person | Person id | required |
+| include.occupation_kind | list of kinds | optional; absent: no restriction |
+| include.occupation | list of Occupation held ids | optional |
+| include.period | from and to, each an optional date | optional |
+| include.skill_under | list of uri, ESCO skill groups | optional |
+| include.status | list of proposed, accepted | optional; default in Section 4.5 |
+| include_facts | list of fact ids | optional; allow list |
+| exclude_facts | list of fact ids | optional; deny list |
+| show.level | boolean | required |
+| show.evidence | boolean | required |
+
+### 3.8. Grant and access log
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | uuid | required |
+| view | View id | required |
+| reader | string | required |
+| identity | Identity id | optional; how the person presents themself to this reader |
+| status | active, revoked | required |
+| expires | datetime | optional |
+
+An access log entry holds a grant id and the datetime of a read.
+
+### 3.9. Task
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | uuid | required |
+| person | Person id | required |
+| kind | string, e.g. cv-import | required |
+| state | queued, running, done, failed | required |
+| started | datetime | required |
+| ended | datetime | optional |
+| result | object | optional; per kind |
+| problem | problem details [RFC9457] | optional; when failed |
+
+## 4. Rules
+
+### 4.1. Facts
+
+- A record grows by adding facts. A correction to an accepted fact is a new fact.
+- A fact is created with status proposed or accepted. A fact created by the owner MAY be accepted directly.
+- A proposed fact MAY be changed until it is reviewed.
+- The status of a fact changes once: from proposed to accepted, or from proposed to rejected.
+- A server MUST NOT change an accepted or rejected fact.
+- A server MUST refuse to accept a practice without a `from` date.
+- The owner MAY delete facts. Deleting is not a correction: a deleted fact is no longer in the record.
+- A server SHOULD set the fidelity of a fact it proposes from a document, and MUST set it to 3 when the owner accepts the fact.
+
+### 4.2. Identifiers
+
+- A person MUST be identified by a version 4 UUID that never changes. Facts carry only this identifier of the person.
+- Skills and occupations MUST be ESCO URIs. Concepts and contexts MUST be Wikidata item URIs.
+- Status, kind, state and fidelity are exchanged as the names given in Section 3. How a server stores them is not specified.
+
+### 4.3. Levels
+
+| Level | Name | Meaning |
+|---|---|---|
+| 1 | Basic | requires guidance |
+| 2 | Intermediate | autonomous: applies solutions |
+| 3 | Average | experience: solves problems |
+| 4 | Advanced | defines problems |
+| 5 | Expert | finds problems |
+
+Who set a level is the author of the fact. How a level is evaluated is outside this document.
+
+### 4.4. Concepts
+
+- A concept that exists as a Wikidata item is given by that item, with an empty `with` list.
+- A concept that does not exist in Wikidata is composed: `is` names the closest Wikidata item, and `with` the Wikidata items that set the concept apart. Example: a Kafka pipeline is a pipeline (Q1192422) with Apache Kafka (Q16235208).
+- A server MUST NOT accept a concept identified by anything other than Wikidata items.
+
+### 4.5. Views
+
+- A view selects the facts that match its `include` rules or its `include_facts` list, and do not appear in its `exclude_facts` list. The deny list wins.
+- A fact matches `include.period` if its own period overlaps it.
+- Without `include.status`, a view selects proposed and accepted facts. A view read under a grant selects only accepted facts unless its `include.status` says otherwise.
+- Rejected facts are never selected.
+- Fields hidden by `show` MUST NOT be returned to a reader.
+- A server MUST apply a view by a deterministic filter.
+- A server MUST filter facts through the view before any search, count or derived result, and MUST compute derived results only from the facts the view selects. Searching first would reveal hidden facts through scores, counts or truncated lists.
+- A view is not a fact: the owner MAY change it at any time.
+
+### 4.6. Access
+
+- A reader MUST NOT read a record except through a view, under an active grant that has not expired.
+- The owner reads the whole record, and any of their views, without a grant.
+- A server MUST record each read under a grant in the access log.
+- The owner MAY revoke a grant at any time; a revoked grant gives no further access.
+
+### 4.7. Tasks
+
+- A fact proposed by a task has the task as its author.
+- The owner MAY reject, in one operation, every fact still proposed by a task.
+- A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.
+
+### 4.8. Server authority
+
+- A server MUST check every change it receives against the rules of this document, whatever the client, and MUST refuse a change that breaks them.
+- A client MAY keep data, work offline and apply its own rules on the device. Its changes take effect only when the server accepts them.
+
+## 5. Vocabulary
+
+The terms of Sections 2 and 3 are exchanged as JSON-LD 1.1 [JSON-LD11]. The context is published with the HTTP binding: [api/contexts/curriculum.jsonld](../api/contexts/curriculum.jsonld). Actions use schema.org [SCHEMA-ORG]; identities use vCard [VCARD-RDF].
+
+The IRI of the vocabulary is not fixed in this revision.
+
+## 6. HTTP Binding
+
+The HTTP binding is described by an OpenAPI contract, [api/openapi.yaml](../api/openapi.yaml). It interprets this document: it follows its requirements and chooses among its options. Where they disagree, this document prevails.
+
+The binding chooses, among others: JSON-LD responses with the actions available on each resource, problem details [RFC9457] for refused changes, JSON merge patch [RFC7396] for changes to proposed facts, and entity tags for freshness and concurrent changes [RFC9110].
+
+## 7. Conformance
+
+A conforming server implements Sections 3 and 4.
+
+A conforming client sends only changes allowed by Section 4, and handles the refusal of any change.
+
+Test data for conformance: [testdata](../testdata/README.md), a record and the document it was written from.
+
+## 8. Internationalization Considerations
+
+- Skills, occupations and concepts are identifiers; their labels exist in many languages in ESCO and Wikidata. A server SHOULD return labels in the language the client asks for.
+- Status, kind, state and fidelity are names, not text for display; clients translate them.
+- Identity labels and occupation labels are free text, in any language.
+
+## 9. Security Considerations
+
+- A grant gives access to one view. A server MUST check the grant on every read, as it can be revoked or expire.
+- Evidence is opaque and can come from any author. A client MUST NOT run or render evidence as active content.
+- A server reachable from a web browser, including one listening on localhost only, can receive requests from any web page the browser opens. A server SHOULD authenticate every request, also on localhost.
+- Facts state what their author claims. This document gives no means to verify a claim; a reader decides whether to trust it.
+
+## 10. Privacy Considerations
+
+- A record describes a person's working life: it is personal data.
+- A person is identified by a UUID only. Names and contacts are kept apart, in identities, and given to a reader only through the identity chosen for a grant.
+- The person decides what each reader sees; the deny list of a view always wins.
+- The access log tells the person who read which view, and when.
+- Source documents, such as a CV, are not kept beyond their import (Section 4.7).
+
+## 11. IANA Considerations
+
+This document has no IANA actions.
+
+## 12. References
+
+### 12.1. Normative References
+
+- [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
+- [RFC3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002, <https://www.rfc-editor.org/info/rfc3339>.
+- [RFC3986] Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986, January 2005, <https://www.rfc-editor.org/info/rfc3986>.
+- [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+- [RFC8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", STD 90, RFC 8259, December 2017, <https://www.rfc-editor.org/info/rfc8259>.
+- [RFC9562] Davis, K., Peabody, B., and P. Leach, "Universally Unique IDentifiers (UUIDs)", RFC 9562, May 2024, <https://www.rfc-editor.org/info/rfc9562>.
+- [ESCO] European Commission, "ESCO: European Skills, Competences, Qualifications and Occupations", <https://esco.ec.europa.eu>.
+- [WIKIDATA] Wikimedia Foundation, "Wikidata", <https://www.wikidata.org>.
+- [JSON-LD11] Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P., and N. Lindström, "JSON-LD 1.1", W3C Recommendation, July 2020, <https://www.w3.org/TR/json-ld11/>.
+
+### 12.2. Informative References
+
+- [RFC7396] Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396, October 2014, <https://www.rfc-editor.org/info/rfc7396>.
+- [RFC9110] Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., "HTTP Semantics", STD 97, RFC 9110, June 2022, <https://www.rfc-editor.org/info/rfc9110>.
+- [RFC9457] Nottingham, M., Wilde, E., and S. Dalal, "Problem Details for HTTP APIs", RFC 9457, August 2023, <https://www.rfc-editor.org/info/rfc9457>.
+- [SCHEMA-ORG] "Schema.org", <https://schema.org>.
+- [VCARD-RDF] Iannella, R. and J. McKinney, "vCard Ontology - for describing People and Organizations", W3C Interest Group Note, May 2014, <https://www.w3.org/TR/vcard-rdf/>.
+- [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
+
+## Author's Address
+
+Alban Crommer\
+Tabellion project\
+URI: <https://github.com/tabellionhq>

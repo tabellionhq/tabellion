@@ -1,6 +1,7 @@
 # Resources
 
 - Status: Draft
+- Specification: [docs/RFC.md](../RFC.md) prevails over this note
 - Decisions: ADR-0011 (view freshness), ADR-0012 (HTTP API), ADR-0013 (access control); ADR-0015 (Richardson level 3, JSON-LD); proposed: ADR-0016 (GUI in the binary)
 - Model: [data-model.md](data-model.md); functions: [functions.md](functions.md)
 

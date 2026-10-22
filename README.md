@@ -6,6 +6,10 @@ Checks that a developer can explain code they merged from agent-written commits.
 
 Exercises are generated from real commits of a project and target the developer's level.
 
+## Specification
+
+[docs/RFC.md](docs/RFC.md): data model and rules of the skills curriculum, beta (`draft-tabellion-curriculum-00`), CC BY 4.0. It prevails over the API contract and the code.
+
 ## Principles
 
 - Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).

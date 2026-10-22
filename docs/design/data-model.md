@@ -1,6 +1,7 @@
 # Data model
 
 - Status: Draft
+- Specification: [docs/RFC.md](../RFC.md) prevails over this note
 - Decisions: ADR-0001 (Wikidata concepts), ADR-0002 (levels 1–5), ADR-0003 (ESCO), ADR-0004 to ADR-0007 (scope, views); ADR-0008 (append-only facts), ADR-0009 (skills, not assessments), ADR-0010 (person identifier), ADR-0018 (composed concepts)
 - Stories: US-01 to US-09
 
