@@ -6,7 +6,7 @@
 
 ## Context
 
-The software is written in English; its users are anywhere in the world (APR-0004). Reference data is already multilingual: ESCO and Wikidata labels exist in many languages. Messages written by `skills-track` are not: web UI texts, command line output, error details, action names in API responses.
+The software is written in English; its users are anywhere in the world (APR-0004). Reference data is already multilingual: ESCO and Wikidata labels exist in many languages. Messages written by `tabellion` are not: web UI texts, command line output, error details, action names in API responses.
 
 APR-0003: an existing standard for messages and translations, rather than our own format.
 

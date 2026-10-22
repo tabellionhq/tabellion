@@ -6,7 +6,7 @@
 
 ## Context
 
-The target is to compile `skills-track` for Windows, macOS and Linux (APR-0004). The binary is a client and an auto-spawned server on a socket owned by the user (ADR-0012), with a web UI (ADR-0016). It needs a place for the socket, one for the data, and builds for each system.
+The target is to compile `tabellion` for Windows, macOS and Linux (APR-0004). The binary is a client and an auto-spawned server on a socket owned by the user (ADR-0012), with a web UI (ADR-0016). It needs a place for the socket, one for the data, and builds for each system.
 
 Unix domain sockets are available on Windows since Windows 10 version 1803, and Go supports them on all three systems.
 
@@ -24,9 +24,9 @@ C.
 
 | System | Socket | Data |
 |---|---|---|
-| Linux | `$XDG_RUNTIME_DIR/<name>/` | `$XDG_DATA_HOME/<name>/`, default `~/.local/share/<name>/` |
-| macOS | `$TMPDIR/<name>/` (per user) | `~/Library/Application Support/<name>/` |
-| Windows | `%LOCALAPPDATA%\<name>\` | `%LOCALAPPDATA%\<name>\` |
+| Linux | `$XDG_RUNTIME_DIR/tabellion/` | `$XDG_DATA_HOME/tabellion/`, default `~/.local/share/tabellion/` |
+| macOS | `$TMPDIR/tabellion/` (per user) | `~/Library/Application Support/tabellion/` |
+| Windows | `%LOCALAPPDATA%\tabellion\` | `%LOCALAPPDATA%\tabellion\` |
 
 - Architectures: amd64 and arm64.
 - Builds: Go cross-compilation, without C dependencies (`CGO_ENABLED=0`) as long as possible, so that one machine builds every target.
@@ -44,7 +44,7 @@ Our target is to compile for Windows, macOS and Linux.
 ## Consequences
 
 - The choices of store engine, local language model and embeddings engine must run on the three systems.
-- `<name>` waits for the project name.
+- The directory name is the project name, `tabellion`.
 - The CI chain must be robust, and may prove costly. Local development compiles for the developer's own system, probably Linux. The full build, for every target, runs only on a full release: a push to main, which sets a new semantic version and publishes a release.
 
 ## References

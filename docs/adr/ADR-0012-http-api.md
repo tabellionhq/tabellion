@@ -18,12 +18,12 @@ APR-0002 asks for a fast bootstrap, easy plug-in with agents, and complexity dis
 
 ## Decision
 
-C. The software API is all HTTP, like Docker and its daemon. One binary, `skills-track`.
+C. The software API is all HTTP, like Docker and its daemon. One binary, `tabellion`.
 
-- **Client**: turns commands into HTTP requests and manages auth. Subcommands for people (`skills-track practice add …`); a raw escape hatch for power users and agents (`skills-track api POST /practices -d @fact.yaml`).
+- **Client**: turns commands into HTTP requests and manages auth. Subcommands for people (`tabellion practice add …`); a raw escape hatch for power users and agents (`tabellion api POST /practices -d @fact.yaml`).
 - **Server**: always an HTTP endpoint.
   - Default: auto-spawned on the first request, on a Unix socket owned by the user; exits after 5 minutes idle.
-  - `skills-track serve [--detach]`: TCP, to share with others; encryption (TLS) enforced; third-party auth adapters (ADR-0013).
+  - `tabellion serve [--detach]`: TCP, to share with others; encryption (TLS) enforced; third-party auth adapters (ADR-0013).
 - **One writer**: the running server owns the store; intensive writes (CV import) and request bursts (MCP searches) go through it.
 - **No configuration required**: smart defaults (APR-0002); configuration only overrides them.
 - Agents connect through an MCP adapter, itself an HTTP client.

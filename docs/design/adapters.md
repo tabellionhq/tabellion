@@ -3,7 +3,7 @@
 - Status: Draft
 - Decisions: ADR-0012 (HTTP API), ADR-0013 (access control), ADR-0014 (language), ADR-0016 (core web UI), ADR-0017 (core, adapter or external system), ADR-0018 (composed concepts)
 
-Adapters connect the core to people, systems and standards. All are compiled into `skills-track` (ADR-0017). An adapter keeps no state of its own, or only a cache it can rebuild; anything that needs its own store is an external system, a client of the API under a grant.
+Adapters connect the core to people, systems and standards. All are compiled into `tabellion` (ADR-0017). An adapter keeps no state of its own, or only a cache it can rebuild; anything that needs its own store is an external system, a client of the API under a grant.
 
 - Driving: something calls the core.
 - Driven: the core calls something.

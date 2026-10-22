@@ -8,13 +8,13 @@
 
 The core exposes a limited set of features. Adapters make them useful (CV import, CV export), united by the core web UI (ADR-0016). Some features need their own data: sharing the central store with them would couple their lifecycle to the curriculum's and break its rules (append-only facts, views, grants).
 
-No user story needs third parties to add code to `skills-track`.
+No user story needs third parties to add code to `tabellion`.
 
 ## Options
 
 | Option | How | Pros | Cons |
 |---|---|---|---|
-| A. A rule by state, adapters compiled in | Core: the curriculum. Adapter: a stateless translator, compiled in. External system: anything with its own data, a client of the API under a grant. | No plugin system; no shared store; external systems already work through the API (ADR-0012, ADR-0013) | Adding a translator means a new release of `skills-track` |
+| A. A rule by state, adapters compiled in | Core: the curriculum. Adapter: a stateless translator, compiled in. External system: anything with its own data, a client of the API under a grant. | No plugin system; no shared store; external systems already work through the API (ADR-0012, ADR-0013) | Adding a translator means a new release of `tabellion` |
 | B. Plugin system for imported adapters | Versioned executables in a directory (like Terraform providers), started on demand, metadata at a `.well-known` route, web views in sandboxed frames at their own `*.localhost` origin | Third parties extend the binary | Specified without a use case; zero trust needs a container or an OS sandbox; plugins needing a store either share the central one or bring their own |
 | C. Plugins with access to the central store | Plugins read and write the store directly | Easy for plugin authors | Bypasses views and grants; couples schemas; rejected |
 
@@ -30,7 +30,7 @@ A.
 
 Rule: a feature that needs its own store is an external system, never an adapter.
 
-Reopen B when a translator that `skills-track` does not ship is needed and cannot be built as an external client.
+Reopen B when a translator that `tabellion` does not ship is needed and cannot be built as an external client.
 
 ## Decision
 

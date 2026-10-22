@@ -10,7 +10,7 @@ The web UI calls the same API as `curl`. Below, `$API` stands for the server add
 
 ```shell
 # command line, through the user's Unix socket
-curl --unix-socket "$XDG_RUNTIME_DIR/skills-track.sock" http://localhost/
+curl --unix-socket "$XDG_RUNTIME_DIR/tabellion/tabellion.sock" http://localhost/
 # web UI, through localhost, with the session cookie
 curl -b "session=…" http://localhost:$PORT/
 ```
@@ -19,7 +19,7 @@ curl -b "session=…" http://localhost:$PORT/
 
 | | |
 |---|---|
-| Anne | runs `skills-track ui` |
+| Anne | runs `tabellion ui` |
 | Components | client → starts the server if not running (socket) → server opens a localhost port for the UI, creates a one-time token → client opens the browser at `http://localhost:$PORT/ui/?token=…` |
 | Request | `GET /ui/?token=…` → `303 See Other`, `Set-Cookie: session=…; HttpOnly; SameSite=Strict` |
 | Stored | first run only: the store, one Person (`id: uuid`) |
@@ -121,7 +121,7 @@ curl $API/views/5b7a…/facts
 | Request | `GET /views/5b7a…/resume?identity=e2d4…` |
 | Components | core: view filter → rendering adapter: JSON Resume |
 | Stored | nothing |
-| UI shows | download of `resume.json`; rendering to PDF or HTML is done by a JSON Resume theme, outside `skills-track` |
+| UI shows | download of `resume.json`; rendering to PDF or HTML is done by a JSON Resume theme, outside `tabellion` |
 
 ```shell
 curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
@@ -147,7 +147,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 4. Correcting a proposed fact: edited until reviewed (US-09).
 5. Rejected occupation: its practices stay. Removing them is Anne's manual action, deleting facts by a filter; deleting facts is allowed (ADR-0008).
 6. Raw CV text: not kept once the task ends. Each fact keeps its excerpt, the file name and the position in the file.
-7. Socket path: `$XDG_RUNTIME_DIR/<name>/` on Linux; macOS and Windows: ADR on target platforms. `<name>`: the project name, not decided.
+7. Socket path: `$XDG_RUNTIME_DIR/tabellion/` on Linux; macOS and Windows in ADR-0020.
 8. Identity: not asked at start. Asked when first needed: after a CV import, proposed from the CV; or at the first export or share, typed by Anne. Can be changed or aliased later.
 9. Review screen: wireframes, and an ADR for the frontend framework. A task of its own.
 
@@ -163,7 +163,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 | Facts | proposed, accepted, rejected; proposed facts editable until reviewed; deleting allowed (ADR-0008); fidelity 1 to 3; author is the import task |
 | Views | proposed and accepted facts by default |
 | Reference data | ESCO shipped with the release; Wikidata looked up online and cached |
-| Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `skills-track` |
+| Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `tabellion` |
 | Platforms | Windows, macOS, Linux; `CGO_ENABLED=0` (ADR-0020) |
 
 ### To decide before code, in order
@@ -181,7 +181,6 @@ At development time: the extraction model, a small local language model tested o
 
 ### Not blocking
 
-- Project name; `skills-track` until decided.
 - Messages in English only, kept apart from the code; ADR-0019 after the frontend framework.
 - Later: vocabulary IRI, grants, MCP, accepting a group in one request, deleting facts by a filter, CV formats other than JSON Resume.
 

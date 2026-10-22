@@ -12,13 +12,13 @@ The server exposes a limited set of core features. Adapters make them useful: ma
 
 | Option | Pros | Cons |
 |---|---|---|
-| A. Web GUI served by `skills-track`, opened in the browser | One binary; no install beyond it; the GUI is a client of the same HTTP API | The GUI needs a local TCP port or a browser-reachable address, since browsers do not speak Unix sockets |
+| A. Web GUI served by `tabellion`, opened in the browser | One binary; no install beyond it; the GUI is a client of the same HTTP API | The GUI needs a local TCP port or a browser-reachable address, since browsers do not speak Unix sockets |
 | B. Desktop application, separate | Native feel | A second package to install and update; contradicts APR-0002 |
 | C. No GUI; third parties build it | Smallest scope | Anne must use the command line or an agent first; slow adoption |
 
 ## Recommendation
 
-A: `skills-track ui` starts the server if needed and opens the browser. The GUI uses the public HTTP API only, with no private endpoint. It listens on localhost only, with a one-time token in the URL it opens.
+A: `tabellion ui` starts the server if needed and opens the browser. The GUI uses the public HTTP API only, with no private endpoint. It listens on localhost only, with a one-time token in the URL it opens.
 
 ## Decision
 
@@ -32,7 +32,7 @@ The server exposes a limited set of core features, made useful by adapters. With
 
 - The web UI is a client of the public HTTP API, driven by its actions (ADR-0015): an adapter the server offers appears in the UI as an action, with no UI change.
 - Authentication, by the owner:
-  - Local: `skills-track ui` opens the browser with a one-time token (single use, short-lived), swapped for a session cookie (`HttpOnly`, `SameSite=Strict`) that ends with the server. Any website in the browser can call localhost, so localhost alone is not a protection.
+  - Local: `tabellion ui` opens the browser with a one-time token (single use, short-lived), swapped for a session cookie (`HttpOnly`, `SameSite=Strict`) that ends with the server. Any website in the browser can call localhost, so localhost alone is not a protection.
   - Exposed: requires an auth adapter (ADR-0013).
 
 ## References

@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: skills-track
+  title: Tabellion
   version: 0.1.0-draft
-  summary: HTTP API of skills-track.
+  summary: HTTP API of Tabellion.
   description: |
     Stores occupations held, practices (an ESCO skill on a Wikidata concept, at an occupation,
     over a period, with an optional level from 1 to 5) and views (filters on them).
