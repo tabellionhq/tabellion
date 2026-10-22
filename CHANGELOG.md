@@ -37,3 +37,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0022 store engine: ncruces/go-sqlite3, PostgreSQL later. ADR-0023 HTTP stack (proposed). Test data: Anne's facts and CV.
 - Data model: human languages and undated skills are practices completed in review; a proposed practice may miss its start date; evidence line; view periods match by overlap.
 - Persona Thomas; US-10 install an app, run no server: apps are separate clients, the server is the authority. UI functions.
+- ADR-0024: a specification is the source of truth for the model and the rules; the OpenAPI contract interprets it.
