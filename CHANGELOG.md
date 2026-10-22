@@ -45,3 +45,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0021 web UI: HTMX, HTML adapter under /ui next to the JSON-LD API under /api. ADR-0023 HTTP stack: standard library, oapi-codegen strict server. ADR-0026 git workflow: GitHub flow.
 - ADR-0019 internationalisation: GNU gettext PO files.
 - APR-0006 accessibility. ADR-0027 accessibility standard: WCAG 2.2 AA.
+- Wireframe: review screen, with its accessibility rules.
