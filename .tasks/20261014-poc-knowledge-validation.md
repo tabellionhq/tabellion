@@ -74,5 +74,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Review screen wireframe: `docs/design/wireframes/review.md`; split rows need no script of our own
 - [x] Owner corrects any fact by editing; progress is a new practice
 - [ ] Review screen: redraw minimal, review all at once with pre-filled buckets
+- [ ] Screens by role-play: 1 home done; next import, review, view and export
+- [ ] Rule: no telemetry (specification or ADR)
+- [ ] Check GDPR household exemption for local use; GDPR duties for the hosted service
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
