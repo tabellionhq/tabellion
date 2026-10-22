@@ -15,7 +15,7 @@ As Anne, I want to check what the import understood from my CV, at my own pace, 
 - Views include proposed facts by default; shared views (with a grant) exclude them by default. Both are configurable.
 - Every review operation is available, from a plain "ok" to splitting or expanding a fact.
 - Levels are set by Anne, or proposed by the import when the CV allows it (e.g. "5 years of Rust").
-- Each imported fact shows its fidelity, how closely it matches what the CV says: 1 low, 2 average, 3 good. A fact reviewed by Anne is always 3.
+- The import fills only what the CV states. An uncertain fact lacks definitions (no level, no start date): its completion is low, and it waits in "to complete".
 - A term the import did not understand: Anne resolves it into a fact, or abandons it; abandoning records nothing.
 - What Anne does with a fact that is true but unwanted is her choice: reject it, or keep it and leave it out of a view.
 
@@ -40,17 +40,17 @@ The raw CV text is not kept once the import task ends. Each fact keeps its excer
 
 ## Data in, data out
 
-- In: the facts proposed by an import, with their excerpts and fidelity; terms not understood.
+- In: the facts proposed by an import, with their excerpts; terms not understood.
 - Out: facts accepted, rejected, edited, split or added, at Anne's pace.
 
 ## Data model impacts
 
 - Anne can correct any fact, reviewed or not, by editing it. Progress over time is a new practice.
 - Views select by status; default: accepted and proposed; shared views: accepted only.
-- Facts carry a fidelity, 1 to 3; 3 once reviewed.
+- Each fact and the record have a completion, computed from the fields (specification, Section 4.8).
 - Split and expand create facts that share the original excerpt as evidence.
 - Evidence of an imported fact: the excerpt, the file name, the line in the file.
 
 ## Open
 
-- How the import computes fidelity.
+- Which fields count towards completion, beyond the start date, the level and the occupation title.

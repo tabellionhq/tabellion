@@ -16,6 +16,7 @@ This note holds what the specification leaves to an implementation: reference da
 | View, Grant, access log | Sections 3.7, 3.8 |
 | Task | Section 3.9 |
 | Status, corrections and progress, deleting, completing a proposed practice | Section 4.1 |
+| Completion of facts and records | Section 4.8 |
 | Identifiers, named values | Section 4.2 |
 | Levels 1 to 5 | Section 4.3 |
 | Composed concepts, human languages, skills without a period | Section 4.4 |
@@ -75,7 +76,7 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 ### Rules of this implementation
 
 - Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs and of their label. Label vectors belong to the search adapter (ADR-0008).
-- How the store encodes status, kind, state and fidelity (e.g. small integers) is the store adapter's choice; the UI translates their names for display (ADR-0019).
+- How the store encodes status, kind and state (e.g. small integers) is the store adapter's choice; the UI translates their names for display (ADR-0019).
 - Responses embed the label of each referenced skill, occupation and concept, in the requested language; the store keeps identifiers only.
 - Reference data: ESCO is shipped with the release; Wikidata items are looked up online and cached.
 - View rules may be written by an agent from the owner's words; the owner confirms them.

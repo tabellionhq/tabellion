@@ -578,6 +578,14 @@ components:
         - {type: ViewAction, name: Views, method: GET, target: "/persons/{personId}/views"}
       allOf:
         - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            completion:
+              description: Average completion of the record's facts that are not rejected, from 0 to 1
+              type: number
+              minimum: 0
+              maximum: 1
+              readOnly: true
 
     Concept:
       description: Wikidata concept (`is`), refined by other Wikidata concepts (`with`), with an optional label
@@ -593,15 +601,17 @@ components:
 
     FactFields:
       type: object
-      required: [author, recorded, status, fidelity]
+      required: [author, recorded, status, completion]
       properties:
         author: {type: string}
         recorded: {type: string, format: date-time}
         status: {$ref: "#/components/schemas/Status"}
-        fidelity:
-          description: How closely the fact matches its source; 1 low, 2 average, 3 good; 3 once reviewed
-          type: integer
-          enum: [1, 2, 3]
+        completion:
+          description: Share of the fact's fields that are set, from 0 to 1; computed by the server
+          type: number
+          minimum: 0
+          maximum: 1
+          readOnly: true
         evidence:
           description: Any JSON, e.g. a CV excerpt or a certificate link; stored and returned unchanged
 

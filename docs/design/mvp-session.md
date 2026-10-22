@@ -61,7 +61,7 @@ curl -X POST $API/persons/9f1e…/identities -H 'Content-Type: application/ld+js
 | Anne | pastes her CV text, or picks a `.txt` file saved from LibreOffice |
 | Request | `POST /imports` (text) → `202 Accepted`, `Location: /tasks/41ab…` |
 | Components | core creates a task → extraction adapter (local language model): statements (occupation, period, terms), each with its excerpt → search adapter: ESCO index for skills and occupations, embeddings for Wikidata concepts → core: proposed facts |
-| Stored | Task `{id, kind: cv-import, state, result: {unresolved}}`; OccupationHeld and Practice rows, `status: proposed`, `author: /tasks/41ab…`, `fidelity`, `evidence: {excerpt}` |
+| Stored | Task `{id, kind: cv-import, state, result: {unresolved}}`; OccupationHeld and Practice rows, `status: proposed`, `author: /tasks/41ab…`, `evidence: {excerpt, file, line}` |
 | UI shows | progress, then the import summary |
 
 ```shell
@@ -160,7 +160,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 | Contract | [api/openapi.yaml](../../api/openapi.yaml): entry point, imports and tasks, occupations, practices, identities, views, resume, reference lookups |
 | Server | Go (ADR-0014); one person per server, started on first call, exits when idle (ADR-0012) |
 | Authentication | Unix socket for the command line; one-time token swapped for a session cookie for the web UI (ADR-0016) |
-| Facts | proposed, accepted, rejected; the owner corrects any fact by editing it, progress is a new practice; deleting allowed (ADR-0008); fidelity 1 to 3; author is the import task |
+| Facts | proposed, accepted, rejected; the owner corrects any fact by editing it, progress is a new practice; deleting allowed (ADR-0008); completion computed from the fields; author is the import task |
 | Views | proposed and accepted facts by default |
 | Reference data | ESCO shipped with the release; Wikidata looked up online and cached |
 | Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `tabellion` |

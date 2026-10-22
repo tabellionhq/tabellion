@@ -85,8 +85,8 @@ Level
 Status
 : The review state of a fact: proposed, accepted or rejected.
 
-Fidelity
-: How closely a proposed fact matches its source: 1 low, 2 average, 3 good.
+Completion
+: The share of the fields of a fact, or of a record, that are filled (Section 4.8).
 
 Evidence
 : Data supporting a fact, such as an excerpt of a CV. Opaque to this specification.
@@ -141,7 +141,6 @@ How a person presents themself to a reader. A server MUST support several identi
 | author | string | required; who states the fact: the person, another person, or the task that proposed it |
 | recorded | datetime | required |
 | status | proposed, accepted, rejected | required |
-| fidelity | 1, 2, 3 | optional |
 | evidence | any JSON value [RFC8259] | optional |
 
 ### 3.4. Occupation held
@@ -229,14 +228,14 @@ An access log entry holds a grant id and the datetime of a read.
 - A server MUST let the owner change any field of any fact in their record, its status included, whatever its current status and author.
 - A server MUST refuse a practice with status accepted and no `from` date.
 - A server MUST let the owner delete facts. A deleted fact is no longer in the record.
-- A server SHOULD set the fidelity of a fact it proposes from a document, and MUST set it to 3 when the owner accepts the fact.
+- A fact proposed from a source SHOULD hold only what the source states. A field the source does not state, or states unclearly, is left empty: an uncertain fact lacks definitions, and its completion shows it.
 - A server MUST store and return evidence unchanged. It does not interpret evidence. Changing a fact does not change its evidence: evidence signed by the fact's author may no longer match the fact.
 
 ### 4.2. Identifiers
 
 - A person MUST be identified by a version 4 UUID that never changes. Facts carry only this identifier of the person.
 - Skills and occupations MUST be ESCO URIs. Concepts and contexts MUST be Wikidata item URIs.
-- Status, kind, state and fidelity are exchanged as the names given in Section 3. How a server stores them is not specified.
+- Status, kind and state are exchanged as the names given in Section 3. How a server stores them is not specified.
 
 ### 4.3. Levels
 
@@ -292,7 +291,14 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A server MUST let the owner reject, in one operation, every fact still proposed by a task.
 - A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.
 
-### 4.8. Server authority
+### 4.8. Completion
+
+- The completion of a practice is the share of these fields that are set: `from`, `level`.
+- The completion of an occupation held is 1 if its `occupation` is set, 0 otherwise.
+- The completion of a record is the average completion of its facts that are not rejected.
+- Completion is derived: a server computes it, and does not store it as a fact.
+
+### 4.9. Server authority
 
 - A server MUST check every change it receives against the rules of this document, whatever the client, and MUST refuse a change that breaks them.
 - A client MAY keep data, work offline and apply its own rules on the device. Its changes take effect only when the server accepts them.
@@ -320,7 +326,7 @@ Test data for conformance: [testdata](../testdata/README.md), a record and the d
 ## 8. Internationalization Considerations
 
 - Skills, occupations and concepts are identifiers; their labels exist in many languages in ESCO and Wikidata. A server SHOULD return labels in the language the client asks for.
-- Status, kind, state and fidelity are names, not text for display; clients translate them.
+- Status, kind and state are names, not text for display; clients translate them.
 - Identity labels and occupation labels are free text, in any language.
 
 ## 9. Security Considerations

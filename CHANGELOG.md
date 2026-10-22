@@ -48,3 +48,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Wireframe: review screen, with its accessibility rules.
 - The owner corrects any fact by editing it, whatever its status; progress over time is a new practice (specification 4.1, ADR-0008 clarification). Owner rights in the specification are written as server duties.
 - Tasks: canonical states ongoing, finished, abandoned, interrupted; stages and transitions defined by each kind of task; the CV import gains a confirm stage for the extracted text.
+- Fidelity removed. An import fills only what its source states; completion, computed from the fields, measures each fact and the record (specification 4.8).

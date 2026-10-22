@@ -1,6 +1,6 @@
 # Wireframe: review proposed facts
 
-- Status: Draft
+- Status: Superseded by the screens found in role-play ([screens/](../screens/)); fidelity removed from the model
 - Story: [US-09 review imported facts](../user-stories/US-09-review-imported-facts.md); UI functions U04 to U09 ([ui-functions.md](../ui-functions.md))
 - Accessibility: WCAG 2.2 AA (ADR-0027)
 - Data: Anne's import ([testdata/anne](../../../testdata/anne/))

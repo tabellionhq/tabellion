@@ -15,7 +15,7 @@ The web UI is online only. Apps that work offline are separate clients (US-10).
 | U01 | opens the UI from the command line | one-time token swapped for a session cookie (ADR-0016) | US-08 | yes |
 | U02 | signs in to an exposed or hosted instance | auth adapter (ADR-0013) | US-10 | |
 | U03 | sees what to do next | the actions of `/`, with the number of facts waiting for review | US-08 | yes |
-| U04 | goes through the review queue | proposed facts grouped by occupation, each with its excerpt and fidelity | US-09 | yes |
+| U04 | goes through the review queue | proposed facts grouped by occupation, each with its excerpt and completion | US-09 | yes |
 | U05 | splits a fact | edit the proposed fact, then add facts with the same evidence | US-09 | yes |
 | U06 | expands a fact | add facts with the same evidence | US-09 | yes |
 | U07 | accepts all the facts of an occupation | one accept per fact | US-09 | |
