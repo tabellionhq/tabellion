@@ -1,8 +1,8 @@
 # ADR-0027: Accessibility standard
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-22
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -29,13 +29,13 @@ A, WCAG 2.2 level AA, for the web UI, the documentation site and the command lin
 
 ## Decision
 
-Owner's words.
+A: WCAG 2.2 level AA.
 
 ## Reason
 
-Owner's words.
+It is the legal standard.
 
-## Consequences, if A
+## Consequences
 
 - Wireframes show, for each screen: the heading structure, the keyboard order, the focus after each action, the label of every control, and what a screen reader announces.
 - HTMX swaps: after a swap, focus moves to the changed part, or a live region announces the change; a status is never shown by colour alone.
