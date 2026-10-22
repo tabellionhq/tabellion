@@ -503,7 +503,7 @@ components:
       type: object
       required: ["@id", "@type", potentialAction]
       properties:
-        "@context": {type: string, format: uri-reference}
+        "@context": {type: string, format: uri-reference, x-go-name: JSONLDContext}
         "@id": {type: string, format: uri-reference}
         "@type": {type: string}
         potentialAction:

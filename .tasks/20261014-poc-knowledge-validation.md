@@ -54,7 +54,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Test data: `testdata/anne`, facts first, CV from them
 - [x] ADR-0022 store engine: ncruces/go-sqlite3 to start, PostgreSQL later
 - [ ] Check ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
-- [ ] Owner: ADR-0023 HTTP stack, after a generation test from api/openapi.yaml
+- [x] Generation test: oapi-codegen v2.8.0 generates and cross-compiles both targets; `@context` name clash fixed; nullable types for merge patch
+- [ ] Owner: ADR-0023 HTTP stack
 - [x] Persona Thomas, US-10: apps are separate clients of the API; the server is the authority
 - [x] UI functions: `docs/design/ui-functions.md`
 - [x] ADR-0024 specification is the source of truth

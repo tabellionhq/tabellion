@@ -25,7 +25,25 @@ Since Go 1.22, the standard library router matches methods and path parameters (
 | C. `ogen`, its own generated `net/http` server | Apache-2.0 | Not verified | Fewer users; no Gin |
 | D. Huma, code first, contract generated from Go code | MIT | Produces 3.1 | The YAML contract is no longer the source |
 
-Not verified for A and B: `$ref` with sibling keywords and our `x-actions` extension in `oapi-codegen`. Indirect dependency licences: to check with `go-licenses` in CI.
+Indirect dependency licences: to check with `go-licenses` in CI.
+
+### Generation test
+
+`oapi-codegen` v2.8.0 on `api/openapi.yaml`, Go 1.25, in Docker, 2026-10-22:
+
+| Check | A (gin target) | B (std-http target) |
+|---|---|---|
+| Generates from the 3.1 contract | yes | yes |
+| Compiles, `go vet` clean, `CGO_ENABLED=0`, for linux, darwin, windows on amd64 and arm64 | yes | yes |
+| Third-party packages compiled in | 122 | 40 (including `kin-openapi`, for the embedded contract) |
+| Request bodies `application/ld+json`, `application/merge-patch+json`, `text/plain` | typed | typed |
+| Nullable fields (`type: [T, "null"]`) | pointers | pointers |
+
+Found:
+
+- The JSON-LD key `@context` and the practice field `context` both became `Context` in Go and did not compile. Fixed in the contract with `x-go-name: JSONLDContext` on `@context`.
+- Merge patch (RFC 7396): with pointers, `"level": null` (clear the level) and an absent `level` (leave it) are the same. The option `nullable-type: true` generates `nullable.Nullable[T]`, which keeps the difference.
+- `x-actions` is ignored by the generator, as expected for our own extension: the actions need their own code and tests.
 
 ## Recommendation
 
