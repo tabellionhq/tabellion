@@ -1,8 +1,8 @@
 # Resources
 
 - Status: Draft
-- Specification: [docs/RFC.md](../RFC.md) prevails over this note
-- Decisions: ADR-0011 (view freshness), ADR-0012 (HTTP API), ADR-0013 (access control); ADR-0015 (Richardson level 3, JSON-LD); proposed: ADR-0016 (GUI in the binary)
+- Specification: [docs/RFC.md](../RFC.md) prevails over this note; this note describes its HTTP binding
+- Decisions: ADR-0011 (view freshness), ADR-0012 (HTTP API), ADR-0013 (access control); ADR-0015 (Richardson level 3, JSON-LD), ADR-0016 (GUI in the binary)
 - Model: [data-model.md](data-model.md); functions: [functions.md](functions.md)
 
 The HTTP API exposes the data model as resources. Every client goes through it: command line, GUI, MCP adapter, other systems.
@@ -13,8 +13,8 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 - The contract: [api/openapi.yaml](../../api/openapi.yaml), with the actions each resource carries (`x-actions`), and the JSON-LD context [api/contexts/curriculum.jsonld](../../api/contexts/curriculum.jsonld). Paths are informative.
 - Every response says what can be done next, as actions with method, target, expected input and a title in plain words (ADR-0015).
 - The core returns structured data only. Human formats (CV, PDF, page) are adapters outside the core.
-- Readers reach a record only through `/views/{id}/facts`, under a grant (ADR-0013).
-- Accepted or rejected facts SHALL NOT be mutated: no `PUT`, `PATCH` or `DELETE` on them. A correction is a new fact.
+- Readers reach a record only through `/views/{id}/facts` (specification, Section 4.6).
+- Accepted or rejected facts have no `PUT` or `PATCH` (specification, Section 4.1). Deleting facts by the owner is not in the contract yet.
 - Freshness: `ETag`, `Last-Modified`, `Cache-Control` on every read; `HEAD` and `304 Not Modified` supported (ADR-0011).
 
 ## Resources
@@ -44,12 +44,7 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 
 ## State changes
 
-| Object | From | To | Who |
-|---|---|---|---|
-| OccupationHeld, Practice | proposed | proposed (edited), accepted, rejected | the person |
-| OccupationHeld, Practice | accepted, rejected | none, frozen | |
-| Grant | active | revoked | the person |
-| View | any | any, edited freely; not a fact | the person |
+The status of facts: specification, Section 4.1. Grants: active to revoked (Section 4.6). Views: changed freely by their owner (Section 4.5).
 
 ## Example: a proposed practice
 

@@ -228,6 +228,7 @@ An access log entry holds a grant id and the datetime of a read.
 - A server MUST refuse to accept a practice without a `from` date.
 - The owner MAY delete facts. Deleting is not a correction: a deleted fact is no longer in the record.
 - A server SHOULD set the fidelity of a fact it proposes from a document, and MUST set it to 3 when the owner accepts the fact.
+- A server MUST store and return evidence unchanged. It does not interpret evidence.
 
 ### 4.2. Identifiers
 
@@ -252,6 +253,14 @@ Who set a level is the author of the fact. How a level is evaluated is outside t
 - A concept that exists as a Wikidata item is given by that item, with an empty `with` list.
 - A concept that does not exist in Wikidata is composed: `is` names the closest Wikidata item, and `with` the Wikidata items that set the concept apart. Example: a Kafka pipeline is a pipeline (Q1192422) with Apache Kafka (Q16235208).
 - A server MUST NOT accept a concept identified by anything other than Wikidata items.
+
+### 4.4.1. Human languages
+
+A human language SHOULD be recorded as a practice of the ESCO language skill, with the Wikidata item of the language as concept, over the period the person has used it; for a native language, since birth.
+
+### 4.4.2. Skills named without a period
+
+A skill named in a source without a period, such as in the summary of a CV, SHOULD be proposed as a practice without a `from` date. The owner sets the date before accepting it (Section 4.1).
 
 ### 4.5. Views
 

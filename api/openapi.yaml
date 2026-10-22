@@ -19,6 +19,10 @@ info:
     Errors follow RFC 9457.
   license:
     name: To be decided
+externalDocs:
+  description: Specification of the data model and the rules (draft-tabellion-curriculum-00). This contract is its HTTP binding; the specification prevails.
+  url: ../docs/RFC.md
+
 servers:
   - url: http://localhost
     description: Local server

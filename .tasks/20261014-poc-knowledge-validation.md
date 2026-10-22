@@ -59,7 +59,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] UI functions: `docs/design/ui-functions.md`
 - [x] ADR-0024 specification is the source of truth
 - [x] Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0
-- [ ] Design notes: keep only what the specification does not hold; link to it
+- [x] Design notes trimmed: data model and resources link to the specification
 - [ ] Owner: ADR-0021 frontend
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
