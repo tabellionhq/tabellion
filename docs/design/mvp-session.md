@@ -169,7 +169,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 ### To decide before code, in order
 
 1. Go HTTP stack: ADR-0023 (proposed).
-2. Store engine: ADR-0022 (proposed).
+2. Store engine: `ncruces/go-sqlite3` (ADR-0022); encryption, vector search, start time and size to check.
 3. Test data: [testdata/anne](../../testdata/anne/), the facts first, then the CV written from them. Open points in [testdata/README.md](../../testdata/README.md).
 4. Frontend framework: ADR-0021 (proposed).
 

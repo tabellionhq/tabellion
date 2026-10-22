@@ -52,7 +52,10 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] APR-0005 hosted service possible
 - [x] MVP requirements: `docs/design/mvp-session.md`
 - [x] Test data: `testdata/anne`, facts first, CV from them
-- [ ] Owner: ADR-0021 frontend, ADR-0022 store engine, ADR-0023 HTTP stack
+- [x] ADR-0022 store engine: ncruces/go-sqlite3 to start, PostgreSQL later
+- [ ] Check ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
+- [ ] Owner: ADR-0023 HTTP stack, after a generation test from api/openapi.yaml
+- [ ] Owner: ADR-0021 frontend
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [ ] Review screen: wireframes, then ADR frontend framework (task of its own)

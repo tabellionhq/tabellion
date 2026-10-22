@@ -1,8 +1,8 @@
 # ADR-0022: Store engine
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-22
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -36,11 +36,17 @@ A, `ncruces/go-sqlite3`, if a measurement confirms it: build a small binary with
 
 ## Decision
 
-Owner's words.
+A: `ncruces/go-sqlite3`, to start. In the long run, PostgreSQL for more compute-intensive instances.
 
 ## Reason
 
-Owner's words.
+`ncruces/go-sqlite3` seems like a good choice to start. What matters is to check the requirements, like encryption or vector search; the engine is behind an adapter anyway.
+
+## Consequences
+
+- The Store port speaks in facts, views and tasks, never in SQL: SQLite specifics (encryption layer, FTS5) stay in the adapter.
+- Vector search belongs to the Search port: sqlite-vec or vec1 now, pgvector with PostgreSQL.
+- To check before relying on them: encryption with a key from the service and from the person; vector search; start time, binary size and memory on the MVP data.
 
 ## References
 
