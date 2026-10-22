@@ -63,7 +63,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0025 licences: CC BY 4.0 spec, Apache-2.0 contract and test data, AGPL-3.0 server, DCO
 - [ ] Licence files (root, api, testdata, docs); DCO and licence checks in CI
 - [x] CONTRIBUTING.md
-- [ ] Owner: ADR-0026 git workflow, reason; rename `master` to `main`
+- [x] Default branch renamed to `main`
+- [ ] Owner: ADR-0026 git workflow, reason
 - [ ] Owner: ADR-0021 frontend
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings

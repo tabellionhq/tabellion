@@ -34,7 +34,6 @@ Owner's words.
 - Commit messages follow Conventional Commits, with a gitmoji after the type: `type(scope): :emoji: subject`. CI refuses other messages.
 - The version is computed from the commit types merged since the last release: `fix` raises the patch, `feat` the minor, a breaking change (`!` or `BREAKING CHANGE:`) the major. The tool is chosen with the CI.
 - The specification is versioned apart, as an Internet-Draft (ADR-0024).
-- The current default branch is named `master`; ADR-0020 names it `main`. To rename before the first release.
 
 ## References
 
