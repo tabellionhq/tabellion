@@ -41,3 +41,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0.
 - Data model and resources notes link to the specification instead of restating it; the contract links to it.
 - ADR-0025 licences: CC BY 4.0 for the specification and documentation, Apache-2.0 for the contract and test data, AGPL-3.0 for the server; contributions under the DCO.
+- CONTRIBUTING: licences, DCO sign-off, short-lived branches, conventional commits with gitmoji, semantic versions. ADR-0026 git workflow (proposed).

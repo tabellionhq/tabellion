@@ -18,7 +18,7 @@ Exercises are generated from real commits of a project and target the developer'
 | API contract, JSON-LD context, test data | Apache-2.0 |
 | Server, web UI, command line | AGPL-3.0 |
 
-Contributions are signed off under the Developer Certificate of Origin.
+Contributions are signed off under the Developer Certificate of Origin: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Principles
 
