@@ -70,4 +70,5 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [ ] Review screen: wireframes; check split and expand as small scripts (ADR-0021)
-- [ ] Owner: ADR-0019 internationalisation (frontend now chosen)
+- [x] ADR-0019 internationalisation: gettext PO
+- [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations

@@ -1,8 +1,8 @@
 # ADR-0019: Internationalisation of UI and command line messages
 
-- Status: Proposed
-- Date: 2026-10-21
-- Drafted by: agent (Claude Code, claude-opus-5-5); need stated by owner
+- Status: Accepted
+- Date: 2026-10-22
+- Drafted by: agent (Claude Code, claude-opus-5-5); need, decision and reason by owner
 
 ## Context
 
@@ -32,11 +32,18 @@ Not verified: the state of Go libraries reading PO files.
 
 ## Decision
 
-Owner's words.
+A: GNU gettext PO files.
 
 ## Reason
 
-Owner's words.
+A mature solution, which we can share between applications.
+
+## Consequences
+
+- Messages of the web UI, the command line, action names and problem details are in PO files; English is the source and the fallback.
+- The documentation is not translated through gettext; its translation is a separate question.
+- Community translations may need a translation service working with PO files (e.g. Weblate); to choose when translators come.
+- To check before the first translated message: a Go library reading PO files, with plural rules.
 
 ## References
 
