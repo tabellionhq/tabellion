@@ -47,9 +47,7 @@ Found:
 
 ## Recommendation
 
-B, the standard library with `oapi-codegen`: same generated code and validation as A, fewer dependencies. A if Gin middlewares are wanted.
-
-First step for A or B: generate the server from `api/openapi.yaml`, in Docker, and check what the generator does not handle.
+B, the standard library with `oapi-codegen` and `nullable-type: true`: same generated code as A, 40 third-party packages compiled in instead of 122. A if Gin middlewares are wanted.
 
 ## Decision
 
