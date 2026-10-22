@@ -30,6 +30,8 @@ The skill curriculum may provide events, as an event stream for a larger system 
 
 Clarification, 2026-10-21: we work by adding facts, but deleting facts is not wrong. It's not a doubly linked list or a blockchain.
 
+Clarification, 2026-10-22: the owner owns the data and may change any fact, whatever its status, as long as it does not break the software. Two ways, one per case, so that implementations do not diverge: a wrong fact is corrected by changing it; a change over time (new level, new period) is a new practice, which keeps the progress.
+
 ## Reason
 
 Best data model for vast and manageable volumes.

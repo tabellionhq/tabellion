@@ -14,7 +14,7 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 - Every response says what can be done next, as actions with method, target, expected input and a title in plain words (ADR-0015).
 - The core returns structured data only. Human formats (CV, PDF, page) are adapters outside the core.
 - Readers reach a record only through `/views/{id}/facts` (specification, Section 4.6).
-- Accepted or rejected facts have no `PUT` or `PATCH` (specification, Section 4.1). Deleting facts by the owner is not in the contract yet.
+- The owner corrects any fact with `PATCH`; progress is a new practice, `POST` (specification, Section 4.1). Deleting facts by the owner is not in the contract yet.
 - Freshness: `ETag`, `Last-Modified`, `Cache-Control` on every read; `HEAD` and `304 Not Modified` supported (ADR-0011).
 
 ## Resources
@@ -25,9 +25,9 @@ The HTTP API exposes the data model as resources. Every client goes through it: 
 | `/persons/{id}` | GET | Person | |
 | `/persons/{id}/identities` | GET, POST | Identity | |
 | `/persons/{id}/occupations` | GET, POST | OccupationHeld | F03 |
-| `/occupations/{id}` | GET; PATCH `status` while proposed | OccupationHeld | F04 |
+| `/occupations/{id}` | GET; PATCH, by the owner | OccupationHeld | F04 |
 | `/persons/{id}/practices` | GET, POST | Practice; `?status=proposed` is the review queue | F03, F04 |
-| `/practices/{id}` | GET; PATCH `status` while proposed | Practice | F04 |
+| `/practices/{id}` | GET; PATCH, by the owner | Practice | F04 |
 | `/persons/{id}/competencies` | GET | Competency, derived; `?related=<text>` | F05 |
 | `/persons/{id}/views` | GET, POST | View | F06 |
 | `/views/{id}` | GET, PUT | View; owner only | F06 |
@@ -79,7 +79,7 @@ The status of facts: specification, Section 4.1. Grants: active to revoked (Sect
 }
 ```
 
-Once accepted, the same resource has no action that changes it.
+Once accepted, the same resource offers "Correct this practice" (`PATCH`) and "Record progress as a new practice" (`POST`).
 
 ## Open
 

@@ -45,7 +45,7 @@ The raw CV text is not kept once the import task ends. Each fact keeps its excer
 
 ## Data model impacts
 
-- A proposed fact can be edited until it is accepted or rejected; then it is frozen.
+- Anne can correct any fact, reviewed or not, by editing it. Progress over time is a new practice.
 - Views select by status; default: accepted and proposed; shared views: accepted only.
 - Facts carry a fidelity, 1 to 3; 3 once reviewed.
 - Split and expand create facts that share the original excerpt as evidence.

@@ -72,6 +72,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] APR-0006 accessibility
 - [x] ADR-0027 accessibility standard: WCAG 2.2 AA
 - [x] Review screen wireframe: `docs/design/wireframes/review.md`; split rows need no script of our own
-- [ ] Owner: accepting is immediate or staged (wireframe, Open 1)
+- [x] Owner corrects any fact by editing; progress is a new practice
+- [ ] Review screen: redraw minimal, review all at once with pre-filled buckets
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations

@@ -11,7 +11,8 @@ info:
     a name, an HTTP method, a URL template. The paths below may change; the actions do not.
     The actions of each schema are listed in its `x-actions`.
 
-    Proposed facts can be edited. Accepted or rejected facts cannot be modified; a correction is a new fact.
+    The owner can edit any fact. A wrong fact is corrected by editing it; a change over time, such as a new level,
+    is recorded as a new practice.
 
     Responses are JSON-LD; the context is `/contexts/curriculum.jsonld`. JSON clients can
     ignore fields starting with `@`.
@@ -173,7 +174,7 @@ paths:
         "404": {$ref: "#/components/responses/Problem"}
     patch:
       tags: [facts]
-      summary: Edit a proposed occupation, or accept or reject it
+      summary: Edit an occupation, accept or reject it
       operationId: reviewOccupation
       requestBody:
         required: true
@@ -182,7 +183,7 @@ paths:
             schema: {$ref: "#/components/schemas/OccupationReview"}
       responses:
         "200":
-          description: Edited, or reviewed and now frozen
+          description: The occupation, as changed
           content:
             application/ld+json:
               schema: {$ref: "#/components/schemas/OccupationHeld"}
@@ -241,7 +242,7 @@ paths:
         "404": {$ref: "#/components/responses/Problem"}
     patch:
       tags: [facts]
-      summary: Edit a proposed practice, or accept or reject it
+      summary: Edit a practice, accept or reject it
       operationId: reviewPractice
       requestBody:
         required: true
@@ -250,7 +251,7 @@ paths:
             schema: {$ref: "#/components/schemas/PracticeReview"}
       responses:
         "200":
-          description: Edited, or reviewed and now frozen
+          description: The practice, as changed
           content:
             application/ld+json:
               schema: {$ref: "#/components/schemas/Practice"}
@@ -601,9 +602,9 @@ components:
 
     OccupationHeld:
       x-actions:
-        - {type: UpdateAction, name: Edit this occupation, method: PATCH, target: "@id", when: status is proposed}
-        - {type: AcceptAction, name: Accept this occupation, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
-        - {type: RejectAction, name: Reject this occupation, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
+        - {type: UpdateAction, name: Edit this occupation, method: PATCH, target: "@id"}
+        - {type: AcceptAction, name: Accept this occupation, method: PATCH, target: "@id", body: {status: accepted}, when: status is not accepted}
+        - {type: RejectAction, name: Reject this occupation, method: PATCH, target: "@id", body: {status: rejected}, when: status is not rejected}
         - {type: CreateAction, name: Add a practice at this occupation, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
       allOf:
         - $ref: "#/components/schemas/Resource"
@@ -636,23 +637,23 @@ components:
 
     Practice:
       x-actions:
-        - {type: UpdateAction, name: Edit this practice, method: PATCH, target: "@id", when: status is proposed}
-        - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed and from is set}
-        - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
-        - {type: CreateAction, name: Record a correction as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
+        - {type: UpdateAction, name: Correct this practice, method: PATCH, target: "@id"}
+        - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is not accepted and from is set}
+        - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is not rejected}
+        - {type: CreateAction, name: Record progress as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
       allOf:
         - $ref: "#/components/schemas/Resource"
         - $ref: "#/components/schemas/PracticeInput"
         - $ref: "#/components/schemas/FactFields"
 
     Review:
-      description: Moves a proposed fact to accepted or rejected, once; without it, the fact is edited and stays proposed
+      description: Sets the status of a fact; without it, the status is unchanged
       type: object
       properties:
         status: {type: string, enum: [accepted, rejected]}
 
     OccupationReview:
-      description: Merge patch on a proposed occupation; fields edited, status optional
+      description: Merge patch on an occupation; fields edited, status optional
       allOf:
         - $ref: "#/components/schemas/Review"
         - type: object
@@ -664,7 +665,7 @@ components:
             to: {type: [string, "null"], format: date}
 
     PracticeReview:
-      description: Merge patch on a proposed practice; fields edited, status optional
+      description: Merge patch on a practice; fields edited, status optional
       allOf:
         - $ref: "#/components/schemas/Review"
         - type: object

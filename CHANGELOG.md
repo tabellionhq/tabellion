@@ -46,3 +46,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0019 internationalisation: GNU gettext PO files.
 - APR-0006 accessibility. ADR-0027 accessibility standard: WCAG 2.2 AA.
 - Wireframe: review screen, with its accessibility rules.
+- The owner corrects any fact by editing it, whatever its status; progress over time is a new practice (specification 4.1, ADR-0008 clarification). Owner rights in the specification are written as server duties.

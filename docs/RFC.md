@@ -42,7 +42,7 @@ Author's Address
 
 A person's skills are usually recorded in documents written for one reader at a time: a CV, an application form, a yearly review. Each is rewritten from memory, and none can be reused by another system.
 
-This document specifies a record kept for one person and owned by that person. The record is a set of facts: occupations held, and practices of a skill on a concept, in a context, at an occupation, over a period. Facts are added, reviewed by the person, and frozen once reviewed. The person exposes part of the record through views, read by others under a grant.
+This document specifies a record kept for one person and owned by that person. The record is a set of facts: occupations held, and practices of a skill on a concept, in a context, at an occupation, over a period. Facts are added, and reviewed by the person, who can correct any of them. The person exposes part of the record through views, read by others under a grant.
 
 The record does not assess the person. How a level is evaluated, and whether a reader trusts a fact, are outside this document.
 
@@ -123,7 +123,7 @@ A person has no other field. Names and contacts are identities (Section 3.2).
 
 ### 3.2. Identity
 
-How a person presents themself to a reader. A person MAY have several identities.
+How a person presents themself to a reader. A server MUST support several identities per person.
 
 | Field | Type | Requirement |
 |---|---|---|
@@ -162,7 +162,7 @@ How a person presents themself to a reader. A person MAY have several identities
 | concept | Concept (Section 3.6) | required |
 | context | uri | optional; a Wikidata item |
 | occupation | Occupation held id | optional |
-| from | date | required to accept; MAY be absent while proposed (Section 4.1) |
+| from | date | required, except on a proposed practice (Section 4.1) |
 | to | date | optional; absent: a single date, or ongoing |
 | level | integer, 1 to 5 | optional |
 
@@ -220,15 +220,15 @@ An access log entry holds a grant id and the datetime of a read.
 
 ### 4.1. Facts
 
-- A record grows by adding facts. A correction to an accepted fact is a new fact.
-- A fact is created with status proposed or accepted. A fact created by the owner MAY be accepted directly.
-- A proposed fact MAY be changed until it is reviewed.
-- The status of a fact changes once: from proposed to accepted, or from proposed to rejected.
-- A server MUST NOT change an accepted or rejected fact.
-- A server MUST refuse to accept a practice without a `from` date.
-- The owner MAY delete facts. Deleting is not a correction: a deleted fact is no longer in the record.
+- A record grows by adding facts. A change over time, such as a new level or a new period of practice, MUST be recorded as a new practice: the history of a person's practices is their progress.
+- A correction of a wrong fact MUST be made by changing that fact. The fact keeps its id.
+- A fact created by anyone other than the owner, including a task, MUST be created with status proposed.
+- A server MUST let the owner create facts with status accepted.
+- A server MUST let the owner change any field of any fact in their record, its status included, whatever its current status and author.
+- A server MUST refuse a practice with status accepted and no `from` date.
+- A server MUST let the owner delete facts. A deleted fact is no longer in the record.
 - A server SHOULD set the fidelity of a fact it proposes from a document, and MUST set it to 3 when the owner accepts the fact.
-- A server MUST store and return evidence unchanged. It does not interpret evidence.
+- A server MUST store and return evidence unchanged. It does not interpret evidence. Changing a fact does not change its evidence: evidence signed by the fact's author may no longer match the fact.
 
 ### 4.2. Identifiers
 
@@ -271,19 +271,19 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - Fields hidden by `show` MUST NOT be returned to a reader.
 - A server MUST apply a view by a deterministic filter.
 - A server MUST filter facts through the view before any search, count or derived result, and MUST compute derived results only from the facts the view selects. Searching first would reveal hidden facts through scores, counts or truncated lists.
-- A view is not a fact: the owner MAY change it at any time.
+- A view is not a fact. A server MUST let the owner change a view at any time.
 
 ### 4.6. Access
 
 - A reader MUST NOT read a record except through a view, under an active grant that has not expired.
 - The owner reads the whole record, and any of their views, without a grant.
 - A server MUST record each read under a grant in the access log.
-- The owner MAY revoke a grant at any time; a revoked grant gives no further access.
+- A server MUST let the owner revoke a grant at any time. A revoked grant gives no further access.
 
 ### 4.7. Tasks
 
 - A fact proposed by a task has the task as its author.
-- The owner MAY reject, in one operation, every fact still proposed by a task.
+- A server MUST let the owner reject, in one operation, every fact still proposed by a task.
 - A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.
 
 ### 4.8. Server authority

@@ -144,7 +144,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 1. Reference data at first run: ESCO shipped with the release; Wikidata looked up online and cached.
 2. Import in the data model: a Task; facts it proposes have it as author.
 3. Labels in responses: embedded, in the requested language.
-4. Correcting a proposed fact: edited until reviewed (US-09).
+4. Correcting a fact: the owner edits it, reviewed or not; progress is a new practice (specification, Section 4.1).
 5. Rejected occupation: its practices stay. Removing them is Anne's manual action, deleting facts by a filter; deleting facts is allowed (ADR-0008).
 6. Raw CV text: not kept once the task ends. Each fact keeps its excerpt, the file name and the line in the file.
 7. Socket path: `$XDG_RUNTIME_DIR/tabellion/` on Linux; macOS and Windows in ADR-0020.
@@ -160,7 +160,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 | Contract | [api/openapi.yaml](../../api/openapi.yaml): entry point, imports and tasks, occupations, practices, identities, views, resume, reference lookups |
 | Server | Go (ADR-0014); one person per server, started on first call, exits when idle (ADR-0012) |
 | Authentication | Unix socket for the command line; one-time token swapped for a session cookie for the web UI (ADR-0016) |
-| Facts | proposed, accepted, rejected; proposed facts editable until reviewed; deleting allowed (ADR-0008); fidelity 1 to 3; author is the import task |
+| Facts | proposed, accepted, rejected; the owner corrects any fact by editing it, progress is a new practice; deleting allowed (ADR-0008); fidelity 1 to 3; author is the import task |
 | Views | proposed and accepted facts by default |
 | Reference data | ESCO shipped with the release; Wikidata looked up online and cached |
 | Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `tabellion` |

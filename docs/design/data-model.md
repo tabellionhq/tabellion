@@ -15,7 +15,7 @@ This note holds what the specification leaves to an implementation: reference da
 | Facts: occupation held, practice, concept | Sections 3.3 to 3.6 |
 | View, Grant, access log | Sections 3.7, 3.8 |
 | Task | Section 3.9 |
-| Status, frozen facts, deleting, completing a proposed practice | Section 4.1 |
+| Status, corrections and progress, deleting, completing a proposed practice | Section 4.1 |
 | Identifiers, named values | Section 4.2 |
 | Levels 1 to 5 | Section 4.3 |
 | Composed concepts, human languages, skills without a period | Section 4.4 |

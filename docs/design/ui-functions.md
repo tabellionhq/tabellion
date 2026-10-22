@@ -31,9 +31,9 @@ From the contract (`x-actions`). The UI renders them; their rules are the server
 |---|---|---|---|
 | Import a CV; follow the task; review what it proposed | entry point, task | US-01 | yes |
 | Reject all facts proposed by a failed task | task | US-09 | |
-| Edit, accept, reject a proposed occupation or practice | occupation, practice | US-09 | yes |
+| Edit, accept, reject an occupation or a practice | occupation, practice | US-09 | yes |
 | Add an occupation; add a practice | record | US-01, US-09 | yes |
-| Record a correction as a new practice | accepted practice | US-09 | |
+| Correct a fact; record progress as a new practice | accepted practice | US-09 | |
 | Find an ESCO skill; find a Wikidata concept | entry point, search results | US-01, US-09 | yes |
 | Add an identity | identities | US-08 | yes |
 | Write a view; edit it; see its facts | views | US-08 | yes |

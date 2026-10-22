@@ -18,7 +18,7 @@ Anne goes through what the import proposed, one fact at a time, at her own pace.
 ├──────────────────────────────────────────────────────────────────────┤
 │ # Review what the import proposed                                    │
 │ 12 facts to review, from cv.txt, imported 22 October 2026.           │
-│ Accepted facts are final: a correction is recorded as a new fact.    │
+│ You can correct any fact later.                                      │
 │                                                                      │
 │ ## Backend developer, ACME Logistics · March 2021 – today            │
 │ ┌──────────────────────────────────────────────────────────────────┐ │
@@ -140,7 +140,5 @@ Focus after a swap: on Accept or Reject, the next card's `h3` (made focusable wi
 
 ## Open
 
-1. Accepting is final. Options:
-   - A. Immediate: one press accepts the fact; the page says once, at the top, that accepted facts are final.
-   - B. Staged: Anne marks facts, then sends her review in one step, and can change her marks before sending. Needs a draft state for review marks, which the model does not have.
-2. Accepting all the facts of an occupation (U07, not in the MVP): one button under the `h2`, with a confirmation listing the facts.
+1. Direction, to redraw minimal: review all at once. The import places each fact in a bucket, "ok", "to check" or "reject", from its fidelity; Anne moves the exceptions, then sends the review in one step.
+2. Accepting all the facts of an occupation (U07, not in the MVP).
