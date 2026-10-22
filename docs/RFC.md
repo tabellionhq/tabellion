@@ -210,11 +210,13 @@ An access log entry holds a grant id and the datetime of a read.
 | id | uuid | required |
 | person | Person id | required |
 | kind | string, e.g. cv-import | required |
-| state | queued, running, done, failed | required |
+| state | ongoing, finished, abandoned, interrupted | required |
+| stage | string | required while ongoing; defined by the kind of task |
+| stages | list of stages, each with a name and a progress: done, current, skipped, to do | optional; defined by the kind of task |
 | started | datetime | required |
 | ended | datetime | optional |
 | result | object | optional; per kind |
-| problem | problem details [RFC9457] | optional; when failed |
+| problem | problem details [RFC9457] | optional; when interrupted |
 
 ## 4. Rules
 
@@ -282,6 +284,10 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 ### 4.7. Tasks
 
+- A task is ongoing until it ends: finished, abandoned by the owner, or interrupted by a failure.
+- While ongoing, a task is at a stage. The stages of a task, and the transitions between them, are defined by its kind, not by this document.
+- Finished and abandoned are final. An interrupted task MAY be resumed, if its kind allows it.
+- A client MUST NOT assume the stages of a kind it does not know. It shows the stages and the actions the task carries.
 - A fact proposed by a task has the task as its author.
 - A server MUST let the owner reject, in one operation, every fact still proposed by a task.
 - A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.

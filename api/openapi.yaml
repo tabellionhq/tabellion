@@ -106,6 +106,24 @@ paths:
             application/ld+json:
               schema: {$ref: "#/components/schemas/Task"}
         "404": {$ref: "#/components/responses/Problem"}
+    patch:
+      tags: [import]
+      summary: Move a task to another stage, stop it, or resume it
+      description: Only the changes offered by the task's actions are accepted; the kind of task defines its stages.
+      operationId: changeTask
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema: {$ref: "#/components/schemas/TaskChange"}
+      responses:
+        "200":
+          description: The task, as changed
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Task"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
 
   /tasks/{taskId}/rejections:
     parameters:
@@ -518,7 +536,7 @@ components:
       properties:
         "@type":
           type: string
-          examples: [AcceptAction, RejectAction, CreateAction, UpdateAction, ViewAction, SearchAction]
+          examples: [AcceptAction, RejectAction, CancelAction, CreateAction, UpdateAction, ViewAction, SearchAction]
         name:
           type: string
           description: What the action does, in plain words
@@ -759,17 +777,39 @@ components:
 
     Task:
       x-actions:
-        - {type: ViewAction, name: Refresh, method: GET, target: "@id", when: state is queued or running}
-        - {type: SearchAction, name: Review the proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed", when: kind is cv-import and state is done}
-        - {type: SearchAction, name: Review the proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed", when: kind is cv-import and state is done}
-        - {type: RejectAction, name: Reject all facts proposed by this task, method: POST, target: "@id/rejections", when: state is failed}
+        - {type: ViewAction, name: Refresh, method: GET, target: "@id", when: state is ongoing}
+        - {type: AcceptAction, name: Yes, read it, method: PATCH, target: "@id", body: {stage: find}, when: kind is cv-import and stage is confirm}
+        - {type: CancelAction, name: Stop, method: PATCH, target: "@id", body: {state: abandoned}, when: state is ongoing}
+        - {type: SearchAction, name: Review the proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed", when: kind is cv-import and state is finished}
+        - {type: SearchAction, name: Review the proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed", when: kind is cv-import and state is finished}
+        - {type: UpdateAction, name: Resume, method: PATCH, target: "@id", body: {state: ongoing}, when: state is interrupted and the kind allows it}
+        - {type: RejectAction, name: Reject all facts proposed by this task, method: POST, target: "@id/rejections", when: state is interrupted or abandoned}
       allOf:
         - $ref: "#/components/schemas/Resource"
         - type: object
           required: [kind, state, started]
           properties:
             kind: {type: string, enum: [cv-import]}
-            state: {type: string, enum: [queued, running, done, failed]}
+            state:
+              description: Canonical; ongoing until finished, abandoned or interrupted
+              type: string
+              enum: [ongoing, finished, abandoned, interrupted]
+            stage:
+              description: "While ongoing; defined by the kind. cv-import: extract (skipped for text), confirm, find"
+              type: [string, "null"]
+            stages:
+              description: The stages of this task, in order, for a progress bar
+              type: array
+              items:
+                type: object
+                required: [name, progress]
+                properties:
+                  name: {type: string}
+                  label: {type: string}
+                  progress: {type: string, enum: [done, current, skipped, to-do]}
+            text:
+              description: "cv-import, at the confirm stage: the extracted text; removed when the task ends"
+              type: [string, "null"]
             started: {type: string, format: date-time}
             ended: {type: [string, "null"], format: date-time}
             result:
@@ -785,6 +825,13 @@ components:
                       excerpt: {type: string}
             problem:
               oneOf: [{$ref: "#/components/schemas/Problem"}, {type: "null"}]
+
+    TaskChange:
+      description: "Merge patch on a task: a stage to move to, or a state: abandoned to stop, ongoing to resume"
+      type: object
+      properties:
+        stage: {type: string}
+        state: {type: string, enum: [abandoned, ongoing]}
 
     Candidate:
       type: object

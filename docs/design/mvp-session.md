@@ -66,11 +66,11 @@ curl -X POST $API/persons/9f1e…/identities -H 'Content-Type: application/ld+js
 
 ```shell
 curl -X POST $API/imports -H 'Content-Type: text/plain' --data-binary @cv.txt
-curl $API/tasks/41ab…          # until "state": "done"
+curl $API/tasks/41ab…          # until "state": "finished"
 ```
 
 ```json
-{"@id": "/tasks/41ab…", "@type": "Task", "kind": "cv-import", "state": "done",
+{"@id": "/tasks/41ab…", "@type": "Task", "kind": "cv-import", "state": "finished",
  "result": {"unresolved": [{"term": "Zephyr RTOS", "excerpt": "Firmware on Zephyr RTOS, 2019"}]},
  "potentialAction": [
    {"@type": "SearchAction", "name": "Review the proposed occupations", "target": {"httpMethod": "GET", "urlTemplate": "/persons/9f1e…/occupations?status=proposed"}},
