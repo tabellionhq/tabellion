@@ -35,3 +35,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - APR-0005 hosted service possible. MVP requirements: decided, to decide, open.
 - Project name: Tabellion, replacing the working name `skills-track`. ADR-0021 frontend framework (proposed).
 - ADR-0022 store engine, ADR-0023 HTTP stack (proposed). Test data: Anne's facts and CV.
+- Data model: human languages and undated skills are practices completed in review; a proposed practice may miss its start date; evidence line; view periods match by overlap.

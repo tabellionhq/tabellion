@@ -620,15 +620,19 @@ components:
           description: The occupation held, by its @id
           type: [string, "null"]
           format: uri-reference
-        from: {type: string, format: date}
+        from:
+          description: Start of the period. Null only on a proposed practice whose source gives no period; required to accept.
+          type: [string, "null"]
+          format: date
         to: {type: [string, "null"], format: date}
         level: {$ref: "#/components/schemas/Level"}
-        evidence: {}
+        evidence:
+          description: Any JSON. From a CV import, `{excerpt, file, line}`.
 
     Practice:
       x-actions:
         - {type: UpdateAction, name: Edit this practice, method: PATCH, target: "@id", when: status is proposed}
-        - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed}
+        - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is proposed and from is set}
         - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is proposed}
         - {type: CreateAction, name: Record a correction as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
       allOf:
@@ -695,6 +699,7 @@ components:
               type: [array, "null"]
               items: {type: string, format: uri-reference}
             period:
+              description: A fact is included if its period overlaps this one.
               type: [object, "null"]
               properties:
                 from: {type: [string, "null"], format: date}

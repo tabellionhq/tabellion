@@ -146,7 +146,7 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 3. Labels in responses: embedded, in the requested language.
 4. Correcting a proposed fact: edited until reviewed (US-09).
 5. Rejected occupation: its practices stay. Removing them is Anne's manual action, deleting facts by a filter; deleting facts is allowed (ADR-0008).
-6. Raw CV text: not kept once the task ends. Each fact keeps its excerpt, the file name and the position in the file.
+6. Raw CV text: not kept once the task ends. Each fact keeps its excerpt, the file name and the line in the file.
 7. Socket path: `$XDG_RUNTIME_DIR/tabellion/` on Linux; macOS and Windows in ADR-0020.
 8. Identity: not asked at start. Asked when first needed: after a CV import, proposed from the CV; or at the first export or share, typed by Anne. Can be changed or aliased later.
 9. Review screen: wireframes, and an ADR for the frontend framework. A task of its own.

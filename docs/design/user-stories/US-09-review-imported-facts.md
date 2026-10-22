@@ -30,12 +30,13 @@ As Anne, I want to check what the import understood from my CV, at my own pace, 
 | Expand | "Kafka pipelines" also means "designed a pub/sub system" | new facts added, same excerpt |
 | Accept a group | everything in one occupation is right | all its facts are accepted |
 | Resolve a term | "Zephyr RTOS" → Anne picks a concept | a new fact |
+| Complete, then accept | "Rust, Go, C" names three skills with no period: Anne sets the start date and the level of each | the facts are accepted |
 | Abandon a term | "Zephyr RTOS" is not worth recording | nothing recorded |
 | Clean up a failed import | the import failed halfway | all facts proposed by that import are rejected |
 
 ## Data kept from the CV
 
-The raw CV text is not kept once the import task ends. Each fact keeps its excerpt and where it comes from in the file (file name, position).
+The raw CV text is not kept once the import task ends. Each fact keeps its excerpt and where it comes from in the file (file name, line).
 
 ## Data in, data out
 
@@ -48,7 +49,7 @@ The raw CV text is not kept once the import task ends. Each fact keeps its excer
 - Views select by status; default: accepted and proposed; shared views: accepted only.
 - Facts carry a fidelity, 1 to 3; 3 once reviewed.
 - Split and expand create facts that share the original excerpt as evidence.
-- Evidence of an imported fact: the excerpt, the file name, the position in the file.
+- Evidence of an imported fact: the excerpt, the file name, the line in the file.
 
 ## Open
 

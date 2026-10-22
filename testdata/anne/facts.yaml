@@ -8,6 +8,7 @@
 #   split         one proposed fact replaced by several, same excerpt
 #   expand        added by Anne from an excerpt, next to the facts proposed from it
 #   resolve       a term the import did not resolve; Anne picks the concept
+#   complete      proposed without a start date or level the CV does not give; Anne completes it, then accepts
 
 person:
   id: 00000000-0000-4000-8000-00000000a001
@@ -167,6 +168,78 @@ practices:
     excerpt: "Since 05/2019: maintainer of mqttlite, an open-source MQTT client in Rust (test suite, releases)."
     review: accept
 
+  # Summary line: three practices, levels differ; the period starts at the first dated use in the CV.
+  - key: summary-rust
+    occupation: null
+    skill: http://data.europa.eu/esco/skill/21d2f96d-35f7-4e3f-9745-c533d2dd6e97  # computer programming
+    concept:
+      is: http://www.wikidata.org/entity/Q575650         # Rust
+      with: []
+      label: null
+    context: null
+    from: 2019-05-01
+    to: null
+    level: 4
+    excerpt: "Backend developer. Rust, Go, C. Event-driven systems."
+    review: complete
+
+  - key: summary-go
+    occupation: null
+    skill: http://data.europa.eu/esco/skill/21d2f96d-35f7-4e3f-9745-c533d2dd6e97  # computer programming
+    concept:
+      is: http://www.wikidata.org/entity/Q37227          # Go
+      with: []
+      label: null
+    context: null
+    from: 2021-03-01
+    to: null
+    level: 2
+    excerpt: "Backend developer. Rust, Go, C. Event-driven systems."
+    review: complete
+
+  - key: summary-c
+    occupation: null
+    skill: http://data.europa.eu/esco/skill/21d2f96d-35f7-4e3f-9745-c533d2dd6e97  # computer programming
+    concept:
+      is: http://www.wikidata.org/entity/Q15777          # C
+      with: []
+      label: null
+    context: null
+    from: 2015-09-01
+    to: null
+    level: 3
+    excerpt: "Backend developer. Rust, Go, C. Event-driven systems."
+    review: complete
+
+  # Human languages: each has its own period. Native: since birth; English: since secondary school.
+  - key: lang-french
+    occupation: null
+    skill: http://data.europa.eu/esco/skill/e747e77e-0ea1-4001-8b07-1d11946b5f1b  # French
+    concept:
+      is: http://www.wikidata.org/entity/Q150            # French
+      with: []
+      label: null
+    context: null
+    from: 1992-04-01      # Anne's birth month, entered by Anne
+    to: null
+    level: 5
+    excerpt: "Languages: French (native), English (fluent)."
+    review: complete
+
+  - key: lang-english
+    occupation: null
+    skill: http://data.europa.eu/esco/skill/6d3edede-8951-4621-a835-e04323300fa0  # English
+    concept:
+      is: http://www.wikidata.org/entity/Q1860           # English
+      with: []
+      label: null
+    context: null
+    from: 2003-09-01      # secondary school, entered by Anne
+    to: null
+    level: 4
+    excerpt: "Languages: French (native), English (fluent)."
+    review: complete
+
 # In cv.txt, recorded as nothing.
 not_recorded:
   - excerpt: "Integrated FleetSync, ACME's in-house routing engine, with the order service."
@@ -175,10 +248,6 @@ not_recorded:
   - excerpt: "Interests: sailing, chess."
     expected: no fact; if proposed, Anne rejects it
 
-# In cv.txt, not representable in the model yet: see README, Open.
-not_modelled:
-  - excerpt: "Backend developer. Rust, Go, C. Event-driven systems."
-  - excerpt: "Languages: French (native), English (fluent)."
 
 # US-08: the view Anne writes for a backend offer, and what it shows.
 view:

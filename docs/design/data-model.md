@@ -45,10 +45,10 @@ Practice:                 # I practiced <skill> on <concept> in <context> at <oc
     label: string | null  # e.g. "block value", for display; may be fed to the embedding engine
   context: uri | null     # Wikidata item, e.g. wd:Q575650 Rust
   occupation: OccupationHeld | null
-  from: date
+  from: date              # may be missing while proposed; required to accept
   to: date | null         # null: a single date, or ongoing
   level: 1..5 | null      # ADR-0002; preset, set by the person, set externally, or empty
-  evidence: object | null # any JSON, e.g. a CV excerpt, a signed token with claims, issuer, signature
+  evidence: object | null # any JSON, e.g. a CV excerpt {excerpt, file, line}, a signed token with claims, issuer, signature
   author: string          # who states the fact: the person, a training provider, an agent…
   recorded: datetime
   status: proposed | accepted | rejected
@@ -66,7 +66,7 @@ View:
   include:                # rules on dimensions; null: no restriction
     occupation_kind: [work | pleasure | study] | null
     occupation: [OccupationHeld] | null
-    period: {from: date | null, to: date | null} | null
+    period: {from: date | null, to: date | null} | null   # a fact is in if its period overlaps this one
     skill_under: [uri] | null     # ESCO categories
     status: [proposed | accepted]  # default: both; a view with a grant: accepted only
   include_facts: [fact id]        # allow list
@@ -169,6 +169,8 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 - No action list: the action is the ESCO skill.
 - Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs and of their label. Label vectors belong to the search adapter (ADR-0008).
 - `level` is always an integer from 1 to 5, or null.
+- Human languages are Practices: the ESCO language skill, the Wikidata language as concept, their own period (native: since birth).
+- A skill named without a period (e.g. a CV summary) is proposed without a start date; the person completes it before accepting.
 - `evidence` is opaque to the model: it is stored and returned, never interpreted (ADR-0004).
 - Who set a level is the fact's `author`.
 - Status moves once: `proposed` → `accepted` | `rejected`. An accepted or rejected fact SHALL NOT be mutated.
