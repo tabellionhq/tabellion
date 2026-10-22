@@ -286,6 +286,7 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A task is ongoing until it ends: finished, abandoned by the owner, or interrupted by a failure.
 - While ongoing, a task is at a stage. The stages of a task, and the transitions between them, are defined by its kind, not by this document.
 - Finished and abandoned are final. An interrupted task MAY be resumed, if its kind allows it.
+- A server MUST keep a task, with its result, until the owner deletes it. What a result holds, such as terms an import did not match, stays available after the task ends.
 - A client MUST NOT assume the stages of a kind it does not know. It shows the stages and the actions the task carries.
 - A fact proposed by a task has the task as its author.
 - A server MUST let the owner reject, in one operation, every fact still proposed by a task.

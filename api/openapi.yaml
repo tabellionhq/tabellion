@@ -124,6 +124,13 @@ paths:
               schema: {$ref: "#/components/schemas/Task"}
         "404": {$ref: "#/components/responses/Problem"}
         "409": {$ref: "#/components/responses/Problem"}
+    delete:
+      tags: [import]
+      summary: Delete a task and its result; the facts it proposed stay
+      operationId: deleteTask
+      responses:
+        "204": {description: Deleted}
+        "404": {$ref: "#/components/responses/Problem"}
 
   /tasks/{taskId}/rejections:
     parameters:
@@ -823,7 +830,7 @@ components:
             started: {type: string, format: date-time}
             ended: {type: [string, "null"], format: date-time}
             result:
-              description: "Per kind. cv-import: terms that could not be resolved"
+              description: "Per kind; kept until the task is deleted. cv-import: terms not matched, each removed when resolved into a fact or left out"
               type: [object, "null"]
               properties:
                 unresolved:

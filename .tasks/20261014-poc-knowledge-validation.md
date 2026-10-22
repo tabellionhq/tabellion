@@ -77,5 +77,6 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [ ] Screens by role-play: 1 home, 2 import done; next review, view and export
 - [ ] Rule: no telemetry (specification or ADR)
 - [ ] Check GDPR household exemption for local use; GDPR duties for the hosted service
+- [ ] Contract: operation to leave out a term not matched (cv-import result); home shows terms not matched
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations

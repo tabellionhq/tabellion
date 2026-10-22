@@ -19,7 +19,7 @@ The web UI is online only. Apps that work offline are separate clients (US-10).
 | U05 | splits a fact | edit the proposed fact, then add facts with the same evidence | US-09 | yes |
 | U06 | expands a fact | add facts with the same evidence | US-09 | yes |
 | U07 | accepts all the facts of an occupation | one accept per fact | US-09 | |
-| U08 | abandons a term not resolved | hidden from the import summary; nothing sent to the server | US-09 | yes |
+| U08 | leaves out a term not matched | removed from the import task's result; no fact recorded | US-09 | yes |
 | U09 | writes a view while seeing what it shows | the view form next to its facts | US-08 | yes |
 | U10 | picks the language | `Accept-Language` on every request (ADR-0019) | | |
 
