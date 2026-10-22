@@ -10,6 +10,8 @@
 ## Upload your CV one last time.
 With Tabellion, finding where you saved the last version won't be a problem anymore.
 
+Older version? Upload it, then add what's missing in the next step.
+
 🌐  Source: online file
     The link must be public.
     [ https://…                ] [Go]
@@ -34,6 +36,7 @@ Layout: one row per source; icon column 15 %, content 85 %; each row has its own
 - The headline carries the home page's promise ("for the last time") from one screen to the next.
 - A raw text area alone is not a call to action: sources are listed, each with the input it needs.
 - Copying from a PDF is not a usable path: files are read as they are.
+- "One last time" was read as "no updates afterwards": a line says what to do with an older version, and points to the next step.
 
 ## Open
 
