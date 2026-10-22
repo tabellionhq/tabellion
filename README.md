@@ -25,6 +25,9 @@ Contributions are signed off under the Developer Certificate of Origin: see [CON
 - Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).
 - Simple adoption curve: see [APR-0002](docs/apr/APR-0002-simple-adoption-curve.md).
 - Skills curriculum standard, existing standards for the rest: see [APR-0003](docs/apr/APR-0003-curriculum-standard-defer-the-rest.md).
+- International: see [APR-0004](docs/apr/APR-0004-international.md).
+- Hosted service possible: see [APR-0005](docs/apr/APR-0005-hosted-service-possible.md).
+- Accessibility: see [APR-0006](docs/apr/APR-0006-accessibility.md).
 
 ## Exercise types
 

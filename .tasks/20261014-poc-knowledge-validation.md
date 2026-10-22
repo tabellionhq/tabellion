@@ -69,6 +69,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0021 web UI: HTMX, `/ui` HTML adapter, `/api` JSON-LD
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
+- [x] APR-0006 accessibility
+- [ ] Owner: ADR-0027 accessibility standard, WCAG 2.2 AA recommended
 - [ ] Review screen: wireframes; check split and expand as small scripts (ADR-0021)
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
