@@ -1,60 +1,73 @@
 # ADR-0025: Licences
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-22
-- Drafted by: agent (Claude Code, claude-opus-5-5); CC BY 4.0 for the specification and Apache-2.0 preference stated by owner
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
-The project must be free and open: the person owns and can export everything, and the schema is open so other systems can use it (APR-0001). The specification is the source of truth, written to be implemented by others (ADR-0024). A hosted service may run the software (APR-0005).
+The project must be free and open: the person owns and can export everything, and the schema is open so other systems can use it (APR-0001). The specification is the source of truth, written to be implemented by others (ADR-0024). The software may be run as a hosted service, by us or by others (APR-0005).
 
-The specification is licensed CC BY 4.0. Creative Commons advises against its licences for software: they do not address source code distribution or patents. The code needs a software licence.
+The goals pull in two directions: the implementation should be free as in freedom, and the work should be reusable, commercial uses included.
 
-The direct dependencies chosen so far are under MIT, Apache-2.0 or BSD-3-Clause licences (ADR-0022, ADR-0023). Apache-2.0 code can be combined with GPL-3.0 code, not with GPL-2.0-only code.
+Creative Commons advises against its licences for software: they do not address source code distribution or patents.
+
+The Go toolchain links libraries statically: a library imported by the server is part of the distributed binary.
 
 ## Options
 
-For the code (Go server, web UI, command line):
+| Option | Specification, docs | Contract, JSON-LD context, test data | Server, web UI | Issues |
+|---|---|---|---|---|
+| A. All permissive | CC BY 4.0 | Apache-2.0 | MIT or Apache-2.0 | A copy may be modified and hosted, its changes closed |
+| B. Split, copyleft server | CC BY 4.0 | Apache-2.0 | AGPL-3.0 | Some companies do not use AGPL software; they can still implement the specification |
+| C. All copyleft | CC BY-SA 4.0 | GPL-3.0 | AGPL-3.0 | Clients and other implementations built on the contract must be copyleft too |
 
-| Option | Others may | Others must | Issues |
-|---|---|---|---|
-| A. MIT | use, change, sell, host, close their changes | keep the copyright notice | No patent grant |
-| B. Apache-2.0 | use, change, sell, host, close their changes | keep notices; state changes; keep the NOTICE file | Explicit patent grant from contributors, ended for anyone who sues over patents; not combinable with GPL-2.0-only code |
-| C. MPL-2.0 | use, combine with closed code | publish their changes to our files when they distribute | Weak copyleft per file; hosting is not distribution |
-| D. AGPL-3.0 | use, change, host | publish their changes, also when they only host the software | Strong copyleft; companies running it on premises or as a service often avoid it |
+Contributions:
+
+| Option | How | Issues |
+|---|---|---|
+| DCO | Each commit is signed off: the contributor certifies the right to submit it under the project licence | The licence cannot be changed later without every contributor's consent |
+| CLA | Contributors grant the project rights over their contributions | Allows relicensing and dual licensing; contributors often distrust it |
 
 ## Recommendation
 
-B, Apache-2.0, for the code, the API contract and the JSON-LD context. CC BY 4.0 for the specification and the documentation.
+B, with a DCO.
 
-- The patent grant protects implementers of the specification and contributors.
-- The software can be hosted, by us or by others, without conditions (APR-0005).
-- Trade-off: a hosted copy may keep its changes closed. The specification stays open whatever a copy does.
+- The specification lets anyone build an implementation, open or closed, and sell it.
+- The contract, the vocabulary and the test data carry no copyleft: anyone builds clients and implementations against them.
+- Our server stays free: whoever modifies it, also when only hosting it, shares the changes.
+- With a DCO, the server cannot be closed later: a promise to contributors.
 
 ## Decision
 
-Owner's words.
+B, the split with a copyleft server, AGPL-3.0, and a DCO for contributions.
 
 ## Reason
 
-Owner's words.
+This might be far-fetched for now, but it is a sensible approach.
 
 ## Consequences
 
-- `LICENSE` at the root with the Apache-2.0 text; `NOTICE` with the copyright line; `docs/LICENSE` with CC BY 4.0, or a line in the README saying which licence covers what.
-- An SPDX identifier in each source file header: `SPDX-License-Identifier: Apache-2.0`.
-- CI checks the licences of all dependencies, direct and indirect (e.g. `go-licenses`), and refuses copyleft or unknown licences.
-- The `license` field of the API contract names the chosen licence.
-- Open: how contributions are accepted, e.g. a Developer Certificate of Origin sign-off.
+- Licences by part:
+  - `docs/RFC.md` and the documentation: CC BY 4.0.
+  - `api/` (OpenAPI contract, JSON-LD context) and `testdata/`: Apache-2.0.
+  - Server, web UI, command line: AGPL-3.0.
+- Files: `LICENSE` (AGPL-3.0) at the root; a licence file in `api/`, `testdata/` and `docs/`; the README says which licence covers what.
+- An SPDX identifier in each source file header, e.g. `SPDX-License-Identifier: AGPL-3.0-only` or `AGPL-3.0-or-later`: to choose when the first source file is written.
+- Dependencies compiled into the server: licences compatible with AGPL-3.0 only. MIT, BSD and Apache-2.0 are; GPL-2.0-only is not. Programs run as separate processes are not affected.
+- CI checks the licences of all Go dependencies, direct and indirect (e.g. `go-licenses`), and refuses incompatible or unknown licences.
+- Every commit carries a `Signed-off-by` line (DCO); CI refuses commits without it.
+- The `license` field of the API contract: Apache-2.0.
 
 ## References
 
 - [APR-0001: Free and open](../apr/APR-0001-free-and-open.md)
 - [APR-0005: Hosted service possible](../apr/APR-0005-hosted-service-possible.md)
+- [ADR-0020: Target platforms](ADR-0020-target-platforms.md)
 - [ADR-0024: The specification is the source of truth](ADR-0024-specification-source-of-truth.md)
+- GNU AGPL-3.0: <https://www.gnu.org/licenses/agpl-3.0.html>
 - Apache License 2.0: <https://www.apache.org/licenses/LICENSE-2.0>
 - Apache-2.0 and GPL compatibility: <https://www.apache.org/licenses/GPL-compatibility.html>
-- Creative Commons on software: <https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software>
 - CC BY 4.0: <https://creativecommons.org/licenses/by/4.0/>
-- MPL-2.0: <https://www.mozilla.org/en-US/MPL/2.0/>
-- AGPL-3.0: <https://www.gnu.org/licenses/agpl-3.0.html>
+- Creative Commons on software: <https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software>
+- Developer Certificate of Origin: <https://developercertificate.org/>

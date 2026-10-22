@@ -60,7 +60,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0024 specification is the source of truth
 - [x] Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0
 - [x] Design notes trimmed: data model and resources link to the specification
-- [ ] Owner: ADR-0025 licences, Apache-2.0 recommended
+- [x] ADR-0025 licences: CC BY 4.0 spec, Apache-2.0 contract and test data, AGPL-3.0 server, DCO
+- [ ] Licence files (root, api, testdata, docs); DCO and licence checks in CI
 - [ ] Owner: ADR-0021 frontend
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings

@@ -40,4 +40,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0024: a specification is the source of truth for the model and the rules; the OpenAPI contract interprets it.
 - Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0.
 - Data model and resources notes link to the specification instead of restating it; the contract links to it.
-- ADR-0025 licences (proposed): Apache-2.0 for the code, CC BY 4.0 for the specification and documentation.
+- ADR-0025 licences: CC BY 4.0 for the specification and documentation, Apache-2.0 for the contract and test data, AGPL-3.0 for the server; contributions under the DCO.

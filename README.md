@@ -10,6 +10,16 @@ Exercises are generated from real commits of a project and target the developer'
 
 [docs/RFC.md](docs/RFC.md): data model and rules of the skills curriculum, beta (`draft-tabellion-curriculum-00`), CC BY 4.0. It prevails over the API contract and the code.
 
+## Licences
+
+| Part | Licence |
+|---|---|
+| Specification and documentation | CC BY 4.0 |
+| API contract, JSON-LD context, test data | Apache-2.0 |
+| Server, web UI, command line | AGPL-3.0 |
+
+Contributions are signed off under the Developer Certificate of Origin.
+
 ## Principles
 
 - Free and open: see [APR-0001](docs/apr/APR-0001-free-and-open.md).

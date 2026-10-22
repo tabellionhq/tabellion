@@ -18,7 +18,8 @@ info:
 
     Errors follow RFC 9457.
   license:
-    name: To be decided
+    name: Apache-2.0
+    identifier: Apache-2.0
 externalDocs:
   description: Specification of the data model and the rules (draft-tabellion-curriculum-00). This contract is its HTTP binding; the specification prevails.
   url: ../docs/RFC.md
