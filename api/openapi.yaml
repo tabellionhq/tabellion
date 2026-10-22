@@ -25,8 +25,8 @@ externalDocs:
   url: ../docs/RFC.md
 
 servers:
-  - url: http://localhost
-    description: Local server
+  - url: http://localhost/api
+    description: Local server; the web UI is served under /ui
 
 x-actions-format: |
   Each `x-actions` entry is rendered in responses as a schema.org Action in `potentialAction`:

@@ -1,8 +1,8 @@
 # ADR-0021: Frontend framework of the web UI
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-21
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -42,11 +42,17 @@ Not verified: HTMX licence and current version; Go libraries for content negotia
 
 ## Decision
 
-Owner's words.
+A: HTMX, with HTML rendered by the server under `/ui`, next to the JSON-LD API under `/api`.
 
 ## Reason
 
-Owner's words.
+Returning web pages seems ugly, but in a hexagonal approach it is clean: `/api` is a JSON format driven by the OpenAPI contract, `/ui` an HTML format. Both are adapters of the same core.
+
+## Consequences
+
+- Two driving adapters on the same core: `/api` (JSON-LD, the OpenAPI contract) and `/ui` (HTML). Neither holds rules; both show the actions the core makes available.
+- The `/ui` adapter calls the core directly, not the HTTP API. No feature exists only in the UI.
+- The review screen's split and expand are written as small scripts; to check on the wireframes.
 
 ## References
 

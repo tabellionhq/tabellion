@@ -1,8 +1,8 @@
 # ADR-0026: Git workflow
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-22
-- Drafted by: agent (Claude Code, claude-opus-5-5); decision stated by owner
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -13,8 +13,9 @@ A push to the main branch sets a new semantic version and publishes a release; t
 | Option | How | Issues |
 |---|---|---|
 | A. Git flow | Long-lived `develop` and `main`, feature, release and hotfix branches | Many branches and merges; releases batched; long-lived branches drift |
-| B. Short-lived feature branches | One branch per change, from `main`, merged back within days through a pull request with CI passing | Unfinished work must hide behind feature flags or branch by abstraction |
-| C. Trunk only | Everyone commits to `main` | No review before a release, since each push to `main` releases |
+| B. GitHub flow | One short-lived branch per change, from `main`, merged back through a pull request with CI passing; `main` is always releasable | Unfinished work must hide behind feature flags or branch by abstraction |
+| C. GitLab flow | GitHub flow, plus environment branches (e.g. `staging`, `production`) or release branches | Releases promoted from branch to branch; more branches to keep in step |
+| D. Trunk-based | Everyone merges to `main` at least daily; branches last hours, or none | Needs feature flags and a fast CI; little review before a release, since each push to `main` releases |
 
 ## Recommendation
 
@@ -22,11 +23,11 @@ B.
 
 ## Decision
 
-B: short-lived feature branches. Semantic versioning and conventional commits are enforced.
+B: GitHub flow, with short-lived feature branches. Semantic versioning and conventional commits are enforced.
 
 ## Reason
 
-Owner's words.
+That is the easiest way for now.
 
 ## Consequences
 

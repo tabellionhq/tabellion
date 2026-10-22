@@ -55,7 +55,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0022 store engine: ncruces/go-sqlite3 to start, PostgreSQL later
 - [ ] Check ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
 - [x] Generation test: oapi-codegen v2.8.0 generates and cross-compiles both targets; `@context` name clash fixed; nullable types for merge patch
-- [ ] Owner: ADR-0023 HTTP stack
+- [x] ADR-0023 HTTP stack: standard library, oapi-codegen strict server
 - [x] Persona Thomas, US-10: apps are separate clients of the API; the server is the authority
 - [x] UI functions: `docs/design/ui-functions.md`
 - [x] ADR-0024 specification is the source of truth
@@ -65,8 +65,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [ ] Licence files (root, api, testdata, docs); DCO and licence checks in CI
 - [x] CONTRIBUTING.md
 - [x] Default branch renamed to `main`
-- [ ] Owner: ADR-0026 git workflow, reason
-- [ ] Owner: ADR-0021 frontend
+- [x] ADR-0026 git workflow: GitHub flow
+- [x] ADR-0021 web UI: HTMX, `/ui` HTML adapter, `/api` JSON-LD
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [ ] Review screen: wireframes, then ADR frontend framework (task of its own)

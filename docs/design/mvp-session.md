@@ -6,13 +6,13 @@
 
 Anne's first session, step by step: her action in the web UI, the request it makes, the components called, what is stored.
 
-The web UI calls the same API as `curl`. Below, `$API` stands for the server address:
+The JSON-LD API is under `/api`; the web UI, an HTML adapter on the same core, is under `/ui` (ADR-0021). Each step below shows the API request that does what Anne does in the web UI. `$API` stands for the API address:
 
 ```shell
 # command line, through the user's Unix socket
-curl --unix-socket "$XDG_RUNTIME_DIR/tabellion/tabellion.sock" http://localhost/
-# web UI, through localhost, with the session cookie
-curl -b "session=…" http://localhost:$PORT/
+curl --unix-socket "$XDG_RUNTIME_DIR/tabellion/tabellion.sock" http://localhost/api/
+# through localhost, with the session cookie of the web UI
+curl -b "session=…" http://localhost:$PORT/api/
 ```
 
 ## 0. Start
