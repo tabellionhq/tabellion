@@ -69,5 +69,5 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0021 web UI: HTMX, `/ui` HTML adapter, `/api` JSON-LD
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
-- [ ] Review screen: wireframes, then ADR frontend framework (task of its own)
-- [ ] Owner: ADR-0019 internationalisation, after the frontend framework
+- [ ] Review screen: wireframes; check split and expand as small scripts (ADR-0021)
+- [ ] Owner: ADR-0019 internationalisation (frontend now chosen)
