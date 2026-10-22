@@ -34,3 +34,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Design note: CV standards. Roadmap: glossary, CV round trip.
 - APR-0005 hosted service possible. MVP requirements: decided, to decide, open.
 - Project name: Tabellion, replacing the working name `skills-track`. ADR-0021 frontend framework (proposed).
+- ADR-0022 store engine, ADR-0023 HTTP stack (proposed). Test data: Anne's facts and CV.

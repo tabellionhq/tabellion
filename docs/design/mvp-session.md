@@ -168,9 +168,9 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 
 ### To decide before code, in order
 
-1. Go HTTP stack: Gin with `oapi-codegen`; licences to check.
-2. Store engine: SQLite in pure Go (`modernc.org/sqlite` or `ncruces/go-sqlite3`). It also keeps an encrypted store per hosted instance possible (APR-0005).
-3. Test data: the facts first, then a fictional CV written from them. Fixes the shape of the evidence: `{excerpt, file, position}`.
+1. Go HTTP stack: ADR-0023 (proposed).
+2. Store engine: ADR-0022 (proposed).
+3. Test data: [testdata/anne](../../testdata/anne/), the facts first, then the CV written from them. Open points in [testdata/README.md](../../testdata/README.md).
 4. Frontend framework: ADR-0021 (proposed).
 
 At development time: the extraction model, a small local language model tested on the test data; then an ADR.

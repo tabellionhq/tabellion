@@ -1,0 +1,190 @@
+# Anne's record after her first session: the expected result of importing cv.txt and reviewing it.
+# Written first; cv.txt is written from it. Every excerpt appears verbatim in cv.txt.
+# IDs checked against the ESCO API and the Wikidata API on 2026-10-22; labels in comments.
+#
+# review: how the fact reaches this state (US-09)
+#   accept        proposed by the import, accepted as is
+#   edit          proposed by the import, edited, then accepted
+#   split         one proposed fact replaced by several, same excerpt
+#   expand        added by Anne from an excerpt, next to the facts proposed from it
+#   resolve       a term the import did not resolve; Anne picks the concept
+
+person:
+  id: 00000000-0000-4000-8000-00000000a001
+
+identity:
+  label: Anne Martin
+  contact: anne@example.org
+  excerpt: "Anne Martin — anne@example.org"
+
+occupations:
+  - key: acme
+    occupation: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer
+    label: Backend developer, ACME Logistics
+    kind: work
+    from: 2021-03-01
+    to: null
+    excerpt: "03/2021 – today    Backend developer, ACME Logistics, Lyon"
+    review: accept
+
+  - key: nordwind
+    occupation: http://data.europa.eu/esco/occupation/57af9090-55b4-4911-b2d0-86db01c00b02  # embedded systems software developer
+    label: Embedded software engineer, Nordwind Sensors
+    kind: work
+    from: 2017-09-01
+    to: 2021-02-28
+    excerpt: "09/2017 – 02/2021  Embedded software engineer, Nordwind Sensors, Grenoble"
+    review: accept
+
+  - key: msc
+    occupation: null
+    label: MSc Computer Science, Rhône University
+    kind: study
+    from: 2015-09-01
+    to: 2017-06-30
+    excerpt: "2015 – 2017        MSc Computer Science, Rhône University"
+    review: edit          # the CV gives years only; Anne sets the months
+
+  - key: mqttlite
+    occupation: http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1  # software developer
+    label: Maintainer of mqttlite
+    kind: pleasure
+    from: 2019-05-01
+    to: null
+    excerpt: "Since 05/2019: maintainer of mqttlite, an open-source MQTT client in Rust (test suite, releases)."
+    review: accept
+
+practices:
+  - key: acme-pipelines-rust
+    occupation: acme
+    skill: http://data.europa.eu/esco/skill/f9670490-8aa4-4540-b121-d440a8294aab  # develop data processing applications
+    concept:
+      is: http://www.wikidata.org/entity/Q1192422        # pipeline
+      with: [http://www.wikidata.org/entity/Q16235208]   # Apache Kafka
+      label: Kafka pipeline
+    context: http://www.wikidata.org/entity/Q575650      # Rust
+    from: 2021-03-01
+    to: null
+    level: 4              # set by Anne in review; the CV states no level
+    excerpt: "Designed and built the Kafka data pipelines of the order service, in Rust and Go."
+    review: split
+
+  - key: acme-pipelines-go
+    occupation: acme
+    skill: http://data.europa.eu/esco/skill/f9670490-8aa4-4540-b121-d440a8294aab  # develop data processing applications
+    concept:
+      is: http://www.wikidata.org/entity/Q1192422        # pipeline
+      with: [http://www.wikidata.org/entity/Q16235208]   # Apache Kafka
+      label: Kafka pipeline
+    context: http://www.wikidata.org/entity/Q37227       # Go
+    from: 2021-03-01
+    to: null
+    level: null
+    excerpt: "Designed and built the Kafka data pipelines of the order service, in Rust and Go."
+    review: split
+
+  - key: acme-pubsub
+    occupation: acme
+    skill: http://data.europa.eu/esco/skill/2b7a79e5-84d8-4880-be66-3d9bb05bea17  # use software design patterns
+    concept:
+      is: http://www.wikidata.org/entity/Q1071360        # publish–subscribe pattern
+      with: []
+      label: null
+    context: http://www.wikidata.org/entity/Q575650      # Rust
+    from: 2021-03-01
+    to: null
+    level: null
+    excerpt: "Designed and built the Kafka data pipelines of the order service, in Rust and Go."
+    review: expand
+
+  - key: acme-schema
+    occupation: acme
+    skill: http://data.europa.eu/esco/skill/6c08403c-a5bb-4868-b8c2-b7d039c0e511  # design database scheme
+    concept:
+      is: http://www.wikidata.org/entity/Q192490         # PostgreSQL
+      with: []
+      label: null
+    context: null
+    from: 2022-01-01
+    to: 2023-12-31
+    level: null
+    excerpt: "2022 – 2023: redesigned the PostgreSQL schema of the order service."
+    review: accept
+
+  - key: nordwind-firmware
+    occupation: nordwind
+    skill: http://data.europa.eu/esco/skill/cf200547-25b5-47c8-9eda-bca4aedc13fb  # program firmware
+    concept:
+      is: http://www.wikidata.org/entity/Q22909895       # Zephyr, real-time operating system
+      with: []
+      label: null
+    context: http://www.wikidata.org/entity/Q15777       # C
+    from: 2017-09-01
+    to: 2021-02-28
+    level: null
+    excerpt: "Firmware on Zephyr RTOS, in C, for air-quality sensors."
+    review: resolve       # Wikidata labels it "Zephyr"; a search for "Zephyr RTOS" by label finds nothing
+
+  - key: nordwind-ota
+    occupation: nordwind
+    skill: http://data.europa.eu/esco/skill/cf200547-25b5-47c8-9eda-bca4aedc13fb  # program firmware
+    concept:
+      is: http://www.wikidata.org/entity/Q2088106        # over-the-air update
+      with: [http://www.wikidata.org/entity/Q104851]     # firmware
+      label: OTA firmware update
+    context: http://www.wikidata.org/entity/Q15777       # C
+    from: 2019-01-01
+    to: 2021-02-28
+    level: null
+    excerpt: "From 2019, wrote the OTA firmware update system for 40,000 field sensors."
+    review: accept
+
+  - key: msc-graphs
+    occupation: msc
+    skill: http://data.europa.eu/esco/skill/21d2f96d-35f7-4e3f-9745-c533d2dd6e97  # computer programming
+    concept:
+      is: http://www.wikidata.org/entity/Q131476         # graph theory
+      with: []
+      label: null
+    context: http://www.wikidata.org/entity/Q15777       # C
+    from: 2015-09-01
+    to: 2017-06-30
+    level: null
+    excerpt: "Thesis: graph algorithms for sensor networks, in C."
+    review: accept
+
+  - key: mqttlite-tests
+    occupation: mqttlite
+    skill: http://data.europa.eu/esco/skill/7961413f-61d0-4722-9cd9-20a050a29899  # perform software unit testing
+    concept:
+      is: http://www.wikidata.org/entity/Q10322548       # MQTT
+      with: []
+      label: null
+    context: http://www.wikidata.org/entity/Q575650      # Rust
+    from: 2019-05-01
+    to: null
+    level: null
+    excerpt: "Since 05/2019: maintainer of mqttlite, an open-source MQTT client in Rust (test suite, releases)."
+    review: accept
+
+# In cv.txt, recorded as nothing.
+not_recorded:
+  - excerpt: "Integrated FleetSync, ACME's in-house routing engine, with the order service."
+    term: FleetSync
+    expected: unresolved; Anne abandons it
+  - excerpt: "Interests: sailing, chess."
+    expected: no fact; if proposed, Anne rejects it
+
+# In cv.txt, not representable in the model yet: see README, Open.
+not_modelled:
+  - excerpt: "Backend developer. Rust, Go, C. Event-driven systems."
+  - excerpt: "Languages: French (native), English (fluent)."
+
+# US-08: the view Anne writes for a backend offer, and what it shows.
+view:
+  label: Backend developer, offer
+  include:
+    occupation: [acme, mqttlite]
+  exclude_facts: [acme-pipelines-go]
+  show: {level: true, evidence: false}
+  expected_facts: [acme, mqttlite, acme-pipelines-rust, acme-pubsub, acme-schema, mqttlite-tests]

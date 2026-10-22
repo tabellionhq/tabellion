@@ -51,6 +51,9 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0020 target platforms: Windows, macOS, Linux; full builds on release
 - [x] APR-0005 hosted service possible
 - [x] MVP requirements: `docs/design/mvp-session.md`
+- [x] Test data: `testdata/anne`, facts first, CV from them
+- [ ] Owner: ADR-0021 frontend, ADR-0022 store engine, ADR-0023 HTTP stack
+- [ ] Owner: test data open points (languages, undated skills, evidence position, view period rule)
 - [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [ ] Review screen: wireframes, then ADR frontend framework (task of its own)
 - [ ] Owner: ADR-0019 internationalisation, after the frontend framework

@@ -1,0 +1,28 @@
+Anne Martin — anne@example.org
+
+Backend developer. Rust, Go, C. Event-driven systems.
+
+EXPERIENCE
+
+03/2021 – today    Backend developer, ACME Logistics, Lyon
+  Designed and built the Kafka data pipelines of the order service, in Rust and Go.
+  2022 – 2023: redesigned the PostgreSQL schema of the order service.
+  Integrated FleetSync, ACME's in-house routing engine, with the order service.
+
+09/2017 – 02/2021  Embedded software engineer, Nordwind Sensors, Grenoble
+  Firmware on Zephyr RTOS, in C, for air-quality sensors.
+  From 2019, wrote the OTA firmware update system for 40,000 field sensors.
+
+EDUCATION
+
+2015 – 2017        MSc Computer Science, Rhône University
+  Thesis: graph algorithms for sensor networks, in C.
+
+OPEN SOURCE
+
+Since 05/2019: maintainer of mqttlite, an open-source MQTT client in Rust (test suite, releases).
+
+OTHER
+
+Languages: French (native), English (fluent).
+Interests: sailing, chess.
