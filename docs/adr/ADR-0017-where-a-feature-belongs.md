@@ -1,6 +1,7 @@
 # ADR-0017: Where a feature belongs: core, adapter or external system
 
 - Status: Accepted
+- Updated by ADR-0028: plugins run as optional services behind contracts in the specification; a feature that needs its own store stays an external system
 - Date: 2026-10-19
 - Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 

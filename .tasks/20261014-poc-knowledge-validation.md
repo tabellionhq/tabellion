@@ -81,3 +81,6 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [ ] Contract: operation to leave out a term not matched (cv-import result); home shows terms not matched
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
+- [x] ADR-0028 core and plugins as services
+- [ ] Specification: define plugin; contracts for CV extraction, term matching, CV rendering
+- [ ] Demo compose: core, `cv`, `model`

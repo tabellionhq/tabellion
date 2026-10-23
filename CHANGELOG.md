@@ -45,6 +45,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0021 web UI: HTMX, HTML adapter under /ui next to the JSON-LD API under /api. ADR-0023 HTTP stack: standard library, oapi-codegen strict server. ADR-0026 git workflow: GitHub flow.
 - ADR-0019 internationalisation: GNU gettext PO files.
 - APR-0006 accessibility. ADR-0027 accessibility standard: WCAG 2.2 AA.
+- ADR-0028 core and plugins as services: Go core, optional plugin services (`cv` in TypeScript, `model` in Rust); demo compose runs the core and both.
 - Wireframe: review screen, with its accessibility rules.
 - The owner corrects any fact by editing it, whatever its status; progress over time is a new practice (specification 4.1, ADR-0008 clarification). Owner rights in the specification are written as server duties.
 - Tasks: canonical states ongoing, finished, abandoned, interrupted; stages and transitions defined by each kind of task; the CV import gains a confirm stage for the extracted text.
