@@ -9,3 +9,4 @@
   - Occupation held gains its details: position, organisation, location, url, summary, highlights. The import copies them as written in the CV; a weak CV leaves them empty and completion shows it.
   - Identity gains the `basics` fields: headline, summary, location, links, several contacts.
   - A language model as an optional helper, e.g. drafting a summary from the practices; generated text is a draft the person accepts or edits, and never changes a fact.
+- Where the data goes: the UI shows what each plugin does and whether it runs on the local system. Before data leaves the local system, e.g. to an external language model provider, the person is told where it goes and agrees; without agreement, nothing is sent.

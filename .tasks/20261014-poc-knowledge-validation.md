@@ -82,5 +82,8 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] ADR-0019 internationalisation: gettext PO
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
 - [x] ADR-0028 core and plugins as services
-- [ ] Specification: define plugin; contracts for CV extraction, term matching, CV rendering
+- [x] Specification: define plugin; contracts for CV extraction, term matching, CV rendering
+- [ ] Term matching also returns the identity (name, contacts) of the CV
+- [ ] Plugin contracts: HTTP binding
+- [ ] Consent before data leaves the local system (roadmap)
 - [ ] Demo compose: core, `cv`, `model`

@@ -8,7 +8,7 @@ Category: Beta specification, not an RFC
 
 ## Abstract
 
-This document specifies a data model and rules for recording the skills a person has practised over time: the occupations held, the practices of a skill on a concept at an occupation over a period, and the views through which the person exposes part of this record to others. Skills are identified by the European Skills, Competences, Qualifications and Occupations classification (ESCO); concepts and contexts by Wikidata items. The document defines what a server keeping a record and a client using it must do to interoperate.
+This document specifies a data model and rules for recording the skills a person has practised over time: the occupations held, the practices of a skill on a concept at an occupation over a period, and the views through which the person exposes part of this record to others. Skills are identified by the European Skills, Competences, Qualifications and Occupations classification (ESCO); concepts and contexts by Wikidata items. The document defines what a server keeping a record, a client using it, and a plugin doing part of the server's work must do to interoperate.
 
 ## Status of This Memo
 
@@ -29,12 +29,13 @@ Copyright (c) 2026 Alban Crommer and the Tabellion authors. This document is lic
 4. [Rules](#4-rules)
 5. [Vocabulary](#5-vocabulary)
 6. [HTTP Binding](#6-http-binding)
-7. [Conformance](#7-conformance)
-8. [Internationalization Considerations](#8-internationalization-considerations)
-9. [Security Considerations](#9-security-considerations)
-10. [Privacy Considerations](#10-privacy-considerations)
-11. [IANA Considerations](#11-iana-considerations)
-12. [References](#12-references)
+7. [Plugin Contracts](#7-plugin-contracts)
+8. [Conformance](#8-conformance)
+9. [Internationalization Considerations](#9-internationalization-considerations)
+10. [Security Considerations](#10-security-considerations)
+11. [Privacy Considerations](#11-privacy-considerations)
+12. [IANA Considerations](#12-iana-considerations)
+13. [References](#13-references)
 
 Author's Address
 
@@ -107,7 +108,10 @@ Server
 : A system that keeps records and enforces the rules of this document.
 
 Client
-: A system that reads or changes a record through a server.
+: A system that reads or changes a record through a server, for a person: the owner or a reader. A client application, such as a web interface or a mobile app, is a client.
+
+Plugin
+: A system that a server calls to do part of a task, such as reading a CV. A plugin never reads or changes a record: it returns a result to the server that called it (Section 4.10).
 
 ## 3. Data Model
 
@@ -304,6 +308,15 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A server MUST check every change it receives against the rules of this document, whatever the client, and MUST refuse a change that breaks them.
 - A client MAY keep data, work offline and apply its own rules on the device. Its changes take effect only when the server accepts them.
 
+### 4.10. Plugins
+
+- A server calls a plugin by its URL, for a kind of plugin that the plugin declares (Section 7.1). A server MUST NOT call a plugin for a kind it does not declare.
+- A server MUST send a plugin only the data its call needs, never access to a record.
+- A server MUST check what a plugin returns as it checks a change from a client (Section 4.9). Facts built from a plugin's result are proposed by the task that called it (Section 4.7).
+- A plugin MUST NOT keep the data it receives once it has answered. It MAY keep a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
+- The rules of Sections 3 and 4 MUST NOT depend on a plugin. Without a plugin, a server still lets the owner create, change, review and delete facts, and write views.
+- A server SHOULD NOT offer an action that needs a plugin it cannot reach. It MAY tell the owner which kind of plugin is missing.
+
 ## 5. Vocabulary
 
 The terms of Sections 2 and 3 are exchanged as JSON-LD 1.1 [JSON-LD11]. The context is published with the HTTP binding: [api/contexts/curriculum.jsonld](../api/contexts/curriculum.jsonld). Actions use schema.org [SCHEMA-ORG]; identities use vCard [VCARD-RDF].
@@ -316,42 +329,98 @@ The HTTP binding is described by an OpenAPI contract, [api/openapi.yaml](../api/
 
 The binding chooses, among others: JSON-LD responses with the actions available on each resource, problem details [RFC9457] for refused changes, JSON merge patch [RFC7396] for changes to proposed facts, and entity tags for freshness and concurrent changes [RFC9110].
 
-## 7. Conformance
+## 7. Plugin Contracts
+
+A contract is what a server sends to a plugin of one kind, and what the plugin returns. The HTTP binding of each contract is not fixed in this revision.
+
+### 7.1. Common to all plugins
+
+- A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind, such as the formats it reads or the themes it renders.
+- A plugin that cannot do a call MUST return a problem detail [RFC9457]. The server then interrupts the task (Section 4.7).
+
+### 7.2. CV extraction
+
+Turns a document into text.
+
+| Direction | Field | Type | Requirement |
+|---|---|---|---|
+| Sent | document | bytes | required |
+| Sent | media type | string, e.g. application/pdf | required |
+| Returned | lines | list of strings, in reading order | required |
+
+- A plugin declares the media types it reads.
+- The line numbers of the text are the positions in `lines`, from 1. Evidence refers to them.
+
+### 7.3. Term matching
+
+Proposes facts from the text of a CV.
+
+| Direction | Field | Type | Requirement |
+|---|---|---|---|
+| Sent | lines | list of strings | required |
+| Sent | language | language tag of the text, e.g. fr | optional |
+| Returned | occupations | occupations held: the fields of Section 3.4, without id, author, status or recording time | required, may be empty |
+| Returned | practices | practices: the fields of Section 3.5, without id, author, status or recording time; the occupation as an index in `occupations` | required, may be empty |
+| Returned | unmatched | terms found without a skill or a concept, each with its excerpt and line | required, may be empty |
+
+- Each returned occupation and practice carries its evidence: the excerpt it comes from and its line.
+- A plugin SHOULD return only what the text states (Section 4.1).
+
+### 7.4. CV rendering
+
+Turns a CV document into a file to read or print.
+
+| Direction | Field | Type | Requirement |
+|---|---|---|---|
+| Sent | resume | JSON Resume document [JSON-RESUME], built by the server from a view | required |
+| Sent | theme | theme name | required |
+| Sent | format | media type, e.g. text/html, application/pdf | required |
+| Returned | file | bytes, of the media type asked | required |
+
+- A plugin declares the themes and the formats it renders.
+- A server MUST build the resume only from the facts and fields the view shows (Section 4.5).
+
+## 8. Conformance
 
 A conforming server implements Sections 3 and 4.
 
 A conforming client sends only changes allowed by Section 4, and handles the refusal of any change.
 
+A conforming plugin implements Sections 4.10 and 7.1, and the contract of each kind it declares.
+
 Test data for conformance: [testdata](../testdata/README.md), a record and the document it was written from.
 
-## 8. Internationalization Considerations
+## 9. Internationalization Considerations
 
 - Skills, occupations and concepts are identifiers; their labels exist in many languages in ESCO and Wikidata. A server SHOULD return labels in the language the client asks for.
 - Status, kind and state are names, not text for display; clients translate them.
 - Identity labels and occupation labels are free text, in any language.
 
-## 9. Security Considerations
+## 10. Security Considerations
 
 - A grant gives access to one view. A server MUST check the grant on every read, as it can be revoked or expire.
 - Evidence is opaque and can come from any author. A client MUST NOT run or render evidence as active content.
 - A server reachable from a web browser, including one listening on localhost only, can receive requests from any web page the browser opens. A server SHOULD authenticate every request, also on localhost.
+- A plugin may run on another host, or be run by another provider. A server SHOULD authenticate the plugins it calls, and MUST use TLS to call a plugin outside its own host or private network.
+- What a plugin returns is untrusted input, like any change from a client (Section 4.10).
 - Facts state what their author claims. This document gives no means to verify a claim; a reader decides whether to trust it.
 
-## 10. Privacy Considerations
+## 11. Privacy Considerations
 
 - A record describes a person's working life: it is personal data.
 - A person is identified by a UUID only. Names and contacts are kept apart, in identities, and given to a reader only through the identity chosen for a grant.
 - The person decides what each reader sees; the deny list of a view always wins.
 - The access log tells the person who read which view, and when.
 - Source documents, such as a CV, are not kept beyond their import (Section 4.7).
+- A plugin receives personal data, such as the text of a CV, and does not keep it (Section 4.10). A server SHOULD tell the owner which plugin, and which provider, receives their data before a task sends it.
 
-## 11. IANA Considerations
+## 12. IANA Considerations
 
 This document has no IANA actions.
 
-## 12. References
+## 13. References
 
-### 12.1. Normative References
+### 13.1. Normative References
 
 - [RFC2119] Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
 - [RFC3339] Klyne, G. and C. Newman, "Date and Time on the Internet: Timestamps", RFC 3339, July 2002, <https://www.rfc-editor.org/info/rfc3339>.
@@ -363,11 +432,12 @@ This document has no IANA actions.
 - [WIKIDATA] Wikimedia Foundation, "Wikidata", <https://www.wikidata.org>.
 - [JSON-LD11] Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P., and N. Lindström, "JSON-LD 1.1", W3C Recommendation, July 2020, <https://www.w3.org/TR/json-ld11/>.
 
-### 12.2. Informative References
+### 13.2. Informative References
 
 - [RFC7396] Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396, October 2014, <https://www.rfc-editor.org/info/rfc7396>.
 - [RFC9110] Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., "HTTP Semantics", STD 97, RFC 9110, June 2022, <https://www.rfc-editor.org/info/rfc9110>.
 - [RFC9457] Nottingham, M., Wilde, E., and S. Dalal, "Problem Details for HTTP APIs", RFC 9457, August 2023, <https://www.rfc-editor.org/info/rfc9457>.
+- [JSON-RESUME] JSON Resume, "JSON Resume schema", <https://jsonresume.org/schema>.
 - [SCHEMA-ORG] "Schema.org", <https://schema.org>.
 - [VCARD-RDF] Iannella, R. and J. McKinney, "vCard Ontology - for describing People and Organizations", W3C Interest Group Note, May 2014, <https://www.w3.org/TR/vcard-rdf/>.
 - [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
