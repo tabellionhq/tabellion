@@ -12,7 +12,7 @@ No single standard fits. Candidate model, by layer:
 |---|---|---|
 | 1. Concepts | What a skill is, with a stable ID | Wikidata (fine), ESCO (anchor), own open concepts for gaps |
 | 2. Framework | Concepts + levels + relations | CTDL-ASN or ELM |
-| 3. Evidence | Quizzes, answers, verdicts | This repository (`quizzes/`, `sessions/`) |
+| 3. Evidence | Quizzes, answers, verdicts | A separate knowledge-checks repository (quizzes, sessions) |
 | 4. Claim | Signed, portable "I reached level Y on X" | W3C Verifiable Credentials 2.0, via Open Badges 3.0 or an ELM credential |
 
 ELM and Open Badges 3.0 are both built on W3C Verifiable Credentials, so W3C VC is not a separate choice: it comes with either.
