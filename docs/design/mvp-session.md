@@ -6,6 +6,8 @@
 
 Anne's first session, step by step: her action in the web UI, the request it makes, the components called, what is stored.
 
+This note follows the binary: `tabellion ui`, a Unix socket, a one-time token. The demo compose file runs the core and its plugins instead, with `tabellion serve --insecure` on `127.0.0.1:3333` and no login (roadmap: deployment modes). The screens are in [screens/](screens/); each control is mapped to the contract in [ui-api-map.md](ui-api-map.md).
+
 The JSON-LD API is under `/api`; the web UI, an HTML adapter on the same core, is under `/ui` (ADR-0021). Each step below shows the API request that does what Anne does in the web UI. `$API` stands for the API address:
 
 ```shell
@@ -60,9 +62,9 @@ curl -X POST $API/persons/9f1e…/identities -H 'Content-Type: application/ld+js
 |---|---|
 | Anne | pastes her CV text, or picks a `.txt` file saved from LibreOffice |
 | Request | `POST /imports` (text) → `202 Accepted`, `Location: /tasks/41ab…` |
-| Components | core creates a task → extraction adapter (local language model): statements (occupation, period, terms), each with its excerpt → search adapter: ESCO index for skills and occupations, embeddings for Wikidata concepts → core: proposed facts |
+| Components | core creates a task → `cv` plugin, for a file: text in numbered lines → Anne confirms the text → `model` plugin: occupations, practices and unmatched terms, each with its excerpt (term matching, specification Section 7.3) → core: checks them, records proposed facts |
 | Stored | Task `{id, kind: cv-import, state, result: {unresolved}}`; OccupationHeld and Practice rows, `status: proposed`, `author: /tasks/41ab…`, `evidence: {excerpt, file, line}` |
-| UI shows | progress, then the import summary |
+| UI shows | progress, the extracted text to confirm, then the check screen ([screens/](screens/)) |
 
 ```shell
 curl -X POST $API/imports -H 'Content-Type: text/plain' --data-binary @cv.txt
@@ -163,17 +165,17 @@ curl "$API/views/5b7a…/resume?identity=e2d4…" -o resume.json
 | Facts | proposed, accepted, rejected; the owner corrects any fact by editing it, progress is a new practice; deleting allowed (ADR-0008); completion computed from the fields; author is the import task |
 | Views | proposed and accepted facts by default |
 | Reference data | ESCO shipped with the release; Wikidata looked up online and cached |
-| Output | JSON Resume; PDF and HTML by JSON Resume themes, outside `tabellion` |
+| Output | JSON Resume by the core; PDF and HTML by JSON Resume themes, in the `cv` plugin (ADR-0028) |
 | Platforms | Windows, macOS, Linux; `CGO_ENABLED=0` (ADR-0020) |
 
 ### To decide before code, in order
 
-1. Go HTTP stack: ADR-0023 (proposed).
+1. Go HTTP stack: ADR-0023, accepted.
 2. Store engine: `ncruces/go-sqlite3` (ADR-0022); encryption, vector search, start time and size to check.
 3. Test data: [testdata/anne](../../testdata/anne/), the facts first, then the CV written from them. Open points in [testdata/README.md](../../testdata/README.md).
-4. Frontend framework: ADR-0021 (proposed).
+4. Frontend framework: ADR-0021, accepted.
 
-At development time: the extraction model, a small local language model tested on the test data; then an ADR.
+At development time: the term matching model, a small local language model tested on the test data, in the `model` plugin; other providers as other plugins; then an ADR.
 
 ### Open
 
@@ -181,7 +183,7 @@ At development time: the extraction model, a small local language model tested o
 
 ### Not blocking
 
-- Messages in English only, kept apart from the code; ADR-0019 after the frontend framework.
+- Messages in English only, kept apart from the code, in gettext PO files (ADR-0019).
 - Later: vocabulary IRI, grants, MCP, accepting a group in one request, deleting facts by a filter, CV formats other than JSON Resume.
 
 ### Covered by the contract

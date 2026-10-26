@@ -62,7 +62,7 @@ Label:                    # labels and descriptions, all languages
   label: string
   description: string | null
 
-ConceptVector:            # for semantic search on Wikidata concepts; tied to the model that computed it
+ConceptVector:            # for semantic search on Wikidata concepts; tied to the model that computed it; kept by the model plugin as its cache (specification, Section 4.10)
   id: uri
   model: string
   vector: [float]
@@ -75,7 +75,7 @@ ConceptVector:            # for semantic search on Wikidata concepts; tied to th
 
 ### Rules of this implementation
 
-- Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs and of their label. Label vectors belong to the search adapter (ADR-0008).
+- Search: ESCO skills by index (exact IDs, ancestors); concepts by semantic search over the vectors of their Wikidata IDs and of their label. Vectors belong to the model plugin (ADR-0008, ADR-0028).
 - How the store encodes status, kind and state (e.g. small integers) is the store adapter's choice; the UI translates their names for display (ADR-0019).
 - Responses embed the label of each referenced skill, occupation and concept, in the requested language; the store keeps identifiers only.
 - Reference data: ESCO is shipped with the release; Wikidata items are looked up online and cached.

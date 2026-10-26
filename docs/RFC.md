@@ -327,7 +327,7 @@ The IRI of the vocabulary is not fixed in this revision.
 
 The HTTP binding is described by an OpenAPI contract, [api/openapi.yaml](../api/openapi.yaml). It interprets this document: it follows its requirements and chooses among its options. Where they disagree, this document prevails.
 
-The binding chooses, among others: JSON-LD responses with the actions available on each resource, problem details [RFC9457] for refused changes, JSON merge patch [RFC7396] for changes to proposed facts, and entity tags for freshness and concurrent changes [RFC9110].
+The binding chooses, among others: JSON-LD responses with the actions available on each resource, problem details [RFC9457] for refused changes, JSON merge patch [RFC7396] for changes to facts, and entity tags for freshness and concurrent changes [RFC9110].
 
 ## 7. Plugin Contracts
 

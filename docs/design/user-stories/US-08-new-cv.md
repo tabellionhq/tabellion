@@ -32,10 +32,11 @@ F01 extract, F02 find the skill meant by words, F03 propose, F04 review, F06 wri
 | Client | web UI (ADR-0016) |
 | Auth | UI one-time token |
 | Store | one database engine |
-| Extraction | plain text CV, through a small language model running locally |
+| Extraction | plain text CV in the core; PDF, DOCX, ODT in the `cv` plugin |
+| Term matching | `model` plugin: a small local language model to test; other providers as other plugins |
 | Reference data | ESCO, Wikidata |
-| Search | ESCO index; embeddings on concepts |
-| Rendering | JSON Resume out |
+| Search | ESCO index in the core; embeddings on concepts in the `model` plugin |
+| Export, rendering | JSON Resume by the core; PDF and HTML in the `cv` plugin |
 
 ## Rules
 
@@ -43,4 +44,4 @@ F01 extract, F02 find the skill meant by words, F03 propose, F04 review, F06 wri
 
 ## Open
 
-- Which LLM extracts the CV: a small language model running locally, to test; an ADR when it is chosen.
+- Which language model matches the terms of the CV: a small one running locally, to test; an ADR when it is chosen.

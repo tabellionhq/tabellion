@@ -12,8 +12,9 @@ Functional design, data first.
 | [adapters.md](adapters.md) | adapters by port |
 | [mvp-session.md](mvp-session.md) | the MVP session, request by request |
 | [ui-functions.md](ui-functions.md) | what the web UI does itself, and the server actions it shows |
-| [wireframes/review.md](wireframes/review.md) | review screen: layout, actions, focus, WCAG 2.2 AA |
+| [wireframes/review.md](wireframes/review.md) | review screen, superseded by the screens |
 | [screens/](screens/) | MVP screens, found by playing Anne's session |
+| [ui-api-map.md](ui-api-map.md) | each control of the screens mapped to the contract; build order |
 | [data-first.md](data-first.md) | design position and its lineage |
 | [cv-standards.md](cv-standards.md) | CV import and export through existing standards |
 

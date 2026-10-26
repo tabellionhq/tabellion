@@ -2,9 +2,9 @@
 
 Code: [github.com/tabellionhq](https://github.com/tabellionhq) · site: [tabellion.app](https://tabellion.app)
 
-Checks that a developer can explain code they merged from agent-written commits.
+Records the skills a person has practised over time: occupations held, and practices of a skill on a concept, over a period, at a level. The record belongs to the person, who exposes part of it through views, such as a CV.
 
-Exercises are generated from real commits of a project and target the developer's level.
+Skills are ESCO skills; concepts are Wikidata items.
 
 ## Specification
 
@@ -29,7 +29,11 @@ Contributions are signed off under the Developer Certificate of Origin: see [CON
 - Hosted service possible: see [APR-0005](docs/apr/APR-0005-hosted-service-possible.md).
 - Accessibility: see [APR-0006](docs/apr/APR-0006-accessibility.md).
 
-## Exercise types
+## Potential use case: knowledge checks
+
+Checks that a developer can explain code they merged from agent-written commits. Exercises are generated from real commits of a project and target the developer's level; a passed check can become evidence of a practice.
+
+### Exercise types
 
 | Type | The developer… | Status |
 |---|---|---|
@@ -38,7 +42,7 @@ Contributions are signed off under the Developer Certificate of Origin: see [CON
 | Definition | defines a concept in their own words | planned |
 | Input → output | predicts what comes out for a given input | planned |
 
-## Quiz format
+### Quiz format
 
 - 1 or 2 code blocks taken from one commit.
 - 3 questions, easy to hard.
@@ -52,5 +56,7 @@ docs/adr/       Architecture Decision Records
 docs/agdr/      Agent Decision Records
 docs/research/  benchmarks and studies
 docs/design/    personas, user stories, data model, functions, design notes
-quizzes/, sessions/  sample exercises; storage is not decided
+api/           API contract (OpenAPI) and JSON-LD context
+testdata/      a sample record and the CV it was written from
+quizzes/, sessions/  sample exercises of the knowledge checks; storage is not decided
 ```
