@@ -25,8 +25,6 @@
 
 ## Screens
 
-- [ ] Screens 03 (reading and confirm) and 06 (export, view editor) from the role-play: save from the session transcript if needed
-- [ ] Export screen: focus a CV on a job (target ESCO occupation, job offer, saved views)
 - [ ] Check screen: drag-and-drop library, and a way to do the same without dragging (WCAG 2.5.7)
 - [ ] Review screen wireframe (superseded): redraw minimal, review all at once with pre-filled buckets, or drop
 

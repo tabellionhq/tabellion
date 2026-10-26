@@ -3,7 +3,7 @@
 - Date: 2026-10-14
 - Model: Claude Opus 5.5 (claude-opus-5-5)
 - Tool: Claude Code
-- Status: Closed, 2026-10-26; open items deferred to [20261026-tabellion-design-backlog](20261026-tabellion-design-backlog.md)
+- Status: Closed, 2026-10-26; role-play moved to [20261026-anne-mvp-roleplay](20261026-anne-mvp-roleplay.md), other open items to [20261026-tabellion-design-backlog](20261026-tabellion-design-backlog.md)
 
 A developer must be able to explain code they merged from agent commits. POC: generate exercises from real commits, at the developer's level (beginner Rust), and record answers.
 
@@ -75,7 +75,7 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Review screen wireframe: `docs/design/wireframes/review.md`; split rows need no script of our own
 - [x] Owner corrects any fact by editing; progress is a new practice
 - [>] Review screen: redraw minimal, review all at once with pre-filled buckets
-- [x] Role-play of Anne's MVP session, ended: screens 1 home, 2 import, 4 check, 5 import epilogue saved; 3 and export drafted, not saved
+- [>] Role-play of Anne's MVP session: moved to [20261026-anne-mvp-roleplay](20261026-anne-mvp-roleplay.md)
 - [>] Owner: CV prose (summary, highlights): written, generated, kept where (cv-standards.md, Questions)
 - [>] Rule: no telemetry (specification or ADR)
 - [>] Check GDPR household exemption for local use; GDPR duties for the hosted service
