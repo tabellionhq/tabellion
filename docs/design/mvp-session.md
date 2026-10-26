@@ -184,7 +184,7 @@ At development time: the term matching model, a small local language model teste
 ### Not blocking
 
 - Messages in English only, kept apart from the code, in gettext PO files (ADR-0019).
-- Later: vocabulary IRI, grants, MCP, accepting a group in one request, deleting facts by a filter, CV formats other than JSON Resume.
+- Later: a document published at the vocabulary IRI, grants, MCP, accepting a group in one request, deleting facts by a filter, CV formats other than JSON Resume.
 
 ### Covered by the contract
 

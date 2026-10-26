@@ -321,7 +321,7 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 The terms of Sections 2 and 3 are exchanged as JSON-LD 1.1 [JSON-LD11]. The context is published with the HTTP binding: [api/contexts/curriculum.jsonld](../api/contexts/curriculum.jsonld). Actions use schema.org [SCHEMA-ORG]; identities use vCard [VCARD-RDF].
 
-The IRI of the vocabulary is not fixed in this revision.
+The IRI of the vocabulary is <https://tabellion.app/vocab#>. Nothing is published at this address yet.
 
 ## 6. HTTP Binding
 

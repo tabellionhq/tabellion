@@ -48,6 +48,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ADR-0028 core and plugins as services: Go core, optional plugin services (`cv` in TypeScript, `model` in Rust); demo compose runs the core and both.
 - Specification: plugin defined next to client; rules for plugins (4.10); contracts for CV extraction, term matching and CV rendering (7); sections 7 to 12 renumbered 8 to 13.
 - Design review: README describes Tabellion, knowledge checks become a potential use case; adapters, data model, MVP session and US-08 follow ADR-0028 (plugins); UI to API map with a build order.
+- Vocabulary IRI: https://tabellion.app/vocab#.
 - Wireframe: review screen, with its accessibility rules.
 - The owner corrects any fact by editing it, whatever its status; progress over time is a new practice (specification 4.1, ADR-0008 clarification). Owner rights in the specification are written as server duties.
 - Tasks: canonical states ongoing, finished, abandoned, interrupted; stages and transitions defined by each kind of task; the CV import gains a confirm stage for the extracted text.
