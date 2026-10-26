@@ -3,7 +3,7 @@
 - Date: 2026-10-14
 - Model: Claude Opus 5.5 (claude-opus-5-5)
 - Tool: Claude Code
-- Status: Open
+- Status: Closed, 2026-10-26; open items deferred to [20261026-tabellion-design-backlog](20261026-tabellion-design-backlog.md)
 
 A developer must be able to explain code they merged from agent commits. POC: generate exercises from real commits, at the developer's level (beginner Rust), and record answers.
 
@@ -40,20 +40,21 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Agent capability check: out of scope (ADR-0015)
 - [x] Adapters by port: `docs/design/adapters.md` (draft)
 - [x] MVP story: import a CV, export it filtered (US-01, US-08), in the web UI
-- [ ] ADR when chosen: language model for CV extraction; a small local model to test first
+- [>] ADR when chosen: language model for CV extraction; a small local model to test first
 - [x] Closed: evidence export, chosen per view by `show.evidence`
 - [x] Closed: ESCO–O*NET crosswalk, no impact on the model
 - [x] Closed: exchange stack, signed credentials out of scope (ADR-0004)
 - [x] Closed: quiz exercises, starting exercise only
 - [x] Project name: Tabellion; GitHub `tabellionhq`, tabellion.app
-- [ ] Owner: register tabellion.app, create GitHub `tabellionhq`; manual trademark check
+- [x] Owner: register tabellion.app
+- [>] Owner: create GitHub `tabellionhq`; manual trademark check
 - [x] Rename `skills-track` to `tabellion` in docs, contract and paths
 - [x] ADR-0020 target platforms: Windows, macOS, Linux; full builds on release
 - [x] APR-0005 hosted service possible
 - [x] MVP requirements: `docs/design/mvp-session.md`
 - [x] Test data: `testdata/anne`, facts first, CV from them
 - [x] ADR-0022 store engine: ncruces/go-sqlite3 to start, PostgreSQL later
-- [ ] Check ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
+- [>] Check ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
 - [x] Generation test: oapi-codegen v2.8.0 generates and cross-compiles both targets; `@context` name clash fixed; nullable types for merge patch
 - [x] ADR-0023 HTTP stack: standard library, oapi-codegen strict server
 - [x] Persona Thomas, US-10: apps are separate clients of the API; the server is the authority
@@ -62,28 +63,32 @@ A developer must be able to explain code they merged from agent commits. POC: ge
 - [x] Specification draft-tabellion-curriculum-00: `docs/RFC.md`, CC BY 4.0
 - [x] Design notes trimmed: data model and resources link to the specification
 - [x] ADR-0025 licences: CC BY 4.0 spec, Apache-2.0 contract and test data, AGPL-3.0 server, DCO
-- [ ] Licence files (root, api, testdata, docs); DCO and licence checks in CI
+- [>] Licence files (root, api, testdata, docs); DCO and licence checks in CI
 - [x] CONTRIBUTING.md
 - [x] Default branch renamed to `main`
 - [x] ADR-0026 git workflow: GitHub flow
 - [x] ADR-0021 web UI: HTMX, `/ui` HTML adapter, `/api` JSON-LD
 - [x] Test data open points: languages and summary skills are practices completed in review; evidence line; view period by overlap
-- [ ] Owner: concept search in the MVP, Wikidata online search or local embeddings
+- [>] Owner: concept search in the MVP, Wikidata online search or local embeddings
 - [x] APR-0006 accessibility
 - [x] ADR-0027 accessibility standard: WCAG 2.2 AA
 - [x] Review screen wireframe: `docs/design/wireframes/review.md`; split rows need no script of our own
 - [x] Owner corrects any fact by editing; progress is a new practice
-- [ ] Review screen: redraw minimal, review all at once with pre-filled buckets
-- [ ] Screens by role-play: 1 home, 2 import, 4 check, 5 import epilogue done; 3 reading to save; next view and export
-- [ ] Owner: CV prose (summary, highlights): written, generated, kept where (cv-standards.md, Questions)
-- [ ] Rule: no telemetry (specification or ADR)
-- [ ] Check GDPR household exemption for local use; GDPR duties for the hosted service
-- [ ] Contract: operation to leave out a term not matched (cv-import result); home shows terms not matched
+- [>] Review screen: redraw minimal, review all at once with pre-filled buckets
+- [x] Role-play of Anne's MVP session, ended: screens 1 home, 2 import, 4 check, 5 import epilogue saved; 3 and export drafted, not saved
+- [>] Owner: CV prose (summary, highlights): written, generated, kept where (cv-standards.md, Questions)
+- [>] Rule: no telemetry (specification or ADR)
+- [>] Check GDPR household exemption for local use; GDPR duties for the hosted service
+- [>] Contract: operation to leave out a term not matched (cv-import result); home shows terms not matched
 - [x] ADR-0019 internationalisation: gettext PO
-- [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
+- [>] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
 - [x] ADR-0028 core and plugins as services
 - [x] Specification: define plugin; contracts for CV extraction, term matching, CV rendering
-- [ ] Term matching also returns the identity (name, contacts) of the CV
-- [ ] Plugin contracts: HTTP binding
-- [ ] Consent before data leaves the local system (roadmap)
-- [ ] Demo compose: core, `cv`, `model`
+- [>] Term matching also returns the identity (name, contacts) of the CV
+- [>] Plugin contracts: HTTP binding
+- [>] Consent before data leaves the local system (roadmap)
+- [>] Demo compose: core, `cv`, `model`
+- [>] Owner: level names, "Intermediate" and "Average" read alike (ADR-0002)
+- [>] Owner: date precision of practices (year only?)
+- [>] Check screen: drag-and-drop library, and a way to do the same without dragging (WCAG 2.5.7)
+- [>] Export screen: focus a CV on a job (target ESCO occupation, job offer, saved views)
