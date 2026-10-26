@@ -1,6 +1,6 @@
 # Tabellion
 
-Code: [github.com/tabellionhq](https://github.com/tabellionhq) · site: [tabellion.app](https://tabellion.app)
+Code: [github.com/tabellionhq/tabellion](https://github.com/tabellionhq/tabellion) · site: [tabellion.app](https://tabellion.app)
 
 Records the skills a person has practised over time: occupations held, and practices of a skill on a concept, over a period, at a level. The record belongs to the person, who exposes part of it through views, such as a CV.
 

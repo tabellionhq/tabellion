@@ -439,8 +439,8 @@ This document has no IANA actions.
 - [RFC9457] Nottingham, M., Wilde, E., and S. Dalal, "Problem Details for HTTP APIs", RFC 9457, August 2023, <https://www.rfc-editor.org/info/rfc9457>.
 - [JSON-RESUME] JSON Resume, "JSON Resume schema", <https://jsonresume.org/schema>.
 - [SCHEMA-ORG] "Schema.org", <https://schema.org>.
-- [TABELLION-API] Tabellion project, "Tabellion HTTP binding: OpenAPI contract and JSON-LD context", <https://github.com/tabellionhq>.
-- [TABELLION-TESTDATA] Tabellion project, "Tabellion conformance test data", <https://github.com/tabellionhq>.
+- [TABELLION-API] Tabellion project, "Tabellion HTTP binding: OpenAPI contract and JSON-LD context", <https://github.com/tabellionhq/tabellion/tree/main/api>.
+- [TABELLION-TESTDATA] Tabellion project, "Tabellion conformance test data", <https://github.com/tabellionhq/tabellion/tree/main/testdata>.
 - [VCARD-RDF] Iannella, R. and J. McKinney, "vCard Ontology - for describing People and Organizations", W3C Interest Group Note, May 2014, <https://www.w3.org/TR/vcard-rdf/>.
 - [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
 
@@ -448,4 +448,4 @@ This document has no IANA actions.
 
 Alban Crommer\
 Tabellion project\
-URI: <https://github.com/tabellionhq>
+URI: <https://github.com/tabellionhq/tabellion>

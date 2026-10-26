@@ -15,7 +15,8 @@
 - [ ] Date precision of practices (year only?)
 - [ ] Rule: no telemetry (specification or ADR)
 - [ ] Consent before data leaves the local system (roadmap)
-- [ ] Create GitHub `tabellionhq`; manual trademark check
+- [x] Create GitHub `tabellionhq`
+- [ ] Manual trademark check
 
 ## Specification and contract
 
