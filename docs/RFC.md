@@ -319,19 +319,19 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 ## 5. Vocabulary
 
-The terms of Sections 2 and 3 are exchanged as JSON-LD 1.1 [JSON-LD11]. The context is published with the HTTP binding: [api/contexts/curriculum.jsonld](../api/contexts/curriculum.jsonld). Actions use schema.org [SCHEMA-ORG]; identities use vCard [VCARD-RDF].
+The terms of Sections 2 and 3 are exchanged as JSON-LD 1.1 [JSON-LD11]. The context is published with the HTTP binding [TABELLION-API]. Actions use schema.org [SCHEMA-ORG]; identities use vCard [VCARD-RDF].
 
-The IRI of the vocabulary is <https://tabellion.app/vocab#>. Nothing is published at this address yet.
+The IRI of the vocabulary is <https://tabellion.app/vocab#>.
 
 ## 6. HTTP Binding
 
-The HTTP binding is described by an OpenAPI contract, [api/openapi.yaml](../api/openapi.yaml). It interprets this document: it follows its requirements and chooses among its options. Where they disagree, this document prevails.
+The HTTP binding is described by an OpenAPI contract [OPENAPI], published by the Tabellion project [TABELLION-API]. It interprets this document: it follows its requirements and chooses among its options. Where they disagree, this document prevails.
 
 The binding chooses, among others: JSON-LD responses with the actions available on each resource, problem details [RFC9457] for refused changes, JSON merge patch [RFC7396] for changes to facts, and entity tags for freshness and concurrent changes [RFC9110].
 
 ## 7. Plugin Contracts
 
-A contract is what a server sends to a plugin of one kind, and what the plugin returns. The HTTP binding of each contract is not fixed in this revision.
+A contract is what a server sends to a plugin of one kind, and what the plugin returns. This document does not define an HTTP binding for these contracts.
 
 ### 7.1. Common to all plugins
 
@@ -388,7 +388,7 @@ A conforming client sends only changes allowed by Section 4, and handles the ref
 
 A conforming plugin implements Sections 4.10 and 7.1, and the contract of each kind it declares.
 
-Test data for conformance: [testdata](../testdata/README.md), a record and the document it was written from.
+Test data for conformance, a record and the document it was written from, is published by the Tabellion project [TABELLION-TESTDATA].
 
 ## 9. Internationalization Considerations
 
@@ -439,6 +439,8 @@ This document has no IANA actions.
 - [RFC9457] Nottingham, M., Wilde, E., and S. Dalal, "Problem Details for HTTP APIs", RFC 9457, August 2023, <https://www.rfc-editor.org/info/rfc9457>.
 - [JSON-RESUME] JSON Resume, "JSON Resume schema", <https://jsonresume.org/schema>.
 - [SCHEMA-ORG] "Schema.org", <https://schema.org>.
+- [TABELLION-API] Tabellion project, "Tabellion HTTP binding: OpenAPI contract and JSON-LD context", <https://github.com/tabellionhq>.
+- [TABELLION-TESTDATA] Tabellion project, "Tabellion conformance test data", <https://github.com/tabellionhq>.
 - [VCARD-RDF] Iannella, R. and J. McKinney, "vCard Ontology - for describing People and Organizations", W3C Interest Group Note, May 2014, <https://www.w3.org/TR/vcard-rdf/>.
 - [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
 

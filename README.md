@@ -58,5 +58,5 @@ docs/research/  benchmarks and studies
 docs/design/    personas, user stories, data model, functions, design notes
 api/           API contract (OpenAPI) and JSON-LD context
 testdata/      a sample record and the CV it was written from
-quizzes/, sessions/  sample exercises of the knowledge checks; storage is not decided
+quizzes/, sessions/  sample exercises of the knowledge checks
 ```
