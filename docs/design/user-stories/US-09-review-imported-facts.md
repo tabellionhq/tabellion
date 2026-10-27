@@ -14,7 +14,7 @@ As Anne, I want to check what the import understood from my CV, at my own pace, 
 - Review is not a gate. Imported facts that are not yet reviewed are usable.
 - Views include proposed facts by default; shared views (with a grant) exclude them by default. Both are configurable.
 - Every review operation is available, from a plain "ok" to splitting or expanding a fact.
-- Levels are set by Anne, or proposed by the import when the CV allows it (e.g. "5 years of Rust").
+- Levels are set by Anne, or proposed by the import when the CV states one (e.g. "English: fluent"); a level is not inferred, e.g. from years of practice (specification, Section 4.1).
 - The import fills only what the CV states. An uncertain fact lacks definitions (no level, no start date): its completion is low, and it waits in "to complete".
 - A term the import did not match stays in the import task until Anne resolves it into a fact or leaves it out; leaving it out records nothing.
 - What Anne does with a fact that is true but unwanted is her choice: reject it, or keep it and leave it out of a view.
@@ -53,4 +53,4 @@ The raw CV text is not kept once the import task ends. Each fact keeps its excer
 
 ## Open
 
-- Which fields count towards completion, beyond the start date, the level and the occupation title.
+- Settled: completion counts the start date and the level of a practice, and the ESCO occupation of an occupation held (specification, Section 4.8).

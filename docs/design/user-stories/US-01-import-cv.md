@@ -17,7 +17,7 @@ As Anne, I want to upload my CV and review what is extracted, so that my curricu
 | Personal projects | "Maintainer of a laser tracer" | occupation, pleasure |
 | Education, certifications, trainings | "MSc Computer Science, 2016–2018" | occupation (student, trainee) over that period; skills gained there are Practices at that occupation |
 | Languages, human and computer | "English: fluent", "Rust" | Practices: human languages as ESCO language skills, computer languages as Wikidata context |
-| Identity and contact | name, email, phone, address | not stored: Person is opaque |
+| Identity and contact | name, email, phone, address | an identity, proposed from the CV; kept apart from facts (specification, Section 3.2) |
 
 ## Data in, data out
 
@@ -28,7 +28,7 @@ As Anne, I want to upload my CV and review what is extracted, so that my curricu
 ## Functions required
 
 1. Extract statements from a document: occupations, periods, skill and technology terms, each with the excerpt it comes from.
-2. Resolve a term to identifiers (ESCO skill or occupation, Wikidata concept or context), with candidates and a confidence. This is the search of US-02.
+2. Resolve a term to identifiers (ESCO skill or occupation, Wikidata concept or context), with candidates. A term the import cannot resolve stays unmatched; a fact it is unsure of lacks fields. This is the search of US-02.
 3. Propose facts to the person's record, status proposed, the CV excerpt as evidence.
 4. Review proposed facts: Anne augments, filters, validates.
 
@@ -36,11 +36,13 @@ ADR-0006 leaves out who accepts facts in an organisation; Anne reviewing her own
 
 ## Data model impacts
 
-- **Occupation held** is missing: person, occupation, kind (work, pleasure), from, to.
-- **Practice over a period**: a CV gives periods, not dates.
-- **Level**: a CV rarely states one; null by default, or self-declared ("fluent").
-- **Evidence**: the CV excerpt behind each fact.
-- **Author**: Anne states the facts; an extractor wrote them. Both may need recording.
+Covered by the specification:
+
+- **Occupation held**: person, occupation, kind (work, pleasure, study), from, to (Section 3.4).
+- **Practice over a period** (Section 3.5).
+- **Level**: empty unless the CV states one, e.g. "English: fluent" (Section 4.1).
+- **Evidence**: the CV excerpt behind each fact, its file and line.
+- **Author**: the import task; Anne accepts or corrects (Sections 4.1, 4.7).
 
 ## Scope
 

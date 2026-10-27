@@ -84,7 +84,7 @@ Michaela looks on the market for new potential recruits who can do Rust, Kafka a
 | UC5 training completed | Ismael | training objectives | Anne's view | gaps |
 | UC6 signed skills | Ismael | Practices with signed evidence | | Practices proposed to Anne's record |
 | UC7 bootstrap from a CV | Anne | CV text | | Practices proposed to Anne's record |
-| UC8 new CV | Anne | | Anne's view | view data (rendering out of scope) |
+| UC8 new CV | Anne | | Anne's view | view data; rendering by a plugin, outside the specification |
 | UC9a–c strategic analysis | Anne's company | embedded-systems requirements | coworkers' views | readiness; who is fit; who is trainable |
 | UC9d orientation | Anne's company | embedded-systems requirements | Anne's view | Target proposed to Anne |
 | UC10 yearly HR | Michaela | a period | coworkers' views | progress per person |

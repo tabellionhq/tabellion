@@ -11,15 +11,15 @@ As Anne, I want to export a CV from my curriculum, filtered for a job offer, so 
 
 ## Flow, in the web UI
 
-1. Import: Anne uploads her old CV as text (e.g. saved from LibreOffice) (US-01).
-2. Validation: she reviews the proposed facts, accepts or rejects each (F04).
-3. View: she writes a filter for the offer: occupations, periods, skill categories, facts to include or exclude (F06).
-4. New CV: she exports through the view as JSON Resume; a JSON Resume theme renders it as PDF or HTML (F07).
+1. Import: Anne uploads her old CV, as a file (pdf, docx, odt, txt), a link or text (US-01).
+2. Check: she completes, accepts or rejects the proposed facts (F04, US-09).
+3. New CV: she picks the identity that signs it, then a view for the offer: occupations, periods, skill categories, facts to include or exclude (F06).
+4. Export: as JSON Resume, or as PDF or HTML rendered with a JSON Resume theme (F07). The CV is saved, and rebuilt later with new facts.
 
 ## Data in, data out
 
-- In: a CV as plain text; Anne's picks for the view.
-- Out: a JSON Resume document holding only the facts the view shows.
+- In: a CV; Anne's choice of identity and her picks for the view; a theme and a format.
+- Out: a JSON Resume document, or a PDF or HTML file, holding only the facts the view shows.
 
 ## Functions required
 
