@@ -11,7 +11,7 @@ As Anne, I want to add to my curriculum the skills I learned as part of the CKAD
 ## Data in, data out
 
 - In: the certification's name, its period, the skills learned (in Anne's words), a link to the certificate.
-- Out: facts in Anne's record: the preparation as an occupation (study), Practices at that occupation; each with Anne as author and the certificate link as evidence.
+- Out: facts in Anne's record, created as accepted: the preparation as an occupation (study), Practices at that occupation; each with Anne as author and the certificate link as evidence.
 
 ```yaml
 evidence:
@@ -29,8 +29,7 @@ evidence:
 ## Functions required
 
 - F02 Find the skill meant by words.
-- F03 Propose facts to a record.
-- F04 Review proposed facts.
+- Create facts: the owner creates them with status accepted (specification, Section 4.1).
 
 ## Data model impacts
 
