@@ -11,7 +11,7 @@ As Michaela, I want to find among applicants those whose curriculum relates to R
 ## Scope
 
 - In scope: applicants who shared a view with their application (US-06), e.g. a link in the application.
-- Out of scope: discovering people who did not apply. Crawling and indexing public curricula is a requester-side system (e.g. a job board); the curriculum only makes public views readable.
+- Out of scope: discovering people who did not apply. Crawling and indexing public curricula is a requester-side system (e.g. a job board); the curriculum only makes views readable to the readers they are granted to, or as exported files (ADR-0013).
 
 ## Data in, data out
 

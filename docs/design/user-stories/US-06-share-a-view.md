@@ -19,7 +19,7 @@ A view is a database view used for access control: a stored selection of Anne's 
 | include_facts | allow list: `OR id IN (…)` | these facts, picked for a job offer |
 | exclude_facts | deny list: `AND id NOT IN (…)` | not this charity project |
 | show | projection | levels yes, evidence no |
-| grantee | grant | Michaela, Ismael, a recruiter, public |
+| grantee | grant, one per reader (ADR-0013) | Michaela, Ismael, a recruiter holding a link with a bearer token; anyone, through an exported file |
 
 The deny list wins over rules and allow list.
 
