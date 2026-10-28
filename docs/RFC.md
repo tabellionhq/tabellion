@@ -294,6 +294,7 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A client MUST NOT assume the stages of a kind it does not know. It shows the stages and the actions the task carries.
 - A fact proposed by a task has the task as its author.
 - A server MUST let the owner reject, in one operation, every fact still proposed by a task.
+- A server MUST let the owner leave out a term an import did not match. Leaving a term out removes it from the result and records no fact.
 - A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.
 
 ### 4.8. Completion

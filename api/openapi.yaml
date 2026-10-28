@@ -147,6 +147,18 @@ paths:
               schema: {$ref: "#/components/schemas/Task"}
         "404": {$ref: "#/components/responses/Problem"}
 
+  /tasks/{taskId}/terms/{termId}:
+    parameters:
+      - {$ref: "#/components/parameters/taskId"}
+      - {$ref: "#/components/parameters/termId"}
+    delete:
+      tags: [import]
+      summary: Leave out a term the import did not match; no fact is recorded
+      operationId: leaveOutTerm
+      responses:
+        "204": {description: Left out}
+        "404": {$ref: "#/components/responses/Problem"}
+
   /persons/{personId}/occupations:
     parameters:
       - {$ref: "#/components/parameters/personId"}
@@ -468,6 +480,7 @@ components:
     factId: {name: factId, in: path, required: true, schema: {type: string, format: uuid}}
     viewId: {name: viewId, in: path, required: true, schema: {type: string, format: uuid}}
     taskId: {name: taskId, in: path, required: true, schema: {type: string, format: uuid}}
+    termId: {name: termId, in: path, required: true, schema: {type: string, format: uuid}}
     status:
       name: status
       in: query
@@ -841,9 +854,14 @@ components:
                   type: array
                   items:
                     type: object
+                    x-actions:
+                      - {type: DeleteAction, name: Leave out, method: DELETE, target: "@id"}
+                    required: ["@id", term, excerpt]
                     properties:
+                      "@id": {type: string, format: uri-reference}
                       term: {type: string}
                       excerpt: {type: string}
+                      line: {type: [integer, "null"], minimum: 1}
             problem:
               oneOf: [{$ref: "#/components/schemas/Problem"}, {type: "null"}]
 

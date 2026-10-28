@@ -54,7 +54,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Occupations list | `listOccupations` | ok |
 | Skill cards, buckets Complete and To complete | `listPractices`, grouped by `completion` | ok |
 | Not matched cards | `getTask`: `result.unresolved` | ok |
-| Leave out a term | | missing |
+| Leave out a term | `leaveOutTerm` | ok |
 | Resolve a term into a practice | `createPractice`; the term leaves `result.unresolved` | change: nothing removes the term |
 | Card, click: modal | `getPractice`, with its evidence | ok |
 | Modal: skill blank | `searchSkills` | ok |
@@ -122,7 +122,6 @@ Each step ends with something Anne can use.
      - the plugin binding (term matching)
      - the check stage
      - accepting proposed facts and ending the task
-     - leaving out a term
      - the epilogue actions
    - Matching can be a stub at first, returning the facts of `testdata/anne`.
 4. **Files and rendering, with the cv plugin.**

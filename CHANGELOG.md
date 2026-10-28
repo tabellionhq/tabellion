@@ -58,3 +58,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Dates of periods take the precision their source gives: year, year-month or full date.
 - Specification: a server sends no usage data (no telemetry).
 - Review screen wireframe removed; screen 04 covers the review.
+- Leave out a term an import did not match: `DELETE /tasks/{taskId}/terms/{termId}` (specification 4.7).
