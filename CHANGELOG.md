@@ -64,3 +64,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Delete a fact: `DELETE /practices/{id}`, `DELETE /occupations/{id}`; an occupation with practices is deleted only if its practices are moved or deleted in the same call (specification 4.1).
 - `GET /server`: demo mode and where records are stored, for the owner.
 - Screens 03 confirm and read the CV, 06 export a new CV.
+- CI: DCO check of every new commit (AgDR-0004).

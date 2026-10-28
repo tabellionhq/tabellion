@@ -24,7 +24,7 @@ This adds a line with your name and email:
 Signed-off-by: Your Name <you@example.org>
 ```
 
-Commits without it are refused.
+Commits without it, or whose sign-off email is not the author's, are refused by the DCO check in CI. To sign off earlier commits of a branch: `git rebase --signoff main`.
 
 ## Branches
 

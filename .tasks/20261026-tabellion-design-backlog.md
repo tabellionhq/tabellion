@@ -39,6 +39,7 @@
 - [ ] ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
 - [ ] GDPR household exemption for local use; GDPR duties for the hosted service
 - [x] Licence files: `licences/`, linked from the README
-- [ ] DCO and licence checks in CI
+- [x] DCO check in CI (AgDR-0004)
+- [ ] Licence check of Go dependencies in CI, once there is Go code
 - [ ] Demo compose: core, `cv`, `model`
 - [ ] Before the first translated message: Go PO library with plural rules; later, a translation service for community translations
