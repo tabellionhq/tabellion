@@ -53,6 +53,7 @@ This might be far-fetched for now, but it is a sensible approach.
   - `api/` (OpenAPI contract, JSON-LD context) and `testdata/`: Apache-2.0.
   - Server, web UI, command line: AGPL-3.0.
 - Files: `LICENSE` (AGPL-3.0) at the root; a licence file in `api/`, `testdata/` and `docs/`; the README says which licence covers what.
+  Updated 2026-10-28 by the owner: the licence texts live in `licences/`, one file per licence.
 - An SPDX identifier in each source file header, e.g. `SPDX-License-Identifier: AGPL-3.0-only` or `AGPL-3.0-or-later`: to choose when the first source file is written.
 - Dependencies compiled into the server: licences compatible with AGPL-3.0 only. MIT, BSD and Apache-2.0 are; GPL-2.0-only is not. Programs run as separate processes are not affected.
 - CI checks the licences of all Go dependencies, direct and indirect (e.g. `go-licenses`), and refuses incompatible or unknown licences.

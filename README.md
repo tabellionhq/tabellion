@@ -14,9 +14,9 @@ Skills are ESCO skills; concepts are Wikidata items.
 
 | Part | Licence |
 |---|---|
-| Specification and documentation | CC BY 4.0 |
-| API contract, JSON-LD context, test data | Apache-2.0 |
-| Server, web UI, command line | AGPL-3.0 |
+| Specification and documentation | [CC BY 4.0](licences/CC-BY-4.0.txt) |
+| API contract, JSON-LD context, test data | [Apache-2.0](licences/Apache-2.0.txt) |
+| Server, web UI, command line | [AGPL-3.0](licences/AGPL-3.0.txt) |
 
 Contributions are signed off under the Developer Certificate of Origin: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -58,4 +58,5 @@ docs/research/  benchmarks and studies
 docs/design/    personas, user stories, data model, functions, design notes
 api/           API contract (OpenAPI) and JSON-LD context
 testdata/      a sample record and the CV it was written from
+licences/      licence texts
 ```
