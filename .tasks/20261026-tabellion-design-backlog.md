@@ -11,10 +11,10 @@
 - [ ] Language model for CV extraction (ADR); a small local model to test first
 - [ ] Concept search in the MVP: Wikidata online search or local embeddings
 - [ ] CV prose (summary, highlights): written, generated, kept where (cv-standards.md, Questions)
-- [ ] Level names: "Intermediate" and "Average" read alike (ADR-0002)
-- [ ] Date precision of practices (year only?)
-- [ ] Rule: no telemetry (specification or ADR)
-- [ ] Consent before data leaves the local system (roadmap)
+- [x] Level names: level 3 renamed Experienced (ADR-0002, specification 4.3)
+- [x] Date precision: year, year-month or full date, as the source gives (specification 3, 4.5; contract `PartialDate`)
+- [x] Rule: no telemetry (specification 11)
+- [x] Consent before data leaves the local system: moved to ROADMAP ("Where the data goes")
 - [x] Create GitHub `tabellionhq`
 - [ ] Manual trademark check
 
@@ -30,7 +30,7 @@
 
 - [ ] Screens drafted in the role-play, not saved: 03 reading and confirm, 06 export (who, what, look, file, build); "My CVs" screen
 - [ ] Check screen: drag-and-drop library, and a way to do the same without dragging (WCAG 2.5.7)
-- [ ] Review screen wireframe (superseded): redraw minimal, review all at once with pre-filled buckets, or drop
+- [x] Review screen wireframe: dropped, screen 04 covers the review
 
 ## Checks and setup
 

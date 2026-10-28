@@ -63,7 +63,7 @@ Level list, meaning first, name second:
 ```
 I need guidance · Basic
 I apply known solutions · Intermediate
-I solve problems · Average
+I solve problems · Experienced
 I define the problems · Advanced
 I find new problems · Expert
 ```
@@ -82,6 +82,4 @@ I find new problems · Expert
 
 - Drag and drop needs a non-drag way to move a card (WCAG 2.5.7), e.g. in the modal.
 - Drag and drop, the modal and the tips need more script than HTMX alone: a small library to choose.
-- Dates: Anne types a year; the model holds full dates. Store a precision, or the first day of the period.
-- Level names: "Intermediate" and "Average" both read as "in the middle" (ADR-0002).
 - The vocabulary of the sentence ("did", "on", "at") needs wording.

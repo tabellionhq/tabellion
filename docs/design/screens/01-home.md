@@ -38,5 +38,5 @@ deleted.                      wikidata.org.
 ## Open
 
 - The paragraph names features not in the MVP (sharing, progress): show them as coming, or leave them out until they exist.
-- "No telemetry" becomes a rule, in the specification or an ADR.
+- "No telemetry": specification, Section 11.
 - GDPR on a personal machine: the household exemption, Art. 2(2)(c); to check. The hosted service holds data: the GDPR applies.

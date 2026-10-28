@@ -115,7 +115,7 @@ Plugin
 
 ## 3. Data Model
 
-Types: `uuid` is a UUID [RFC9562]; `date` is a full-date and `datetime` a date-time [RFC3339]; `uri` is an absolute URI [RFC3986]. A field marked optional MAY be absent or null.
+Types: `uuid` is a UUID [RFC9562]; `date` is a year, a year and month, or a full date (YYYY, YYYY-MM or YYYY-MM-DD), at the precision its source gives, and stands for the whole year or month it names; `datetime` is a date-time [RFC3339]; `uri` is an absolute URI [RFC3986]. A field marked optional MAY be absent or null.
 
 ### 3.1. Person
 
@@ -247,7 +247,7 @@ An access log entry holds a grant id and the datetime of a read.
 |---|---|---|
 | 1 | Basic | requires guidance |
 | 2 | Intermediate | autonomous: applies solutions |
-| 3 | Average | experience: solves problems |
+| 3 | Experienced | experience: solves problems |
 | 4 | Advanced | defines problems |
 | 5 | Expert | finds problems |
 
@@ -270,7 +270,7 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 ### 4.5. Views
 
 - A view selects the facts that match its `include` rules or its `include_facts` list, and do not appear in its `exclude_facts` list. The deny list wins.
-- A fact matches `include.period` if its own period overlaps it.
+- A fact matches `include.period` if its own period overlaps it. A `from` date is read as the first day it stands for, a `to` date as the last.
 - Without `include.status`, a view selects proposed and accepted facts. A view read under a grant selects only accepted facts unless its `include.status` says otherwise.
 - Rejected facts are never selected.
 - Fields hidden by `show` MUST NOT be returned to a reader.
@@ -412,6 +412,7 @@ Test data for conformance, a record and the document it was written from, is pub
 - The person decides what each reader sees; the deny list of a view always wins.
 - The access log tells the person who read which view, and when.
 - Source documents, such as a CV, are not kept beyond their import (Section 4.7).
+- A server MUST NOT send usage data, such as telemetry, to anyone. It sends personal data only to the plugins the owner's tasks call.
 - A plugin receives personal data, such as the text of a CV, and does not keep it (Section 4.10). A server SHOULD tell the owner which plugin, and which provider, receives their data before a task sends it.
 
 ## 12. IANA Considerations

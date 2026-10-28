@@ -518,8 +518,13 @@ components:
       type: string
       format: uri
 
+    PartialDate:
+      description: A date at the precision its source gives, year, year and month, or full date (YYYY, YYYY-MM, YYYY-MM-DD). It stands for the whole year or month it names.
+      type: string
+      pattern: "^[0-9]{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?$"
+
     Level:
-      description: 1 basic, 2 intermediate, 3 average, 4 advanced, 5 expert; null when unknown
+      description: 1 basic, 2 intermediate, 3 experienced, 4 advanced, 5 expert; null when unknown
       oneOf:
         - {type: integer, minimum: 1, maximum: 5}
         - {type: "null"}
@@ -631,8 +636,8 @@ components:
           oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]
         label: {type: string}
         kind: {type: string, enum: [work, pleasure, study]}
-        from: {type: string, format: date}
-        to: {type: [string, "null"], format: date}
+        from: {$ref: "#/components/schemas/PartialDate"}
+        to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
         evidence: {}
 
     OccupationHeld:
@@ -663,9 +668,8 @@ components:
           format: uri-reference
         from:
           description: Start of the period. Null only on a proposed practice whose source gives no period; required to accept.
-          type: [string, "null"]
-          format: date
-        to: {type: [string, "null"], format: date}
+          oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]
+        to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
         level: {$ref: "#/components/schemas/Level"}
         evidence:
           description: Any JSON. From a CV import, `{excerpt, file, line}`.
@@ -696,8 +700,8 @@ components:
             occupation: {oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]}
             label: {type: string}
             kind: {type: string, enum: [work, pleasure, study]}
-            from: {type: string, format: date}
-            to: {type: [string, "null"], format: date}
+            from: {$ref: "#/components/schemas/PartialDate"}
+            to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
 
     PracticeReview:
       description: Merge patch on a practice; fields edited, status optional
@@ -708,8 +712,8 @@ components:
             skill: {$ref: "#/components/schemas/Uri"}
             concept: {$ref: "#/components/schemas/Concept"}
             context: {oneOf: [{$ref: "#/components/schemas/Uri"}, {type: "null"}]}
-            from: {type: string, format: date}
-            to: {type: [string, "null"], format: date}
+            from: {$ref: "#/components/schemas/PartialDate"}
+            to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
             level: {$ref: "#/components/schemas/Level"}
 
     IdentityInput:
@@ -743,8 +747,8 @@ components:
               description: A fact is included if its period overlaps this one.
               type: [object, "null"]
               properties:
-                from: {type: [string, "null"], format: date}
-                to: {type: [string, "null"], format: date}
+                from: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
+                to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
             skill_under:
               description: ESCO skill groups
               type: [array, "null"]

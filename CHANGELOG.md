@@ -54,3 +54,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Tasks: canonical states ongoing, finished, abandoned, interrupted; stages and transitions defined by each kind of task; the CV import gains a confirm stage for the extracted text.
 - Fidelity removed. An import fills only what its source states; completion, computed from the fields, measures each fact and the record (specification 4.8).
 - Tasks are kept with their result until the owner deletes them; terms an import did not match stay there until resolved or left out.
+- Level 3 renamed from Average to Experienced (ADR-0002).
+- Dates of periods take the precision their source gives: year, year-month or full date.
+- Specification: a server sends no usage data (no telemetry).
+- Review screen wireframe removed; screen 04 covers the review.

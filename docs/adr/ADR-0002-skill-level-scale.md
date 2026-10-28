@@ -2,6 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-10-15
+- Updated 2026-10-28: level 3 renamed from Average to Experienced, since Intermediate and Average both read as "in the middle"
 
 ## Decision
 
@@ -11,7 +12,7 @@ Skill levels use our own scale, 1 to 5:
 |---|---|---|
 | 1 | Basic | requires guidance |
 | 2 | Intermediate | autonomous: applies solutions |
-| 3 | Average | experience: solves problems |
+| 3 | Experienced | experience: solves problems |
 | 4 | Advanced | defines problems |
 | 5 | Expert | finds problems |
 
