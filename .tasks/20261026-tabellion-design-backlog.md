@@ -20,7 +20,7 @@
 
 ## Specification and contract
 
-- [ ] Term matching also returns the identity (name, contacts) of the CV
+- [ ] CV adapter, not the specification: the import picks up the name and contacts at the top of a CV and proposes an identity; a CV-adapter specification may come later
 - [ ] Plugin contracts: HTTP binding
 - [ ] Preferences (3.10, 4.11): per-person entries, opaque to the specification, owner only, never exposed by views; e.g. `cv/1: {identity, view, theme, format}` for a saved CV; a plugin gets only the entry its call needs
 - [ ] CV themes (npm): a few in the `cv` image, more installed on demand into a `cv-themes` volume (a rebuildable cache, 4.10); contract 7.4 lists installed and available themes and gains an install operation; risks: a theme is code run on the CV, installs reach npmjs.org (`--ignore-scripts`, pinned versions), theme licences vary
