@@ -29,7 +29,8 @@
 
 ## Screens
 
-- [ ] Screens drafted in the role-play, not saved: 03 reading and confirm, 06 export (who, what, look, file, build); "My CVs" screen
+- [x] Screens 03 reading and confirm, 06 export: saved
+- [ ] "My CVs" screen
 - [ ] Check screen: drag-and-drop library, and a way to do the same without dragging (WCAG 2.5.7)
 - [x] Review screen wireframe: dropped, screen 04 covers the review
 
