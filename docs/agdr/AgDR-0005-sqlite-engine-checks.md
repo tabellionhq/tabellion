@@ -4,7 +4,7 @@ timestamp: 2026-10-28T20:28:25Z
 agent: Claude Code
 model: claude-opus-5-5
 trigger: ADR-0022 consequences, "to check before relying on them"; owner request
-status: executed
+status: superseded
 ---
 
 # AgDR-0005: SQLite engine checks
@@ -20,6 +20,8 @@ status: executed
 
 A. Versions pinned: `github.com/ncruces/go-sqlite3` v0.35.6, with `go-sqlite3-wasm/v6` v6.3.35304, `lukechampine.com/adiantum` v1.1.1, `golang.org/x/crypto` v0.57.0, `golang.org/x/sys` v0.48.0, `ncruces/julianday` v1.0.0. Extensions: `vfs/adiantum`, `ext/fts5`, `ext/vec1`.
 
+Licences, read from each module: go-sqlite3, julianday, adiantum MIT; go-sqlite3-wasm MIT No Attribution; x/crypto, x/sys BSD-3-Clause. All compatible with AGPL-3.0 (ADR-0025).
+
 ## Consequences
 
 - Every check passes: results in [spikes/sqlite/README.md](../../spikes/sqlite/README.md). Start: 4 to 6 ms, 7.4 MiB; builds: 9 to 10 MiB on all six targets.
@@ -31,5 +33,5 @@ A. Versions pinned: `github.com/ncruces/go-sqlite3` v0.35.6, with `go-sqlite3-wa
 
 ## Review
 
-- Reviewer sub-agent: OK | Warning | Refused: (one line)
-- Owner: kept | changed | pushed up to ADR-000x (date)
+- Reviewer sub-agent: Warning: pins a dependency tree, licences not recorded (since added), and Go 1.26 against ADR-0023's Go 1.25 tests, both escalation items; ADR-0022 edited with a "Checked" line
+- Owner: pushed up to ADR-0029 (2026-10-28)

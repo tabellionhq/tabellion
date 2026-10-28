@@ -1,14 +1,14 @@
 # SQLite engine checks
 
-Checks what ADR-0022 requires of `ncruces/go-sqlite3` before relying on it. A throwaway program, not product code.
+Checks what ADR-0022 requires of `ncruces/go-sqlite3` before relying on it. A throwaway program, not product code. Toolchain and versions: ADR-0029.
 
 ```shell
-docker run --rm -v "$PWD:/w" -w /w golang:1.26 sh -c 'CGO_ENABLED=0 go build -o /tmp/sqlite . && /tmp/sqlite checks /tmp/run'
+docker run --rm -v "$PWD:/w" -w /w golang:1.27 sh -c 'CGO_ENABLED=0 go build -o /tmp/sqlite . && /tmp/sqlite checks /tmp/run'
 ```
 
 ## Results
 
-`ncruces/go-sqlite3` v0.35.6, Go 1.26, `CGO_ENABLED=0`, in Docker on Linux amd64, 2026-10-28.
+`ncruces/go-sqlite3` v0.35.6, Go 1.26 and 1.27.3, `CGO_ENABLED=0`, in Docker on Linux amd64, 2026-10-28.
 
 | Check | Result |
 |---|---|
