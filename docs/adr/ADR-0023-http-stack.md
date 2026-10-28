@@ -1,6 +1,7 @@
 # ADR-0023: HTTP stack
 
 - Status: Accepted
+- Updated by ADR-0029: Go 1.27; code generation checked with `oapi-codegen` v2.8.1
 - Date: 2026-10-22
 - Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 

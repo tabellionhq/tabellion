@@ -1,8 +1,8 @@
 # ADR-0029: Go toolchain and store dependencies
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-28
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -58,11 +58,11 @@ A and D: Go 1.27, `go 1.27` in `go.mod`, the Docker build image pinned to the sa
 
 ## Decision
 
-Owner's words.
+A and D, as recommended: Go 1.27, the Docker build image on the same release, each new Go release adopted within 3 months. The store dependencies above, with vec1 for vectors behind the Search port and sqlite-vec as a fallback.
 
 ## Reason
 
-Owner's words.
+Run the latest version for security and performance. We build a fat binary, so there is minimal friction with the system anyway.
 
 ## Next steps
 

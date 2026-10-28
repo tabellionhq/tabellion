@@ -47,7 +47,7 @@ A: `ncruces/go-sqlite3`, to start. In the long run, PostgreSQL for more compute-
 - The Store port speaks in facts, views and tasks, never in SQL: SQLite specifics (encryption layer, FTS5) stay in the adapter.
 - Vector search belongs to the Search port: sqlite-vec or vec1 now, pgvector with PostgreSQL.
 - To check before relying on them: encryption with a key from the service and from the person; vector search; start time, binary size and memory on the MVP data.
-  Checked 2026-10-28 ([AgDR-0005](../agdr/AgDR-0005-sqlite-engine-checks.md)): all pass with v0.35.6, which requires Go 1.26; toolchain and versions in ADR-0029 (proposed).
+  Checked 2026-10-28 ([AgDR-0005](../agdr/AgDR-0005-sqlite-engine-checks.md)): all pass with v0.35.6, which requires Go 1.26; toolchain and versions in ADR-0029.
 
 ## References
 
