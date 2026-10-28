@@ -65,3 +65,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - `GET /server`: demo mode and where records are stored, for the owner.
 - Screens 03 confirm and read the CV, 06 export a new CV.
 - CI: DCO check of every new commit (AgDR-0004).
+- ncruces/go-sqlite3 checked: encryption, FTS5, vec1, start time, builds (AgDR-0005).

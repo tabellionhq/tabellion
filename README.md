@@ -59,4 +59,5 @@ docs/design/    personas, user stories, data model, functions, design notes
 api/           API contract (OpenAPI) and JSON-LD context
 testdata/      a sample record and the CV it was written from
 licences/      licence texts
+spikes/        throwaway measurements
 ```

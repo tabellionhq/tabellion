@@ -36,7 +36,7 @@
 
 ## Checks and setup
 
-- [ ] ncruces/go-sqlite3: encryption (service key, person key), vector search, start time, binary size, memory
+- [x] ncruces/go-sqlite3 checks: all pass (AgDR-0005, `spikes/sqlite/`)
 - [ ] GDPR household exemption for local use; GDPR duties for the hosted service
 - [x] Licence files: `licences/`, linked from the README
 - [x] DCO check in CI (AgDR-0004)
