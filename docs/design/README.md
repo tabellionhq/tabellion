@@ -15,6 +15,7 @@ Functional design, data first.
 | [screens/](screens/) | MVP screens, found by playing Anne's session |
 | [ui-api-map.md](ui-api-map.md) | each control of the screens mapped to the contract; build order |
 | [data-first.md](data-first.md) | design position and its lineage |
+| [cv-adapter.md](cv-adapter.md) | contracts of the `cv` plugin: CV extraction and rendering |
 | [cv-standards.md](cv-standards.md) | CV import and export through existing standards |
 
 ## Method

@@ -29,7 +29,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Control | Operation | Status |
 |---|---|---|
 | Raw text, Go | `createImport`, `text/plain` | ok |
-| Local file, Go (pdf, docx, odt, txt) | `createImport` with a file body; extraction by the cv plugin (RFC 7.2) | change |
+| Local file, Go (pdf, docx, odt, txt) | `createImport` with a file body; extraction by the cv plugin ([cv-adapter.md](cv-adapter.md)) | change |
 | Online file, Go | `createImport` with a URL; public HTTPS only | change |
 | Supported formats | the media types the cv plugin declares (RFC 7.1) | missing: plugin information |
 
@@ -50,7 +50,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Progress bar, stage ④ Check | `getTask`: `stages` | change: cv-import has no check stage (extract, confirm, find) |
 | Record completion | `getPerson`: `completion` | ok |
 | Identity line | `listIdentities` | ok |
-| Identity from the CV | term matching (RFC 7.3) | change: matching returns no identity |
+| Identity from the CV | term matching (RFC 7.2) | change: matching returns no identity |
 | Occupations list | `listOccupations` | ok |
 | Skill cards, buckets Complete and To complete | `listPractices`, grouped by `completion` | ok |
 | Not matched cards | `getTask`: `result.unresolved` | ok |
@@ -88,7 +88,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | ② Focus on a job | | open |
 | ③ Look: installed and available themes | the themes the cv plugin declares | missing |
 | ③ Install a theme | | missing |
-| ③ Preview | rendering by the cv plugin (RFC 7.4), HTML | missing |
+| ③ Preview | rendering by the cv plugin ([cv-adapter.md](cv-adapter.md)), HTML | missing |
 | ④ Save as | preferences | missing |
 | ④ File: JSON Resume | `getViewResume` | ok |
 | ④ File: PDF, HTML | rendering by the cv plugin | missing |

@@ -60,3 +60,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - Review screen wireframe removed; screen 04 covers the review.
 - Leave out a term an import did not match: `DELETE /tasks/{taskId}/terms/{termId}` (specification 4.7).
 - Licence texts in `licences/`: AGPL-3.0, Apache-2.0, CC BY 4.0 (ADR-0025).
+- Specification: CV extraction and CV rendering move out to the CV adapter contracts (`docs/design/cv-adapter.md`); term matching, on text, becomes 7.2.

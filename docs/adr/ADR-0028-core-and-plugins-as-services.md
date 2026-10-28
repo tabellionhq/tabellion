@@ -53,6 +53,7 @@ Plugins keep the core clean and adapt it to different use cases.
 - ADR-0017: plugins are no longer rejected; its rule stays: a feature that needs its own store is an external system.
 - ADR-0016: the web UI stays in the core; it shows a plugin's work through task stages and actions (RFC, Section 4.7).
 - The specification gains the definitions of plugin and client application, and a contract per plugin kind: CV extraction, term matching, CV rendering.
+  Updated 2026-10-28 by the owner: CVs are an adapter concern. The specification keeps term matching, on text; CV extraction and CV rendering move to the CV adapter contracts ([cv-adapter.md](../design/cv-adapter.md)).
 - Each plugin has its own image, CI, licence check and release.
 - The web UI says what a missing plugin prevents, and how to start it.
 

@@ -336,25 +336,12 @@ A contract is what a server sends to a plugin of one kind, and what the plugin r
 
 ### 7.1. Common to all plugins
 
-- A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind, such as the formats it reads or the themes it renders.
+- A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind.
 - A plugin that cannot do a call MUST return a problem detail [RFC9457]. The server then interrupts the task (Section 4.7).
 
-### 7.2. CV extraction
+### 7.2. Term matching
 
-Turns a document into text.
-
-| Direction | Field | Type | Requirement |
-|---|---|---|---|
-| Sent | document | bytes | required |
-| Sent | media type | string, e.g. application/pdf | required |
-| Returned | lines | list of strings, in reading order | required |
-
-- A plugin declares the media types it reads.
-- The line numbers of the text are the positions in `lines`, from 1. Evidence refers to them.
-
-### 7.3. Term matching
-
-Proposes facts from the text of a CV.
+Proposes facts from a text, such as the text of a document read by another plugin.
 
 | Direction | Field | Type | Requirement |
 |---|---|---|---|
@@ -364,22 +351,9 @@ Proposes facts from the text of a CV.
 | Returned | practices | practices: the fields of Section 3.5, without id, author, status or recording time; the occupation as an index in `occupations` | required, may be empty |
 | Returned | unmatched | terms found without a skill or a concept, each with its excerpt and line | required, may be empty |
 
+- The line numbers of the text are the positions in `lines`, from 1. Evidence refers to them.
 - Each returned occupation and practice carries its evidence: the excerpt it comes from and its line.
 - A plugin SHOULD return only what the text states (Section 4.1).
-
-### 7.4. CV rendering
-
-Turns a CV document into a file to read or print.
-
-| Direction | Field | Type | Requirement |
-|---|---|---|---|
-| Sent | resume | JSON Resume document [JSON-RESUME], built by the server from a view | required |
-| Sent | theme | theme name | required |
-| Sent | format | media type, e.g. text/html, application/pdf | required |
-| Returned | file | bytes, of the media type asked | required |
-
-- A plugin declares the themes and the formats it renders.
-- A server MUST build the resume only from the facts and fields the view shows (Section 4.5).
 
 ## 8. Conformance
 
@@ -439,7 +413,6 @@ This document has no IANA actions.
 - [RFC7396] Hoffman, P. and J. Snell, "JSON Merge Patch", RFC 7396, October 2014, <https://www.rfc-editor.org/info/rfc7396>.
 - [RFC9110] Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke, Ed., "HTTP Semantics", STD 97, RFC 9110, June 2022, <https://www.rfc-editor.org/info/rfc9110>.
 - [RFC9457] Nottingham, M., Wilde, E., and S. Dalal, "Problem Details for HTTP APIs", RFC 9457, August 2023, <https://www.rfc-editor.org/info/rfc9457>.
-- [JSON-RESUME] JSON Resume, "JSON Resume schema", <https://jsonresume.org/schema>.
 - [SCHEMA-ORG] "Schema.org", <https://schema.org>.
 - [TABELLION-API] Tabellion project, "Tabellion HTTP binding: OpenAPI contract and JSON-LD context", <https://github.com/tabellionhq/tabellion/tree/main/api>.
 - [TABELLION-TESTDATA] Tabellion project, "Tabellion conformance test data", <https://github.com/tabellionhq/tabellion/tree/main/testdata>.
