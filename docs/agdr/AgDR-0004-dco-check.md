@@ -29,5 +29,5 @@ A. The workflow `.github/workflows/dco.yml` runs on pull requests and on pushes 
 
 ## Review
 
-- Reviewer sub-agent: OK | Warning | Refused: (one line)
-- Owner: kept | changed | pushed up to ADR-000x (date)
+- Reviewer sub-agent: OK: enforces ADR-0025 sign-off; no new dependency, read-only token, no publish step; not run on GitHub yet
+- Owner: kept (2026-10-28)
