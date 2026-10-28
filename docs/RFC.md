@@ -232,6 +232,7 @@ An access log entry holds a grant id and the datetime of a read.
 - A server MUST let the owner change any field of any fact in their record, its status included, whatever its current status and author.
 - A server MUST refuse a practice with status accepted and no `from` date.
 - A server MUST let the owner delete facts. A deleted fact is no longer in the record.
+- A server MUST NOT delete an occupation held that practices refer to, unless the owner, in the same operation, moves those practices to another occupation held or deletes them.
 - A fact proposed from a source SHOULD hold only what the source states. A field the source does not state, or states unclearly, is left empty: an uncertain fact lacks definitions, and its completion shows it.
 - A server MUST store and return evidence unchanged. It does not interpret evidence. Changing a fact does not change its evidence: evidence signed by the fact's author may no longer match the fact.
 

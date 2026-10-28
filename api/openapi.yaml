@@ -56,6 +56,19 @@ paths:
             application/ld+json:
               schema: {$ref: "#/components/schemas/Entry"}
 
+  /server:
+    get:
+      tags: [entry]
+      summary: How this server runs, for the owner
+      description: Shown on every screen of the web UI. Never given to a reader.
+      operationId: getServer
+      responses:
+        "200":
+          description: The server
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Server"}
+
   /persons/{personId}:
     parameters:
       - {$ref: "#/components/parameters/personId"}
@@ -227,6 +240,25 @@ paths:
         "404": {$ref: "#/components/responses/Problem"}
         "409": {$ref: "#/components/responses/Problem"}
 
+    delete:
+      tags: [facts]
+      summary: Delete an occupation held
+      description: If practices refer to it, the owner moves them to another occupation held or deletes them, in the same call; otherwise 409.
+      operationId: deleteOccupation
+      parameters:
+        - name: practices
+          in: query
+          description: What happens to the practices at this occupation
+          schema: {type: string, enum: [move, delete]}
+        - name: to
+          in: query
+          description: With practices=move, the occupation held they move to
+          schema: {type: string, format: uuid}
+      responses:
+        "204": {description: Deleted}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+
   /persons/{personId}/practices:
     parameters:
       - {$ref: "#/components/parameters/personId"}
@@ -294,6 +326,14 @@ paths:
               schema: {$ref: "#/components/schemas/Practice"}
         "404": {$ref: "#/components/responses/Problem"}
         "409": {$ref: "#/components/responses/Problem"}
+
+    delete:
+      tags: [facts]
+      summary: Delete a practice
+      operationId: deletePractice
+      responses:
+        "204": {description: Deleted}
+        "404": {$ref: "#/components/responses/Problem"}
 
   /persons/{personId}/identities:
     parameters:
@@ -582,6 +622,7 @@ components:
     Entry:
       x-actions:
         - {type: ViewAction, name: My record, method: GET, target: "/persons/{personId}"}
+        - {type: ViewAction, name: This server, method: GET, target: /server}
         - {type: CreateAction, name: Import a CV, method: POST, target: /imports, contentType: text/plain}
         - {type: SearchAction, name: Review proposed practices, method: GET, target: "/persons/{personId}/practices?status=proposed"}
         - {type: SearchAction, name: Review proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed"}
@@ -594,6 +635,25 @@ components:
         - type: object
           properties:
             person: {type: string, format: uri-reference}
+
+    Server:
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          required: [demo, storage]
+          properties:
+            demo:
+              description: Demo mode, without login; not for production
+              type: boolean
+            storage:
+              description: Where the records are stored
+              type: object
+              required: [kind]
+              properties:
+                kind: {type: string, enum: [docker-volume, path]}
+                volume: {type: [string, "null"], description: "docker-volume: the volume name"}
+                project: {type: [string, "null"], description: "docker-volume: the compose project name"}
+                path: {type: [string, "null"], description: "path: the data directory"}
 
     Person:
       x-actions:
@@ -658,6 +718,7 @@ components:
         - {type: UpdateAction, name: Edit this occupation, method: PATCH, target: "@id"}
         - {type: AcceptAction, name: Accept this occupation, method: PATCH, target: "@id", body: {status: accepted}, when: status is not accepted}
         - {type: RejectAction, name: Reject this occupation, method: PATCH, target: "@id", body: {status: rejected}, when: status is not rejected}
+        - {type: DeleteAction, name: Delete this occupation, method: DELETE, target: "@id{?practices,to}"}
         - {type: CreateAction, name: Add a practice at this occupation, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
       allOf:
         - $ref: "#/components/schemas/Resource"
@@ -692,6 +753,7 @@ components:
         - {type: UpdateAction, name: Correct this practice, method: PATCH, target: "@id"}
         - {type: AcceptAction, name: Accept this practice, method: PATCH, target: "@id", body: {status: accepted}, when: status is not accepted and from is set}
         - {type: RejectAction, name: Reject this practice, method: PATCH, target: "@id", body: {status: rejected}, when: status is not rejected}
+        - {type: DeleteAction, name: Delete this practice, method: DELETE, target: "@id"}
         - {type: CreateAction, name: Record progress as a new practice, method: POST, target: "/persons/{personId}/practices", when: status is accepted}
       allOf:
         - $ref: "#/components/schemas/Resource"

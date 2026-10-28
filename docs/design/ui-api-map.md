@@ -20,9 +20,9 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Headline, paragraph, trust blocks, principles link | | UI |
 | Import a CV | to screen 02 | UI |
 | Start from scratch | `getPerson`, then `createOccupation`, `createPractice` | ok |
-| Data location bar: volume, project or path | | missing: server information (mode, data location) |
+| Data location bar: volume, project or path | `getServer`: `storage` | ok |
 | Data location bar: Export | | missing: export of the whole record |
-| Demo banner | | missing: server information (mode) |
+| Demo banner | `getServer`: `demo` | ok |
 
 ## 02 Import
 
@@ -64,7 +64,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Modal: Save | `reviewPractice` | ok |
 | Drag a card to another bucket | | open: buckets follow completion; what a drop changes is not decided |
 | Save and proceed | accept the proposed facts; end the task | missing: accept many at once (or one call per fact); an action that ends the task |
-| Delete a fact | | missing: required by the specification (4.1), not on any screen yet |
+| Delete a fact | `deletePractice`; `deleteOccupation`, its practices moved or deleted | ok; not on any screen yet |
 
 ## 05 Import epilogue
 
@@ -109,8 +109,7 @@ Each step ends with something Anne can use.
 
 1. **Record, no plugin.**
    - Covers: start from scratch, screen 04 without an import, record completion.
-   - Operations: `getEntry`, `getPerson`, occupations, practices, identities, `searchSkills`, `searchConcepts`.
-   - Contract changes first: delete a fact; server information (mode, data location) for the bar and the banner.
+   - Operations: `getEntry`, `getServer`, `getPerson`, occupations, practices, identities, `searchSkills`, `searchConcepts`.
 2. **CV out, no plugin.**
    - Covers: screen 06 steps ① and ②, and ④ as JSON Resume.
    - Operations: views, `getViewFacts`, `getViewResume`.
