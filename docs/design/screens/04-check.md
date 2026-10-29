@@ -80,6 +80,5 @@ I find new problems · Expert
 
 ## Open
 
-- Drag and drop needs a non-drag way to move a card (WCAG 2.5.7), e.g. in the modal.
-- Drag and drop, the modal and the tips need more script than HTMX alone: a small library to choose.
+- Drag and drop needs a non-drag way to move a card (WCAG 2.5.7), e.g. in the modal; the library is decided with the CV adapter ([CV roadmap](../../../ROADMAP-CV.md)). Until then, the modal moves a card.
 - The vocabulary of the sentence ("did", "on", "at") needs wording.

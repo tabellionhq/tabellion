@@ -12,3 +12,4 @@ The CV adapter is built after the core: the `cv` plugin and what CVs need from t
 - CV themes (npm): a few in the `cv` image, more installed on demand into a `cv-themes` volume, a rebuildable cache (specification 4.10). The CV rendering contract lists installed and available themes and gains an install operation. Risks: a theme is code run on the CV; installs reach npmjs.org (`--ignore-scripts`, pinned versions); theme licences vary.
 - Saved CVs and the "My CVs" screen: identity, view, look and file saved together, built again with new facts ([screen 06](docs/design/screens/06-export.md)).
 - Focus a CV on a job offer.
+- Check screen: a drag-and-drop library, and the same moves without dragging (WCAG 2.5.7) ([screen 04](docs/design/screens/04-check.md)).
