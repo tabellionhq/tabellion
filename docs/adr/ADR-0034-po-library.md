@@ -1,8 +1,8 @@
 # ADR-0034: Go library for PO files
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-29
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision by owner
 
 ## Context
 
@@ -36,11 +36,11 @@ A, `gotext`: no dependency, the most recent release, an extraction tool. Languag
 
 ## Decision
 
-Owner's words.
+OK for gotext (A).
 
 ## Reason
 
-Owner's words.
+The recommendation, accepted by the owner: no dependency, the most recent release, an extraction tool.
 
 ## Next steps
 
