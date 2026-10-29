@@ -42,4 +42,4 @@
 - [x] DCO check in CI (AgDR-0004)
 - [ ] Licence check of Go dependencies in CI, once there is Go code
 - [ ] Demo compose: core and `model`; `cv` with the CV adapter (CV roadmap)
-- [ ] Go library for PO files with plural rules (ADR-0019 consequence): a small ADR, before the first translated message; later, a translation service for community translations
+- [ ] Go library for PO files: ADR-0034, proposed; later, a translation service for community translations
