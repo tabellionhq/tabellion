@@ -68,3 +68,4 @@ All notable changes to this project are documented here. Versions follow [Semant
 - ncruces/go-sqlite3 checked: encryption, FTS5, vec1, start time, builds (AgDR-0005).
 - ADR-0029 Go toolchain and store dependencies: the latest Go release (1.27), each new one within 3 months; ncruces/go-sqlite3 with Adiantum, FTS5, vec1.
 - CV roadmap (`ROADMAP-CV.md`): everything the CV adapter needs, built after the core.
+- ADR-0030 plugin HTTP binding, proposed.
