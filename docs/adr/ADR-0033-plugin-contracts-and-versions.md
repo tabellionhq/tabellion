@@ -1,8 +1,8 @@
 # ADR-0033: Plugin contracts and versions
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-29
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -32,11 +32,11 @@ I.
 
 ## Decision
 
-Owner's words.
+As recommended. I.
 
 ## Reason
 
-Owner's words.
+These options are simple and in line with our principles and previous ADRs.
 
 ## References
 

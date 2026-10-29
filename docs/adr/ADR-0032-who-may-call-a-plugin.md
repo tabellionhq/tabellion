@@ -1,8 +1,8 @@
 # ADR-0032: Who may call a plugin
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-29
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -33,11 +33,11 @@ F, always with TLS outside the host or private network.
 
 ## Decision
 
-Owner's words.
+As recommended. F, always with TLS outside the host or private network.
 
 ## Reason
 
-Owner's words.
+These options are simple and in line with our principles and previous ADRs.
 
 ## References
 

@@ -21,7 +21,7 @@
 ## Specification and contract
 
 - [>] Identity picked up from a CV: CV roadmap
-- [ ] Plugin HTTP binding: ADR-0030 self-description, ADR-0031 slow calls, ADR-0032 who may call, ADR-0033 contracts and versions (proposed)
+- [x] Plugin HTTP binding: ADR-0030 to ADR-0033 accepted; timeouts, size limits and progress streaming after the AI question (ADR-0031)
 - [ ] Preferences, in the specification (not there yet): per-person entries, owner only, never exposed by views; e.g. a saved CV; a plugin gets only the entry its call needs. Important: design it in depth
 - [>] CV themes: CV roadmap
 - [x] Operation to leave out a term not matched: `leaveOutTerm` (specification 4.7)

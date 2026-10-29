@@ -1,8 +1,8 @@
 # ADR-0031: Plugin slow calls
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-29
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
 ## Context
 
@@ -33,11 +33,11 @@ C now; E when the AI question shows calls long enough to need progress. D is ref
 
 ## Decision
 
-Owner's words.
+As recommended. C now; E when the AI question shows calls long enough to need progress. D is refused by the stateless rule. Timeouts and body size limits after the AI question.
 
 ## Reason
 
-Owner's words.
+These options are simple and in line with our principles and previous ADRs.
 
 ## References
 
