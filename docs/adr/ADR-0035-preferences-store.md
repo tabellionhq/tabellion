@@ -58,7 +58,7 @@ Recommendation validated: B with way 1.
 
 ## Reason
 
-Owner's words.
+Separation of concerns. An install can hold an identity and a CV adapter (a personal laptop, and a professional laptop which has no CV), and the record database is a shared element.
 
 ## Next steps
 
