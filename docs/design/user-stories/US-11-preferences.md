@@ -44,6 +44,7 @@ Anne exports her data and moves to another server. Her preferences come with her
 
 - Out: a zip holding `Records.sqlite` and `Preferences.sqlite` (ADR-0035).
 - Rule: the zip is a feature of this server, not of the specification. Another implementation may export differently.
+- Rule: the zip holds the files as stored, encrypted; the key opens them. Nothing leaves in clear.
 
 ### S6: Consent
 
@@ -71,5 +72,4 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 ## Open
 
-1. S5: are the files in the zip encrypted, as stored, or in clear?
-2. S6: what needs consent?
+1. S6: what needs consent?
