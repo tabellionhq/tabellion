@@ -43,7 +43,7 @@ Thomas uses the hosted instance from his phone and his laptop (US-10). His langu
 Anne exports her data and moves to another server. Her preferences come with her.
 
 - Out: a zip holding `Records.sqlite` and `Preferences.sqlite` (ADR-0035).
-- Challenge: a zip of database files is tied to the store engine. Is the zip the export format of the specification, or of this server only? The specification exchanges facts as JSON-LD (Section 5).
+- Rule: the zip is a feature of this server, not of the specification. Another implementation may export differently.
 
 ### S6: Consent
 
@@ -71,5 +71,5 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 ## Open
 
-1. S5: zip in the specification, or a server feature?
+1. S5: are the files in the zip encrypted, as stored, or in clear?
 2. S6: what needs consent?
