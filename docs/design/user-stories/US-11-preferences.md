@@ -16,21 +16,20 @@ As a person, I want the system to remember how I like to work, so that I do not 
 Anne reads in French and English. On first visit the UI follows her browser. She sets French, then English: labels of skills and occupations come in French, English when French is missing (specification, Section 9).
 
 - Stored: an ordered list of BCP 47 language tags.
-- Challenge: the browser already sends `Accept-Language`. Does a stored list prevail over it, or only fill in when a client sends none (an agent, an app)?
+- Rule: the stored list prevails over `Accept-Language`, which applies only when nothing is stored (first visit, an agent, an app).
 
 ### S2: Accessibility
 
 A person sets the UI to their needs before any screen is designed (APR-0006).
 
-- Stored: to decide. Many needs are browser or OS settings (contrast, motion, text size) the UI reads without storing.
-- Challenge: which needs does the system store itself? None identified yet.
+- Stored: nothing for now. The UI follows browser and OS settings (contrast, motion, text size). An entry is added when a need appears that these settings cannot express.
 
 ### S3: CV filters and aliases
 
 Anne makes a CV for an offer (US-08). The `cv` plugin proposes the filters and aliases she used last time. She changes one; next time the change is there.
 
 - Stored: in the `cv` kind's table, written by the server from the plugin's result (ADR-0035, way 1).
-- Challenge: does Anne see and reset them? A UI listing a plugin's keys needs labels the plugin declares.
+- Rule: Anne sees a kind's keys and values, and resets them all at once. Editing stays in the plugin's own flow.
 
 ### S4: Another device
 
@@ -64,7 +63,7 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 | Need | Resource | Scenarios |
 |---|---|---|
-| Read and change the core's preferences | `GET`, `PATCH /persons/{personId}/preferences` | S1, S2, S4, S7 |
+| Read and change the core's preferences | `GET`, `PATCH /persons/{personId}/preferences` | S1, S4, S7 |
 | Read and reset a plugin kind's preferences | `GET`, `DELETE /persons/{personId}/preferences/{kind}` | S3 |
 | Carry a kind's preferences in a plugin call, and changes in its result | a `preferences` member in plugin requests and results (Section 7.1) | S3 |
 | Export and import | `GET`, `PUT /persons/{personId}/export` (zip) | S5 |
@@ -72,8 +71,7 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 ## Open
 
-1. S1: stored languages prevail over `Accept-Language`, or fill in only?
-2. S2: which accessibility needs are stored by the system?
-3. S5: zip in the specification, or a server feature?
-4. S6: what needs consent?
-5. S7: preferences readable through a grant?
+1. S4: preferences belong to an install (ADR-0035); a hosted install used from several devices needs a rule.
+2. S5: zip in the specification, or a server feature?
+3. S6: what needs consent?
+4. S7: preferences readable through a grant?
