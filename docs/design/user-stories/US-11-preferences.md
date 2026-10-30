@@ -36,7 +36,7 @@ Anne makes a CV for an offer (US-08). The `cv` plugin proposes the filters and a
 Thomas uses the hosted instance from his phone and his laptop (US-10). His language is the same on both.
 
 - Stored on the server, encrypted with his record's key (ADR-0035).
-- Challenge: some preferences belong to the device (text size on a phone). Device preferences stay in the app (US-10).
+- Rule: on a shared instance, clients use the remote preferences by default, encrypted. A client may keep its own preferences locally instead (US-10). Synchronising the two is left to the client.
 
 ### S5: Export and move
 
@@ -71,6 +71,5 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 ## Open
 
-1. S4: preferences belong to an install (ADR-0035); a hosted install used from several devices needs a rule.
-2. S5: zip in the specification, or a server feature?
-3. S6: what needs consent?
+1. S5: zip in the specification, or a server feature?
+2. S6: what needs consent?
