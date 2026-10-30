@@ -40,6 +40,12 @@
     "to": {"@type": "xsd:date"},
     "recorded": {"@type": "xsd:dateTime"},
     "level": {"@type": "xsd:integer"},
+    "given": {"@type": "xsd:dateTime"},
+    "withdrawn": {"@type": "xsd:dateTime"},
+    "updated": {"@type": "xsd:dateTime"},
+    "value": {"@type": "@json"},
+    "languages": {"@container": "@list"},
+    "DeleteAction": "schema:DeleteAction",
 
     "Identity": {
       "@id": "vcard:Individual",

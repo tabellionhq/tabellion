@@ -70,3 +70,7 @@ All notable changes to this project are documented here. Versions follow [Semant
 - CV roadmap (`ROADMAP-CV.md`): everything the CV adapter needs, built after the core.
 - Plugin HTTP binding, accepted: ADR-0030 self-description, ADR-0031 slow calls, ADR-0032 who may call a plugin, ADR-0033 contracts and versions.
 - ADR-0034 Go library for PO files: gotext.
+- ADR-0035 preferences store: preferences and records in two SQLite files, one key; a table per kind of plugin.
+- US-11 preferences: languages, plugin preferences, devices, export, consent.
+- Specification: preferences (3.10, 4.11) and consents (3.11, 4.12); plugin calls carry the preferences of their kind (4.10, 7.1).
+- API: preferences of the server and of each kind of plugin; consents, given and withdrawn.

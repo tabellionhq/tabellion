@@ -104,6 +104,12 @@ Grant
 Task
 : Slow work run by a server for the owner, such as importing a CV. Not a fact.
 
+Preference
+: How the owner likes a server, or a kind of plugin, to work for them, such as the languages labels are shown in. Not a fact, and not part of the record.
+
+Consent
+: The owner's dated agreement to an act that sends or receives personal data, such as calling a plugin on another host. Kept with the record.
+
 Server
 : A system that keeps records and enforces the rules of this document.
 
@@ -221,6 +227,32 @@ An access log entry holds a grant id and the datetime of a read.
 | result | object | optional; per kind |
 | problem | problem details [RFC9457] | optional; when interrupted |
 
+### 3.10. Preference
+
+| Field | Type | Requirement |
+|---|---|---|
+| scope | `server`, or a kind of plugin | required |
+| key | string | required; unique within its scope |
+| value | any JSON value [RFC8259] | required |
+| updated | datetime | required |
+
+Preferences of scope `server` defined by this document:
+
+| Key | Value |
+|---|---|
+| languages | list of language tags [BCP47], in the owner's order |
+
+### 3.11. Consent
+
+| Field | Type | Requirement |
+|---|---|---|
+| id | uuid | required |
+| person | Person id | required |
+| kind | remote-plugin, hosted-terms, grant, proposal | required |
+| subject | string | optional; what the consent is for: a plugin URL, a URL of terms, a Grant id, an author. Absent: agreement by default to the whole kind |
+| given | datetime | required |
+| withdrawn | datetime | optional |
+
 ## 4. Rules
 
 ### 4.1. Facts
@@ -318,6 +350,28 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A plugin MUST NOT keep the data it receives once it has answered. It MAY keep a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
 - The rules of Sections 3 and 4 MUST NOT depend on a plugin. Without a plugin, a server still lets the owner create, change, review and delete facts, and write views.
 - A server SHOULD NOT offer an action that needs a plugin it cannot reach. It MAY tell the owner which kind of plugin is missing.
+- A server MAY send a plugin the preferences of the kind it is called for. The plugin MAY return changes to them with its result (Section 7.1). A plugin stores preferences only this way.
+
+### 4.11. Preferences
+
+- Preferences are not facts: a server changes them in place and keeps no history.
+- A server keeps the preferences of scope `server`, and those of each kind of plugin it declares. A server, not a plugin, creates a scope.
+- Only the owner reads and changes preferences. A grant gives no access to them.
+- A server MUST let the owner read the preferences of a kind of plugin, and remove them all in one operation.
+- A server SHOULD limit the size of a value and of a scope. Preferences do not hold documents.
+- When `languages` is set, a server MUST return labels in those languages, in that order, before the languages a client asks for (Section 9).
+- A client MAY keep its own preferences instead of the server's. Keeping the two in step is the client's choice.
+
+### 4.12. Consents
+
+- A server MUST record the owner's consent before it:
+  - calls a plugin outside its own host or private network (`remote-plugin`);
+  - keeps a record under the terms of a hosted service (`hosted-terms`);
+  - gives a reader access to a view (`grant`);
+  - accepts facts proposed by an author other than the owner and the owner's tasks (`proposal`).
+- A consent without a subject agrees by default to every act of its kind. It is a consent like the others, kept with the record.
+- Creating a grant records its consent, with the grant as subject. Revoking the grant withdraws it.
+- A server MUST let the owner withdraw a consent at any time. A withdrawn consent allows no further act. A server keeps a withdrawn consent, with its date.
 
 ## 5. Vocabulary
 
@@ -339,6 +393,7 @@ A contract is what a server sends to a plugin of one kind, and what the plugin r
 
 - A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind.
 - A plugin that cannot do a call MUST return a problem detail [RFC9457]. The server then interrupts the task (Section 4.7).
+- Every call MAY carry `preferences`: the preferences of the kind, as an object of keys and values. Every result MAY carry `preferences`: the keys to change, a null value removing the key (Section 4.10).
 
 ### 7.2. Term matching
 
@@ -368,7 +423,7 @@ Test data for conformance, a record and the document it was written from, is pub
 
 ## 9. Internationalization Considerations
 
-- Skills, occupations and concepts are identifiers; their labels exist in many languages in ESCO and Wikidata. A server SHOULD return labels in the language the client asks for.
+- Skills, occupations and concepts are identifiers; their labels exist in many languages in ESCO and Wikidata. A server SHOULD return labels in the language the client asks for, after the owner's `languages` when set (Section 4.11).
 - Status, kind and state are names, not text for display; clients translate them.
 - Identity labels and occupation labels are free text, in any language.
 
@@ -387,9 +442,10 @@ Test data for conformance, a record and the document it was written from, is pub
 - A person is identified by a UUID only. Names and contacts are kept apart, in identities, and given to a reader only through the identity chosen for a grant.
 - The person decides what each reader sees; the deny list of a view always wins.
 - The access log tells the person who read which view, and when.
+- Preferences are personal data. They are read by the owner only, and by a plugin only for its own kind (Section 4.11).
 - Source documents, such as a CV, are not kept beyond their import (Section 4.7).
 - A server MUST NOT send usage data, such as telemetry, to anyone. It sends personal data only to the plugins the owner's tasks call.
-- A plugin receives personal data, such as the text of a CV, and does not keep it (Section 4.10). A server SHOULD tell the owner which plugin, and which provider, receives their data before a task sends it.
+- A plugin receives personal data, such as the text of a CV, and does not keep it (Section 4.10). A server SHOULD tell the owner which plugin, and which provider, receives their data before a task sends it, and MUST have the owner's consent for a plugin outside its own host or private network (Section 4.12).
 
 ## 12. IANA Considerations
 
@@ -405,6 +461,7 @@ This document has no IANA actions.
 - [RFC8174] Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 - [RFC8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", STD 90, RFC 8259, December 2017, <https://www.rfc-editor.org/info/rfc8259>.
 - [RFC9562] Davis, K., Peabody, B., and P. Leach, "Universally Unique IDentifiers (UUIDs)", RFC 9562, May 2024, <https://www.rfc-editor.org/info/rfc9562>.
+- [BCP47] Phillips, A., Ed., and M. Davis, Ed., "Tags for Identifying Languages", BCP 47, RFC 5646, September 2009, <https://www.rfc-editor.org/info/rfc5646>.
 - [ESCO] European Commission, "ESCO: European Skills, Competences, Qualifications and Occupations", <https://esco.ec.europa.eu>.
 - [WIKIDATA] Wikimedia Foundation, "Wikidata", <https://www.wikidata.org>.
 - [JSON-LD11] Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P., and N. Lindström, "JSON-LD 1.1", W3C Recommendation, July 2020, <https://www.w3.org/TR/json-ld11/>.

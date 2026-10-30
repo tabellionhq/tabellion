@@ -41,6 +41,8 @@ tags:
   - name: facts
   - name: views
   - name: identities
+  - name: preferences
+  - name: consents
   - name: reference
 
 paths:
@@ -367,6 +369,124 @@ paths:
               schema: {$ref: "#/components/schemas/Identity"}
         "400": {$ref: "#/components/responses/Problem"}
 
+  /persons/{personId}/preferences:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [preferences]
+      summary: The owner's preferences for this server, with links to those of each kind of plugin
+      description: Owner only; a grant gives no access.
+      operationId: getPreferences
+      responses:
+        "200":
+          description: Preferences
+          headers:
+            ETag: {$ref: "#/components/headers/ETag"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Preferences"}
+        "404": {$ref: "#/components/responses/Problem"}
+    patch:
+      tags: [preferences]
+      summary: Change preferences; a null value removes one
+      operationId: changePreferences
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema: {$ref: "#/components/schemas/PreferencesInput"}
+      responses:
+        "200":
+          description: Preferences, as changed
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Preferences"}
+        "400": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "413": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/preferences/{kind}:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+      - {$ref: "#/components/parameters/kind"}
+    get:
+      tags: [preferences]
+      summary: What a kind of plugin keeps for the owner, such as the filters of the last CV
+      operationId: getPluginPreferences
+      responses:
+        "200":
+          description: Preferences of the kind
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/PluginPreferences"}
+        "404": {$ref: "#/components/responses/Problem"}
+    delete:
+      tags: [preferences]
+      summary: Remove every preference of the kind
+      operationId: resetPluginPreferences
+      responses:
+        "204": {description: Removed}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /persons/{personId}/consents:
+    parameters:
+      - {$ref: "#/components/parameters/personId"}
+    get:
+      tags: [consents]
+      summary: Consents given, withdrawn ones included
+      operationId: listConsents
+      responses:
+        "200":
+          description: Consents
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/ConsentList"}
+    post:
+      tags: [consents]
+      summary: Give a consent, for one subject or by default for a whole kind. Grants record their own
+      operationId: giveConsent
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/ConsentInput"}
+      responses:
+        "201":
+          description: Given
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Consent"}
+        "400": {$ref: "#/components/responses/Problem"}
+
+  /consents/{consentId}:
+    parameters:
+      - {$ref: "#/components/parameters/consentId"}
+    get:
+      tags: [consents]
+      summary: One consent
+      operationId: getConsent
+      responses:
+        "200":
+          description: The consent
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Consent"}
+        "404": {$ref: "#/components/responses/Problem"}
+    delete:
+      tags: [consents]
+      summary: Withdraw a consent. It stays listed, with the date it was withdrawn
+      operationId: withdrawConsent
+      responses:
+        "200":
+          description: The consent, withdrawn
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Consent"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+
   /persons/{personId}/views:
     parameters:
       - {$ref: "#/components/parameters/personId"}
@@ -521,6 +641,13 @@ components:
     viewId: {name: viewId, in: path, required: true, schema: {type: string, format: uuid}}
     taskId: {name: taskId, in: path, required: true, schema: {type: string, format: uuid}}
     termId: {name: termId, in: path, required: true, schema: {type: string, format: uuid}}
+    consentId: {name: consentId, in: path, required: true, schema: {type: string, format: uuid}}
+    kind:
+      name: kind
+      in: path
+      required: true
+      description: A kind of plugin the server declares, without its version, e.g. term-matching
+      schema: {type: string, pattern: "^[a-z][a-z0-9-]*$"}
     status:
       name: status
       in: query
@@ -533,8 +660,8 @@ components:
     language:
       name: language
       in: query
-      description: BCP 47 language tag of the words
-      schema: {type: string, default: en}
+      description: BCP 47 language tag of the words. Absent, the owner's first language, else en
+      schema: {type: string}
     ifMatch:
       name: If-Match
       in: header
@@ -615,7 +742,7 @@ components:
       required: [httpMethod, urlTemplate]
       properties:
         "@type": {const: EntryPoint}
-        httpMethod: {type: string, enum: [GET, POST, PUT, PATCH]}
+        httpMethod: {type: string, enum: [GET, POST, PUT, PATCH, DELETE]}
         urlTemplate: {type: string, description: RFC 6570 URL template}
         contentType: {type: string}
 
@@ -628,6 +755,8 @@ components:
         - {type: SearchAction, name: Review proposed occupations, method: GET, target: "/persons/{personId}/occupations?status=proposed"}
         - {type: ViewAction, name: My views, method: GET, target: "/persons/{personId}/views"}
         - {type: ViewAction, name: My identities, method: GET, target: "/persons/{personId}/identities"}
+        - {type: ViewAction, name: My preferences, method: GET, target: "/persons/{personId}/preferences"}
+        - {type: ViewAction, name: My consents, method: GET, target: "/persons/{personId}/consents"}
         - {type: SearchAction, name: Find an ESCO skill, method: GET, target: "/reference/skills{?q,language}"}
         - {type: SearchAction, name: Find a Wikidata concept, method: GET, target: "/reference/concepts{?q,language}"}
       allOf:
@@ -661,6 +790,8 @@ components:
         - {type: ViewAction, name: Practices, method: GET, target: "/persons/{personId}/practices"}
         - {type: ViewAction, name: Identities, method: GET, target: "/persons/{personId}/identities"}
         - {type: ViewAction, name: Views, method: GET, target: "/persons/{personId}/views"}
+        - {type: ViewAction, name: Preferences, method: GET, target: "/persons/{personId}/preferences"}
+        - {type: ViewAction, name: Consents, method: GET, target: "/persons/{personId}/consents"}
       allOf:
         - $ref: "#/components/schemas/Resource"
         - type: object
@@ -804,6 +935,89 @@ components:
       allOf:
         - $ref: "#/components/schemas/Resource"
         - $ref: "#/components/schemas/IdentityInput"
+
+    PreferencesInput:
+      description: Preferences of scope server. Merge patch; a null value removes a preference
+      type: object
+      additionalProperties: false
+      properties:
+        languages:
+          description: BCP 47 language tags, in the owner's order; labels are returned in these first
+          type: [array, "null"]
+          items: {type: string, minLength: 1}
+
+    Preferences:
+      x-actions:
+        - {type: UpdateAction, name: Change my preferences, method: PATCH, target: "@id", contentType: application/merge-patch+json}
+        - {type: ViewAction, name: Back to my record, method: GET, target: "/persons/{personId}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/PreferencesInput"
+        - type: object
+          properties:
+            plugins:
+              description: Kinds of plugin that keep preferences for the owner
+              type: array
+              items:
+                type: object
+                required: [kind, "@id"]
+                properties:
+                  kind: {type: string}
+                  "@id": {type: string, format: uri-reference}
+
+    PluginPreferences:
+      x-actions:
+        - {type: DeleteAction, name: Forget what this plugin kept, method: DELETE, target: "@id"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          required: [kind, entries]
+          properties:
+            kind: {type: string}
+            entries:
+              description: Keys and values the plugin returned; opaque to the server
+              type: array
+              items:
+                type: object
+                required: [key, value, updated]
+                properties:
+                  key: {type: string}
+                  value: {description: Any JSON value}
+                  updated: {type: string, format: date-time}
+
+    ConsentInput:
+      type: object
+      required: [kind]
+      properties:
+        kind:
+          type: string
+          enum: [remote-plugin, hosted-terms, proposal]
+          description: Grants record their own consent (kind grant)
+        subject:
+          description: A plugin URL, a URL of terms, an author. Absent, agreement by default to the whole kind
+          type: [string, "null"]
+
+    Consent:
+      x-actions:
+        - {type: DeleteAction, name: Withdraw, method: DELETE, target: "@id", when: not withdrawn and kind is not grant}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          required: [kind, given]
+          properties:
+            kind: {type: string, enum: [remote-plugin, hosted-terms, grant, proposal]}
+            subject: {type: [string, "null"]}
+            given: {type: string, format: date-time}
+            withdrawn: {type: [string, "null"], format: date-time}
+
+    ConsentList:
+      x-actions:
+        - {type: CreateAction, name: Give a consent, method: POST, target: "/persons/{personId}/consents"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Consent"}}
 
     ViewInput:
       type: object
