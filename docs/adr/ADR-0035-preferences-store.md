@@ -1,8 +1,8 @@
 # ADR-0035: Preferences store
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-10-30
-- Drafted by: agent (Claude Code, claude-opus-5-5)
+- Drafted by: agent (Claude Code, claude-opus-5-5); decision by owner
 
 ## Context
 
@@ -46,16 +46,15 @@ B with way 1.
 - Separate files, as the owner proposes: `Preferences.sqlite` and `Records.sqlite`.
 - A size limit per value and per table keeps files out of preferences (no PDF). Limits to set.
 
-Open points:
-
-1. Paths. `~/.config` holds configuration on Linux (XDG); data usually goes in `~/.local/share` (`XDG_DATA_HOME`). Windows and macOS have their own folders. Records in `~/.config` would break that convention.
-2. One key for both files, or one each.
-3. Whether preferences are part of the exported record, and through which API.
-4. Consent: a preference, or a dated record of its own.
+Open point: paths. `~/.config` holds configuration on Linux (XDG); data usually goes in `~/.local/share` (`XDG_DATA_HOME`). Windows and macOS have their own folders. Records in `~/.config` would break that convention.
 
 ## Decision
 
-Owner's words.
+Recommendation validated: B with way 1.
+
+- One key for both files: easier.
+- Export: a zip contains both files.
+- Consent is in Records, in a table of its own.
 
 ## Reason
 
@@ -63,6 +62,7 @@ Owner's words.
 
 ## Next steps
 
+- Paths: to decide.
 - Specification: preferences section, plugin call carries the kind's preferences.
 - OpenAPI: preferences resources.
 - Store adapter: the two files, the tables, the limits.

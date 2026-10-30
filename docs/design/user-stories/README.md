@@ -3,7 +3,7 @@
 - Status: Draft
 - Sources: [personas](../personas.md), [data model](../data-model.md)
 
-Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md), [US-08 new CV filtered for an offer](US-08-new-cv.md), [US-09 review imported facts](US-09-review-imported-facts.md), [US-10 install an app, run no server](US-10-hosted-mobile.md).
+Detailed stories: [US-01 import from a CV](US-01-import-cv.md), [US-02 competencies related to recent work](US-02-related-competencies.md), [US-03 shared progress for the yearly review](US-03-shared-progress.md), [US-04 prerequisites](US-04-prerequisites.md), [US-05 certification](US-05-certification.md), [US-06 share a view](US-06-share-a-view.md), [US-07 recruitment](US-07-recruitment.md), [US-08 new CV filtered for an offer](US-08-new-cv.md), [US-09 review imported facts](US-09-review-imported-facts.md), [US-10 install an app, run no server](US-10-hosted-mobile.md), [US-11 preferences](US-11-preferences.md).
 
 
 ## Catalogue
