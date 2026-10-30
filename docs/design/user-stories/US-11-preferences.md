@@ -57,7 +57,7 @@ Anne agrees to send her CV text to a plugin outside her machine (ADR-0032). The 
 Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 - Read: Anne's languages, by a client acting for her.
-- Challenge: may a requester with a grant on a view read preferences? Default: no; the owner may allow it.
+- Rule: Claude reads them as Anne's client, acting for her (UC1). A requester with a grant on a view does not read preferences. Exposing them is a specific need, close to an export, decided case by case.
 
 ## Resources this suggests
 
@@ -74,4 +74,3 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 1. S4: preferences belong to an install (ADR-0035); a hosted install used from several devices needs a rule.
 2. S5: zip in the specification, or a server feature?
 3. S6: what needs consent?
-4. S7: preferences readable through a grant?
