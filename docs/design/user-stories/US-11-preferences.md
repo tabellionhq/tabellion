@@ -51,7 +51,12 @@ Anne exports her data and moves to another server. Her preferences come with her
 Anne agrees to send her CV text to a plugin outside her machine (ADR-0032). The server records her consent, dated, in Records.
 
 - Stored: a consent table in Records (ADR-0035).
-- Challenge: what needs consent? Candidates: a plugin outside the host, a hosted service's terms. To name.
+- Needs consent, dated and withdrawable:
+  - calling a plugin outside the host or private network (specification, Section 4.10; ADR-0032);
+  - a hosted service's terms (APR-0005);
+  - giving someone access to a view (ADR-0007, ADR-0013);
+  - facts proposed by others, such as signed skills (UC6; specification, Section 4.7).
+- Rule: against click fatigue, a person may agree by default to a kind of consent.
 
 ### S7: An agent
 
@@ -72,4 +77,5 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 
 ## Open
 
-1. S6: what needs consent?
+1. S6: where an agreement by default is kept: a consent in Records, or a preference.
+2. S6: whether a view grant and its consent are one act or two.
