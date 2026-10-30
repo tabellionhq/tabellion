@@ -56,7 +56,8 @@ Anne agrees to send her CV text to a plugin outside her machine (ADR-0032). The 
   - a hosted service's terms (APR-0005);
   - giving someone access to a view (ADR-0007, ADR-0013);
   - facts proposed by others, such as signed skills (UC6; specification, Section 4.7).
-- Rule: against click fatigue, a person may agree by default to a kind of consent.
+- Rule: against click fatigue, a person may agree by default to a kind of consent. That agreement is itself a consent, in Records: it follows the record, not the install.
+- Rule: giving access to a view is one act: the grant records the consent at its date; revoking the grant withdraws it.
 
 ### S7: An agent
 
@@ -73,9 +74,8 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 | Read and reset a plugin kind's preferences | `GET`, `DELETE /persons/{personId}/preferences/{kind}` | S3 |
 | Carry a kind's preferences in a plugin call, and changes in its result | a `preferences` member in plugin requests and results (Section 7.1) | S3 |
 | Export and import | `GET`, `PUT /persons/{personId}/export` (zip) | S5 |
-| Give and withdraw consent | `GET`, `POST /persons/{personId}/consents`, `DELETE /consents/{consentId}` | S6 |
+| Give and withdraw consent, or agree by default to a kind | `GET`, `POST /persons/{personId}/consents`, `DELETE /consents/{consentId}`; a view grant records its own consent | S6 |
 
 ## Open
 
-1. S6: where an agreement by default is kept: a consent in Records, or a preference.
-2. S6: whether a view grant and its consent are one act or two.
+- None.
