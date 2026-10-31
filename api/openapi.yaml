@@ -1155,6 +1155,7 @@ components:
           properties:
             level: {type: boolean, default: true}
             evidence: {type: boolean, default: false}
+            description: {type: boolean, default: false, description: Descriptions of occupations held}
 
     View:
       x-actions:

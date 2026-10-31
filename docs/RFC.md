@@ -199,6 +199,7 @@ How a person presents themself to a reader. A server MUST support several identi
 | exclude_facts | list of fact ids | optional; deny list |
 | show.level | boolean | required |
 | show.evidence | boolean | required |
+| show.description | boolean | required; the description of occupations held |
 
 ### 3.8. Grant and access log
 

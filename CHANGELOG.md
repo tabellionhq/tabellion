@@ -74,5 +74,5 @@ All notable changes to this project are documented here. Versions follow [Semant
 - US-11 preferences: languages, plugin preferences, devices, export, consent.
 - Specification: preferences (3.10, 4.11) and consents (3.11, 4.12); plugin calls carry the preferences of their kind (4.10, 7.1).
 - API: preferences of the server and of each kind of plugin; consents, given and withdrawn.
-- Specification: a grant states how its reader authenticates (`auth`, 3.8); occupations held take an optional description, Markdown recommended (3.4).
+- Specification: a grant states how its reader authenticates (`auth`, 3.8); occupations held take an optional description, Markdown recommended (3.4); a view shows it or not (`show.description`, 3.7).
 - API: grants per view, with auth methods socket and bearer (OpenID Connect to define), revocation and access log; occupation description.
