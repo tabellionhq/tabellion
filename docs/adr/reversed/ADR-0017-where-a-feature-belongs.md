@@ -1,7 +1,6 @@
 # ADR-0017: Where a feature belongs: core, adapter or external system
 
-- Status: Accepted
-- Updated by ADR-0028: plugins run as optional services behind contracts in the specification; a feature that needs its own store stays an external system
+- Status: Reversed by ADR-0028
 - Date: 2026-10-19
 - Drafted by: agent (Claude Code, claude-opus-5-5); decision and reason by owner
 
@@ -43,10 +42,10 @@ Sensible: we are interoperable, so an external system uses the API.
 
 ## References
 
-- [APR-0002: Simple adoption curve](../apr/APR-0002-simple-adoption-curve.md)
-- [APR-0003: Skills curriculum standard, existing standards for the rest](../apr/APR-0003-curriculum-standard-defer-the-rest.md)
-- [ADR-0008: Normalisation of the data model](ADR-0008-normalisation.md)
-- [ADR-0009: Track skills, not assessments](ADR-0009-track-skills-not-assessments.md)
-- [ADR-0012: HTTP API](ADR-0012-http-api.md)
-- [ADR-0013: Access control](ADR-0013-access-control.md)
-- [ADR-0016: Core web UI in the main binary](ADR-0016-gui-in-the-binary.md)
+- [APR-0002: Simple adoption curve](../../apr/APR-0002-simple-adoption-curve.md)
+- [APR-0003: Skills curriculum standard, existing standards for the rest](../../apr/APR-0003-curriculum-standard-defer-the-rest.md)
+- [ADR-0008: Normalisation of the data model](../ADR-0008-normalisation.md)
+- [ADR-0009: Track skills, not assessments](../ADR-0009-track-skills-not-assessments.md)
+- [ADR-0012: HTTP API](../ADR-0012-http-api.md)
+- [ADR-0013: Access control](../ADR-0013-access-control.md)
+- [ADR-0016: Core web UI in the main binary](../ADR-0016-gui-in-the-binary.md)

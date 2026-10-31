@@ -63,7 +63,7 @@ Plugins keep the core clean and adapt it to different use cases.
 - [APR-0003: Skills curriculum standard, existing standards for the rest](../apr/APR-0003-curriculum-standard-defer-the-rest.md)
 - [ADR-0014: Language](ADR-0014-language.md)
 - [ADR-0016: GUI in the main binary](ADR-0016-gui-in-the-binary.md)
-- [ADR-0017: Where a feature belongs](ADR-0017-where-a-feature-belongs.md)
+- [ADR-0017: Where a feature belongs](reversed/ADR-0017-where-a-feature-belongs.md)
 - [ADR-0020: Target platforms](ADR-0020-target-platforms.md)
 - [ADR-0024: Specification as the source of truth](ADR-0024-specification-source-of-truth.md)
 - JSON Resume themes: <https://jsonresume.org/themes>

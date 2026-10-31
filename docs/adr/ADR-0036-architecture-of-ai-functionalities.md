@@ -70,7 +70,7 @@ Keeps the model free and respects our APR.
 
 - [APR-0003: Skills curriculum standard, existing standards for the rest](../apr/APR-0003-curriculum-standard-defer-the-rest.md)
 - [APR-0007: AI as a helper](../apr/APR-0007-ai-as-a-helper.md)
-- [ADR-0017: Where a feature belongs](ADR-0017-where-a-feature-belongs.md)
+- [ADR-0017: Where a feature belongs](reversed/ADR-0017-where-a-feature-belongs.md)
 - [ADR-0018: Concepts missing from Wikidata](ADR-0018-concepts-missing-from-wikidata.md)
 - [ADR-0028: Core and plugins as services](ADR-0028-core-and-plugins-as-services.md)
 - [ADR-0030: Plugin self-description](ADR-0030-plugin-self-description.md)
