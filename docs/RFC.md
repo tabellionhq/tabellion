@@ -162,6 +162,7 @@ How a person presents themself to a reader. A server MUST support several identi
 | kind | work, pleasure, study | required |
 | from | date | required |
 | to | date | optional; absent: ongoing |
+| description | string | optional; free text on what the person did there, such as for a CV. SHOULD be Markdown [COMMONMARK] |
 
 ### 3.5. Practice
 
@@ -207,6 +208,7 @@ How a person presents themself to a reader. A server MUST support several identi
 | view | View id | required |
 | reader | string | required |
 | identity | Identity id | optional; how the person presents themself to this reader |
+| auth | object | required; how the reader authenticates: a `method` and its parameters. Methods are defined by the HTTP binding |
 | status | active, revoked | required |
 | expires | datetime | optional |
 
@@ -431,6 +433,8 @@ Test data for conformance, a record and the document it was written from, is pub
 
 - A grant gives access to one view. A server MUST check the grant on every read, as it can be revoked or expire.
 - Evidence is opaque and can come from any author. A client MUST NOT run or render evidence as active content.
+- A description is text from any author. A client that renders it as Markdown MUST NOT render raw HTML or run scripts from it.
+- A grant's credential is a secret. A server SHOULD NOT keep it in a form a reader could reuse, such as a bearer token in clear.
 - A server reachable from a web browser, including one listening on localhost only, can receive requests from any web page the browser opens. A server SHOULD authenticate every request, also on localhost.
 - A plugin may run on another host, or be run by another provider. A server SHOULD authenticate the plugins it calls, and MUST use TLS to call a plugin outside its own host or private network.
 - What a plugin returns is untrusted input, like any change from a client (Section 4.10).
@@ -462,6 +466,7 @@ This document has no IANA actions.
 - [RFC8259] Bray, T., Ed., "The JavaScript Object Notation (JSON) Data Interchange Format", STD 90, RFC 8259, December 2017, <https://www.rfc-editor.org/info/rfc8259>.
 - [RFC9562] Davis, K., Peabody, B., and P. Leach, "Universally Unique IDentifiers (UUIDs)", RFC 9562, May 2024, <https://www.rfc-editor.org/info/rfc9562>.
 - [BCP47] Phillips, A., Ed., and M. Davis, Ed., "Tags for Identifying Languages", BCP 47, RFC 5646, September 2009, <https://www.rfc-editor.org/info/rfc5646>.
+- [COMMONMARK] MacFarlane, J., "CommonMark Spec", Version 0.31.2, January 2024, <https://spec.commonmark.org/0.31.2/>.
 - [ESCO] European Commission, "ESCO: European Skills, Competences, Qualifications and Occupations", <https://esco.ec.europa.eu>.
 - [WIKIDATA] Wikimedia Foundation, "Wikidata", <https://www.wikidata.org>.
 - [JSON-LD11] Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P., and N. Lindström, "JSON-LD 1.1", W3C Recommendation, July 2020, <https://www.w3.org/TR/json-ld11/>.

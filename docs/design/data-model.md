@@ -28,11 +28,18 @@ This note holds what the specification leaves to an implementation: reference da
 
 ### Grant
 
-A grant also records how the reader authenticates (ADR-0013):
+How the reader authenticates (ADR-0013), in the grant's `auth` (specification, Section 3.8):
 
 ```yaml
-Grant:
-  auth: socket | bearer | oidc
+auth:
+  method: socket   # the local user calling on the socket, as the system reports it
+  user: string
+---
+auth:
+  method: bearer   # a token, shown once when the grant is created; the server keeps its hash
+---
+auth:
+  method: oidc     # parameters to define
 ```
 
 ### Evidence of a CV import

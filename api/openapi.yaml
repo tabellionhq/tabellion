@@ -40,6 +40,7 @@ tags:
   - name: import
   - name: facts
   - name: views
+  - name: grants
   - name: identities
   - name: preferences
   - name: consents
@@ -562,7 +563,9 @@ paths:
     get:
       tags: [views]
       summary: Facts selected by the view, with its fields only
+      description: The owner reads it without a grant; a reader, under an active grant that has not expired. Each read under a grant is logged
       operationId: getViewFacts
+      security: [{}, {readerToken: []}]
       parameters:
         - {$ref: "#/components/parameters/ifNoneMatch"}
       responses:
@@ -586,6 +589,7 @@ paths:
       tags: [views]
       summary: Facts selected by the view, as a JSON Resume document
       operationId: getViewResume
+      security: [{}, {readerToken: []}]
       parameters:
         - name: identity
           in: query
@@ -602,6 +606,88 @@ paths:
               schema:
                 description: JSON Resume schema, https://jsonresume.org/schema
                 type: object
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /views/{viewId}/grants:
+    parameters:
+      - {$ref: "#/components/parameters/viewId"}
+    get:
+      tags: [grants]
+      summary: Who may read this view
+      operationId: listGrants
+      responses:
+        "200":
+          description: Grants, revoked ones included
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/GrantList"}
+        "404": {$ref: "#/components/responses/Problem"}
+    post:
+      tags: [grants]
+      summary: Give a reader access to this view. Records the owner's consent (kind grant)
+      operationId: createGrant
+      requestBody:
+        required: true
+        content:
+          application/ld+json:
+            schema: {$ref: "#/components/schemas/GrantInput"}
+      responses:
+        "201":
+          description: Created. With method bearer, the token is in this response only
+          headers:
+            Location: {$ref: "#/components/headers/Location"}
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/GrantCreated"}
+        "400": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+
+  /grants/{grantId}:
+    parameters:
+      - {$ref: "#/components/parameters/grantId"}
+    get:
+      tags: [grants]
+      summary: One grant
+      operationId: getGrant
+      responses:
+        "200":
+          description: The grant
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Grant"}
+        "404": {$ref: "#/components/responses/Problem"}
+    patch:
+      tags: [grants]
+      summary: Revoke a grant, or change when it expires. Revoking is final and withdraws its consent
+      operationId: changeGrant
+      requestBody:
+        required: true
+        content:
+          application/merge-patch+json:
+            schema: {$ref: "#/components/schemas/GrantChange"}
+      responses:
+        "200":
+          description: The grant, as changed
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/Grant"}
+        "400": {$ref: "#/components/responses/Problem"}
+        "404": {$ref: "#/components/responses/Problem"}
+        "409": {$ref: "#/components/responses/Problem"}
+
+  /grants/{grantId}/access-log:
+    parameters:
+      - {$ref: "#/components/parameters/grantId"}
+    get:
+      tags: [grants]
+      summary: When the reader read the view through this grant
+      operationId: getAccessLog
+      responses:
+        "200":
+          description: Reads, most recent first
+          content:
+            application/ld+json:
+              schema: {$ref: "#/components/schemas/AccessLog"}
         "404": {$ref: "#/components/responses/Problem"}
 
   /reference/skills:
@@ -641,6 +727,7 @@ components:
     viewId: {name: viewId, in: path, required: true, schema: {type: string, format: uuid}}
     taskId: {name: taskId, in: path, required: true, schema: {type: string, format: uuid}}
     termId: {name: termId, in: path, required: true, schema: {type: string, format: uuid}}
+    grantId: {name: grantId, in: path, required: true, schema: {type: string, format: uuid}}
     consentId: {name: consentId, in: path, required: true, schema: {type: string, format: uuid}}
     kind:
       name: kind
@@ -681,6 +768,12 @@ components:
       schema: {type: string}
     CacheControl:
       schema: {type: string}
+
+  securitySchemes:
+    readerToken:
+      description: A grant with auth method bearer. A grant with method socket needs no header; the server reads the calling user from the socket
+      type: http
+      scheme: bearer
 
   responses:
     Problem:
@@ -842,6 +935,9 @@ components:
         kind: {type: string, enum: [work, pleasure, study]}
         from: {$ref: "#/components/schemas/PartialDate"}
         to: {oneOf: [{$ref: "#/components/schemas/PartialDate"}, {type: "null"}]}
+        description:
+          description: What the person did there, such as for a CV. Markdown (CommonMark) recommended; clients render no raw HTML
+          type: [string, "null"]
         evidence: {}
 
     OccupationHeld:
@@ -1065,6 +1161,8 @@ components:
         - {type: ViewAction, name: See the facts this view shows, method: GET, target: "/views/{viewId}/facts"}
         - {type: ViewAction, name: Export as a CV (JSON Resume), method: GET, target: "/views/{viewId}/resume{?identity}"}
         - {type: UpdateAction, name: Edit this view, method: PUT, target: "@id", header: If-Match}
+        - {type: ViewAction, name: Who reads this view, method: GET, target: "@id/grants"}
+        - {type: CreateAction, name: Share this view, method: POST, target: "@id/grants"}
       allOf:
         - $ref: "#/components/schemas/Resource"
         - $ref: "#/components/schemas/ViewInput"
@@ -1084,6 +1182,97 @@ components:
             practices:
               type: array
               items: {$ref: "#/components/schemas/Practice"}
+
+    GrantAuth:
+      description: How the reader authenticates (ADR-0013)
+      oneOf:
+        - type: object
+          description: A local user calling on the socket, as the system reports it
+          required: [method, user]
+          properties:
+            method: {const: socket}
+            user: {type: string, minLength: 1}
+        - type: object
+          description: A bearer token, given once when the grant is created; the server keeps only its hash
+          required: [method]
+          properties:
+            method: {const: bearer}
+        - type: object
+          description: OpenID Connect; parameters to define
+          required: [method]
+          properties:
+            method: {const: oidc}
+
+    GrantInput:
+      type: object
+      required: [reader, auth]
+      properties:
+        reader: {type: string, minLength: 1, description: "A person, an organisation or a system, e.g. Michaela, ACME HR"}
+        identity:
+          description: The identity the person presents to this reader
+          type: [string, "null"]
+          format: uuid
+        expires: {type: [string, "null"], format: date-time}
+        auth: {$ref: "#/components/schemas/GrantAuth"}
+
+    GrantChange:
+      description: Merge patch on a grant
+      type: object
+      additionalProperties: false
+      properties:
+        status: {const: revoked}
+        expires: {type: [string, "null"], format: date-time}
+
+    Grant:
+      x-actions:
+        - {type: ViewAction, name: When it was read, method: GET, target: "@id/access-log"}
+        - {type: UpdateAction, name: Revoke, method: PATCH, target: "@id", body: {status: revoked}, when: status is active}
+        - {type: ViewAction, name: The view, method: GET, target: "/views/{viewId}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - $ref: "#/components/schemas/GrantInput"
+        - type: object
+          required: [view, status, consent]
+          properties:
+            view: {type: string, format: uri-reference}
+            status: {type: string, enum: [active, revoked]}
+            consent:
+              description: The consent this grant recorded
+              type: string
+              format: uri-reference
+
+    GrantCreated:
+      allOf:
+        - $ref: "#/components/schemas/Grant"
+        - type: object
+          properties:
+            token:
+              description: "Method bearer: the token to give the reader. Not returned again"
+              type: string
+
+    GrantList:
+      x-actions:
+        - {type: CreateAction, name: Share this view, method: POST, target: "/views/{viewId}/grants"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items: {type: array, items: {$ref: "#/components/schemas/Grant"}}
+
+    AccessLog:
+      x-actions:
+        - {type: ViewAction, name: The grant, method: GET, target: "/grants/{grantId}"}
+      allOf:
+        - $ref: "#/components/schemas/Resource"
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                required: [at]
+                properties:
+                  at: {type: string, format: date-time}
 
     Task:
       x-actions:
