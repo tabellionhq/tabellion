@@ -28,6 +28,7 @@ Contributions are signed off under the Developer Certificate of Origin: see [CON
 - International: see [APR-0004](docs/apr/APR-0004-international.md).
 - Hosted service possible: see [APR-0005](docs/apr/APR-0005-hosted-service-possible.md).
 - Accessibility: see [APR-0006](docs/apr/APR-0006-accessibility.md).
+- AI as a helper: see [APR-0007](docs/apr/APR-0007-ai-as-a-helper.md).
 
 ## Potential use case: knowledge checks
 
