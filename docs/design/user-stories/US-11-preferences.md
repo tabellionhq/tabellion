@@ -28,7 +28,7 @@ A person sets the UI to their needs before any screen is designed (APR-0006).
 
 Anne makes a CV for an offer (US-08). The `cv` plugin proposes the filters and aliases she used last time. She changes one; next time the change is there.
 
-- Stored: in the `cv` kind's table, written by the server from the plugin's result (ADR-0035, way 1).
+- Stored: in the `cv` kind's table, written by the plugin (specification, Section 4.10).
 - Rule: Anne sees a kind's keys and values, and resets them all at once. Editing stays in the plugin's own flow.
 
 ### S4: Another device
@@ -48,11 +48,11 @@ Anne exports her data and moves to another server. Her preferences come with her
 
 ### S6: Consent
 
-Anne agrees to send her CV text to a plugin outside her machine (ADR-0032). The server records her consent, dated, in Records.
+Anne agrees that a plugin sends her CV text to an endpoint outside her machine, such as a language model provider. The server records her consent, dated, in Records.
 
 - Stored: a consent table in Records (ADR-0035).
 - Needs consent, dated and withdrawable:
-  - calling a plugin outside the host or private network (specification, Section 4.10; ADR-0032);
+  - personal data sent to an endpoint, by the server or a plugin (specification, Section 4.12);
   - a hosted service's terms (APR-0005);
   - giving someone access to a view (ADR-0007, ADR-0013);
   - facts proposed by others, such as signed skills (UC6; specification, Section 4.7).
@@ -72,7 +72,6 @@ Claude assesses Anne's recent commits for her (UC1). It answers in her language.
 |---|---|---|
 | Read and change the core's preferences | `GET`, `PATCH /persons/{personId}/preferences` | S1, S4, S7 |
 | Read and reset a plugin kind's preferences | `GET`, `DELETE /persons/{personId}/preferences/{kind}` | S3 |
-| Carry a kind's preferences in a plugin call, and changes in its result | a `preferences` member in plugin requests and results (Section 7.1) | S3 |
 | Export and import | `GET`, `PUT /persons/{personId}/export` (zip) | S5 |
 | Give and withdraw consent, or agree by default to a kind | `GET`, `POST /persons/{personId}/consents`, `DELETE /consents/{consentId}`; a view grant records its own consent | S6 |
 

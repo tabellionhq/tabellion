@@ -1071,7 +1071,7 @@ components:
           properties:
             kind: {type: string}
             entries:
-              description: Keys and values the plugin returned; opaque to the server
+              description: Keys and values the plugin stored; opaque to the server
               type: array
               items:
                 type: object
@@ -1087,10 +1087,10 @@ components:
       properties:
         kind:
           type: string
-          enum: [remote-plugin, hosted-terms, proposal]
+          enum: [remote-endpoint, hosted-terms, proposal]
           description: Grants record their own consent (kind grant)
         subject:
-          description: A plugin URL, a URL of terms, an author. Absent, agreement by default to the whole kind
+          description: An endpoint URL, a URL of terms, an author. Absent, agreement by default to the whole kind
           type: [string, "null"]
 
     Consent:
@@ -1101,7 +1101,7 @@ components:
         - type: object
           required: [kind, given]
           properties:
-            kind: {type: string, enum: [remote-plugin, hosted-terms, grant, proposal]}
+            kind: {type: string, enum: [remote-endpoint, hosted-terms, grant, proposal]}
             subject: {type: [string, "null"]}
             given: {type: string, format: date-time}
             withdrawn: {type: [string, "null"], format: date-time}

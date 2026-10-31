@@ -52,6 +52,8 @@ Open point: paths. `~/.config` holds configuration on Linux (XDG); data usually 
 
 Recommendation validated: B with way 1.
 
+Updated 2026-10-31 by the owner: way 1 is replaced. A plugin reads and writes the table of its own kinds directly, structured data only, never documents or files (specification, Section 4.10).
+
 - One key for both files: easier.
 - Export: a zip contains both files.
 - Consent is in Records, in a table of its own.

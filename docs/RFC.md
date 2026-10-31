@@ -8,7 +8,7 @@ Category: Beta specification, not an RFC
 
 ## Abstract
 
-This document specifies a data model and rules for recording the skills a person has practised over time: the occupations held, the practices of a skill on a concept at an occupation over a period, and the views through which the person exposes part of this record to others. Skills are identified by the European Skills, Competences, Qualifications and Occupations classification (ESCO); concepts and contexts by Wikidata items. The document defines what a server keeping a record, a client using it, and a plugin doing part of the server's work must do to interoperate.
+This document specifies a data model and rules for recording the skills a person has practised over time: the occupations held, the practices of a skill on a concept at an occupation over a period, and the views through which the person exposes part of this record to others. Skills are identified by the European Skills, Competences, Qualifications and Occupations classification (ESCO); concepts and contexts by Wikidata items. The document defines what a server keeping a record, a client using it, and a plugin adding features or adapters to a server must do to interoperate.
 
 ## Status of This Memo
 
@@ -102,13 +102,13 @@ Grant
 : The permission given by the owner to a reader to read one view.
 
 Task
-: Slow work run by a server for the owner, such as importing a CV. Not a fact.
+: Slow work run for the owner by a server or by a plugin, such as importing a CV. Not a fact.
 
 Preference
 : How the owner likes a server, or a kind of plugin, to work for them, such as the languages labels are shown in. Not a fact, and not part of the record.
 
 Consent
-: The owner's dated agreement to an act that sends or receives personal data, such as calling a plugin on another host. Kept with the record.
+: The owner's dated agreement to an act that sends or receives personal data, such as sending the text of a CV to an endpoint. Kept with the record.
 
 Server
 : A system that keeps records and enforces the rules of this document.
@@ -116,8 +116,14 @@ Server
 Client
 : A system that reads or changes a record through a server, for a person: the owner or a reader. A client application, such as a web interface or a mobile app, is a client.
 
+Application
+: A client that runs on another host than the server, such as a mobile app.
+
 Plugin
-: A system that a server calls to do part of a task, such as reading a CV. A plugin never reads or changes a record: it returns a result to the server that called it (Section 4.10).
+: A system that runs next to a server, on its host or private network, and adds features to it, such as screens and kinds of tasks, adapters, which implement a function of the server, or both (Section 4.10).
+
+Endpoint
+: A service on another host that a server or a plugin calls, such as a language model provider.
 
 ## 3. Data Model
 
@@ -251,8 +257,8 @@ Preferences of scope `server` defined by this document:
 |---|---|---|
 | id | uuid | required |
 | person | Person id | required |
-| kind | remote-plugin, hosted-terms, grant, proposal | required |
-| subject | string | optional; what the consent is for: a plugin URL, a URL of terms, a Grant id, an author. Absent: agreement by default to the whole kind |
+| kind | remote-endpoint, hosted-terms, grant, proposal | required |
+| subject | string | optional; what the consent is for: an endpoint URL, a URL of terms, a Grant id, an author. Absent: agreement by default to the whole kind |
 | given | datetime | required |
 | withdrawn | datetime | optional |
 
@@ -331,6 +337,7 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 - A fact proposed by a task has the task as its author.
 - A server MUST let the owner reject, in one operation, every fact still proposed by a task.
 - A server MUST let the owner leave out a term an import did not match. Leaving a term out removes it from the result and records no fact.
+- A plugin manages the tasks of the kinds it declares: it sets their stage, state and result. The server stores them and checks every change (Section 4.9).
 - A server SHOULD NOT keep the source document of an import once the task has ended. The evidence of each fact keeps the excerpt it comes from.
 
 ### 4.8. Completion
@@ -347,19 +354,20 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 ### 4.10. Plugins
 
-- A server calls a plugin by its URL, for a kind of plugin that the plugin declares (Section 7.1). A server MUST NOT call a plugin for a kind it does not declare.
-- A server MUST send a plugin only the data its call needs, never access to a record.
-- A server MUST check what a plugin returns as it checks a change from a client (Section 4.9). Facts built from a plugin's result are proposed by the task that called it (Section 4.7).
-- A plugin MUST NOT keep the data it receives once it has answered. It MAY keep a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
+- A plugin declares the kinds it implements, each a feature or an adapter (Section 7.1). A server MUST NOT use a plugin for a kind it does not declare.
+- A server calls a plugin's adapter for the function it implements, and MUST send it only the data the call needs.
+- A plugin's features use the server through its API, for the owner, as a client. Facts they create are proposed (Section 4.1); a fact created by a task has the task as author (Section 4.7).
+- A server MUST check what a plugin returns or sends as it checks a change from a client (Section 4.9).
+- A plugin MAY store structured data, such as the fields of a saved CV, in the preferences of its kinds (Section 4.11). It MUST NOT store documents or files there, such as a PDF.
+- A plugin reads and writes only the preferences of its own kinds. It MUST NOT keep other data, except a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
 - The rules of Sections 3 and 4 MUST NOT depend on a plugin. Without a plugin, a server still lets the owner create, change, review and delete facts, and write views.
 - A server SHOULD NOT offer an action that needs a plugin it cannot reach. It MAY tell the owner which kind of plugin is missing.
-- A server MAY send a plugin the preferences of the kind it is called for. The plugin MAY return changes to them with its result (Section 7.1). A plugin stores preferences only this way.
 
 ### 4.11. Preferences
 
 - Preferences are not facts: a server changes them in place and keeps no history.
 - A server keeps the preferences of scope `server`, and those of each kind of plugin it declares. A server, not a plugin, creates a scope.
-- Only the owner reads and changes preferences. A grant gives no access to them.
+- Only the owner reads and changes preferences, and a plugin those of its own kinds (Section 4.10). A grant gives no access to them.
 - A server MUST let the owner read the preferences of a kind of plugin, and remove them all in one operation.
 - A server SHOULD limit the size of a value and of a scope. Preferences do not hold documents.
 - When `languages` is set, a server MUST return labels in those languages, in that order, before the languages a client asks for (Section 9).
@@ -367,11 +375,12 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 ### 4.12. Consents
 
-- A server MUST record the owner's consent before it:
-  - calls a plugin outside its own host or private network (`remote-plugin`);
-  - keeps a record under the terms of a hosted service (`hosted-terms`);
-  - gives a reader access to a view (`grant`);
-  - accepts facts proposed by an author other than the owner and the owner's tasks (`proposal`).
+- A server MUST record the owner's consent before:
+  - personal data is sent to an endpoint, by the server or by a plugin (`remote-endpoint`);
+  - it keeps a record under the terms of a hosted service (`hosted-terms`);
+  - it gives a reader access to a view (`grant`);
+  - it accepts facts proposed by an author other than the owner and the owner's tasks (`proposal`).
+- A plugin MUST NOT send personal data to an endpoint without the owner's consent for that endpoint.
 - A consent without a subject agrees by default to every act of its kind. It is a consent like the others, kept with the record.
 - Creating a grant records its consent, with the grant as subject. Revoking the grant withdraws it.
 - A server MUST let the owner withdraw a consent at any time. A withdrawn consent allows no further act. A server keeps a withdrawn consent, with its date.
@@ -395,8 +404,7 @@ A contract is what a server sends to a plugin of one kind, and what the plugin r
 ### 7.1. Common to all plugins
 
 - A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind.
-- A plugin that cannot do a call MUST return a problem detail [RFC9457]. The server then interrupts the task (Section 4.7).
-- Every call MAY carry `preferences`: the preferences of the kind, as an object of keys and values. Every result MAY carry `preferences`: the keys to change, a null value removing the key (Section 4.10).
+- A plugin that cannot do a call MUST return a problem detail [RFC9457]. The task that made the call is then interrupted (Section 4.7).
 
 ### 7.2. Term matching
 
@@ -420,7 +428,7 @@ A conforming server implements Sections 3 and 4.
 
 A conforming client sends only changes allowed by Section 4, and handles the refusal of any change.
 
-A conforming plugin implements Sections 4.10 and 7.1, and the contract of each kind it declares.
+A conforming plugin implements Sections 4.10 and 7.1, and the contract of each kind it declares. A plugin with features also implements, for the tasks it manages, Section 4.7, and for the data it sends to endpoints, Section 4.12.
 
 Test data for conformance, a record and the document it was written from, is published by the Tabellion project [TABELLION-TESTDATA].
 
@@ -437,8 +445,9 @@ Test data for conformance, a record and the document it was written from, is pub
 - A description is text from any author. A client that renders it as Markdown MUST NOT render raw HTML or run scripts from it.
 - A grant's credential is a secret. A server SHOULD NOT keep it in a form a reader could reuse, such as a bearer token in clear.
 - A server reachable from a web browser, including one listening on localhost only, can receive requests from any web page the browser opens. A server SHOULD authenticate every request, also on localhost.
-- A plugin may run on another host, or be run by another provider. A server SHOULD authenticate the plugins it calls, and MUST use TLS to call a plugin outside its own host or private network.
-- What a plugin returns is untrusted input, like any change from a client (Section 4.10).
+- A server SHOULD authenticate the plugins it calls and the plugins that call it, also on its host or private network.
+- Calls between hosts, from an application to a server, or from a server or a plugin to an endpoint, MUST use TLS.
+- What a plugin returns or sends is untrusted input, like any change from a client (Section 4.10).
 - Facts state what their author claims. This document gives no means to verify a claim; a reader decides whether to trust it.
 
 ## 11. Privacy Considerations
@@ -447,10 +456,10 @@ Test data for conformance, a record and the document it was written from, is pub
 - A person is identified by a UUID only. Names and contacts are kept apart, in identities, and given to a reader only through the identity chosen for a grant.
 - The person decides what each reader sees; the deny list of a view always wins.
 - The access log tells the person who read which view, and when.
-- Preferences are personal data. They are read by the owner only, and by a plugin only for its own kind (Section 4.11).
+- Preferences are personal data. They are read by the owner, and by a plugin only for its own kinds (Section 4.10).
 - Source documents, such as a CV, are not kept beyond their import (Section 4.7).
-- A server MUST NOT send usage data, such as telemetry, to anyone. It sends personal data only to the plugins the owner's tasks call.
-- A plugin receives personal data, such as the text of a CV, and does not keep it (Section 4.10). A server SHOULD tell the owner which plugin, and which provider, receives their data before a task sends it, and MUST have the owner's consent for a plugin outside its own host or private network (Section 4.12).
+- A server MUST NOT send usage data, such as telemetry, to anyone. Personal data leaves the host only to an endpoint the owner consented to (Section 4.12), whether a server or a plugin sends it.
+- A plugin receives personal data, such as the text of a CV. It keeps only structured data, in the preferences of its kinds (Section 4.10). A server SHOULD tell the owner which plugin and which endpoint receive their data before it is sent.
 
 ## 12. IANA Considerations
 
