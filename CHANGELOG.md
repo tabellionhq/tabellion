@@ -76,4 +76,5 @@ All notable changes to this project are documented here. Versions follow [Semant
 - API: preferences of the server and of each kind of plugin; consents, given and withdrawn.
 - Specification: a grant states how its reader authenticates (`auth`, 3.8); occupations held take an optional description, Markdown recommended (3.4); a view shows it or not (`show.description`, 3.7).
 - APR-0007 AI as a helper.
+- ADR-0036 architecture of AI functionalities: functions behind ports, AI-free core adapters, AI clients for the rest, plugins declare their technologies.
 - API: grants per view, with auth methods socket and bearer (OpenID Connect to define), revocation and access log; occupation description.
