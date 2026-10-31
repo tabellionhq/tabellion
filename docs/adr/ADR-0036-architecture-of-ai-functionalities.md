@@ -22,7 +22,7 @@ Functions that AI could serve ([functions](../design/functions.md)):
 | F06 write a view from words | language model | the owner picks filters |
 | Writing text, such as an occupation description | language model | the owner writes it |
 
-Today only F01 has a contract (specification, Section 7.2). Concept embeddings sit in the `model` plugin without a contract (ADR-0028), apart from the core's search index.
+Today only F01 has a contract (specification, Section 7.3). Concept embeddings sit in the `model` plugin without a contract (ADR-0028), apart from the core's search index.
 
 Whether "AI" applies to a plugin is fuzzy: two plugins of the same kind may run rules or a language model, and look the same to the owner.
 
@@ -63,7 +63,7 @@ Keeps the model free and respects our APR.
 
 - Search contract: a `search` kind for F02 and F05, with the core's index as its adapter without AI.
 - Self-description: the field for declared technologies.
-- Rules for every helper, AI or not: excerpts checked against their line (Section 7.2); the plugins a task called (Section 3.9); views applied from their fields alone; facts from an agent proposed.
+- Rules for every helper, AI or not: excerpts checked against their line (Section 7.3); the plugins a task called (Section 3.9); views applied from their fields alone; facts from an agent proposed.
 - Embeddings of personal data: who builds the index, where it is kept.
 
 ## References

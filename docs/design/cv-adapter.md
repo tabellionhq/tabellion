@@ -13,7 +13,7 @@ Turns a document into text.
 | Returned | lines | list of strings, in reading order | required |
 
 - The plugin declares the media types it reads.
-- The line numbers of the text are the positions in `lines`, from 1. Evidence refers to them. The text then goes to term matching (specification, Section 7.2).
+- The line numbers of the text are the positions in `lines`, from 1. Evidence refers to them. The text then goes to term matching (specification, Section 7.3).
 
 ## CV rendering
 

@@ -6,7 +6,7 @@ Functions the system provides, independent of technology. Each is traced to the 
 
 | ID | Function | In | Out | Stories |
 |---|---|---|---|---|
-| F01 | Extract statements from a document | document | statements (occupation, period, terms), each with its excerpt; plugins: CV extraction ([cv-adapter.md](cv-adapter.md)), term matching (specification, Section 7.2) | US-01 |
+| F01 | Extract statements from a document | document | statements (occupation, period, terms), each with its excerpt; plugins: CV extraction ([cv-adapter.md](cv-adapter.md)), term matching (specification, Section 7.3) | US-01 |
 | F02 | Find the skill meant by words | words, any language; optional hint | ranked candidates (ESCO, Wikidata): label, description, source, why; or nothing found | US-01, US-05 |
 | F03 | Propose facts to a record | person, facts, evidence | facts with status proposed | US-01 |
 | F04 | Review proposed facts | proposed facts | facts augmented, filtered, validated by the person | US-01 |

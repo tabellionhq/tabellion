@@ -62,7 +62,7 @@ curl -X POST $API/persons/9f1e…/identities -H 'Content-Type: application/ld+js
 |---|---|
 | Anne | pastes her CV text, or picks a `.txt` file saved from LibreOffice |
 | Request | `POST /imports` (text) → `202 Accepted`, `Location: /tasks/41ab…` |
-| Components | core creates a task → `cv` plugin, for a file: text in numbered lines → Anne confirms the text → `model` plugin: occupations, practices and unmatched terms, each with its excerpt (term matching, specification Section 7.2) → core: checks them, records proposed facts |
+| Components | core creates a task → `cv` plugin, for a file: text in numbered lines → Anne confirms the text → `model` plugin: occupations, practices and unmatched terms, each with its excerpt (term matching, specification Section 7.3) → core: checks them, records proposed facts |
 | Stored | Task `{id, kind: cv-import, state, result: {unresolved}}`; OccupationHeld and Practice rows, `status: proposed`, `author: /tasks/41ab…`, `evidence: {excerpt, file, line}` |
 | UI shows | progress, the extracted text to confirm, then the check screen ([screens/](screens/)) |
 

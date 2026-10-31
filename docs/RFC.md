@@ -240,7 +240,7 @@ An access log entry holds a grant id and the datetime of a read.
 
 | Field | Type | Requirement |
 |---|---|---|
-| scope | `server`, or a kind of plugin | required |
+| scope | `server`, or a plugin resource, named `<plugin>_<resource>` (Section 3.12) | required |
 | key | string | required; unique within its scope |
 | value | any JSON value [RFC8259] | required |
 | updated | datetime | required |
@@ -261,6 +261,19 @@ Preferences of scope `server` defined by this document:
 | subject | string | optional; what the consent is for: an endpoint URL, a URL of terms, a Grant id, an author. Absent: agreement by default to the whole kind |
 | given | datetime | required |
 | withdrawn | datetime | optional |
+
+### 3.12. Plugin resource
+
+A type of structured data that a plugin declares (Section 7.1), such as a saved CV. Its instances are preferences in the scope `<plugin>_<resource>`, such as `cv_saved-cv`.
+
+| Field | Type | Requirement |
+|---|---|---|
+| plugin | name of the plugin | required |
+| name | string | required; unique within the plugin |
+| version | string | required |
+| schema | JSON Schema [JSON-SCHEMA] | required; the structure of an instance |
+
+A name, of a plugin or of a resource, holds lower case letters, digits and `-` only. The character `_` is forbidden: it separates the plugin from the resource in a scope.
 
 ## 4. Rules
 
@@ -354,21 +367,24 @@ A skill named in a source without a period, such as in the summary of a CV, SHOU
 
 ### 4.10. Plugins
 
-- A plugin declares the kinds it implements, each a feature or an adapter (Section 7.1). A server MUST NOT use a plugin for a kind it does not declare.
+- A plugin declares itself at initialization (Sections 7.1, 7.2). A server MUST NOT use a plugin for anything it does not declare.
 - A server calls a plugin's adapter for the function it implements, and MUST send it only the data the call needs.
 - A plugin's features use the server through its API, for the owner, as a client. Facts they create are proposed (Section 4.1); a fact created by a task has the task as author (Section 4.7).
 - A server MUST check what a plugin returns or sends as it checks a change from a client (Section 4.9).
-- A plugin MAY store structured data, such as the fields of a saved CV, in the preferences of its kinds (Section 4.11). It MUST NOT store documents or files there, such as a PDF.
-- A plugin reads and writes only the preferences of its own kinds. It MUST NOT keep other data, except a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
+- A plugin MAY store structured data as instances of the resources it declares (Section 3.12), such as the fields of a saved CV. It MUST NOT store documents or files, such as a PDF.
+- A plugin reads and writes only the scopes of its own resources. It MUST NOT keep other data, except a cache that holds no personal data and that it can rebuild, such as vectors of ESCO and Wikidata labels.
+- When a plugin declares a new version of a resource, it MUST migrate the stored instances to that version before it reports ready (Section 7.2).
+- A server MUST route every request to a plugin's endpoints, screens included, through its own address and its own authentication. A client does not call a plugin directly.
+- A plugin MUST NOT call an external endpoint it does not declare.
 - The rules of Sections 3 and 4 MUST NOT depend on a plugin. Without a plugin, a server still lets the owner create, change, review and delete facts, and write views.
-- A server SHOULD NOT offer an action that needs a plugin it cannot reach. It MAY tell the owner which kind of plugin is missing.
+- A server SHOULD NOT offer an action that needs a plugin that is not ready or not healthy (Section 7.2). It MAY tell the owner which plugin is missing.
 
 ### 4.11. Preferences
 
 - Preferences are not facts: a server changes them in place and keeps no history.
-- A server keeps the preferences of scope `server`, and those of each kind of plugin it declares. A server, not a plugin, creates a scope.
-- Only the owner reads and changes preferences, and a plugin those of its own kinds (Section 4.10). A grant gives no access to them.
-- A server MUST let the owner read the preferences of a kind of plugin, and remove them all in one operation.
+- A server keeps the preferences of scope `server`, and those of each resource a plugin declares. A server, not a plugin, creates a scope.
+- Only the owner reads and changes preferences, and a plugin those of its own resources (Section 4.10). A grant gives no access to them.
+- A server MUST let the owner read the instances of a plugin resource, and remove them all in one operation.
 - A server SHOULD limit the size of a value and of a scope. Preferences do not hold documents.
 - When `languages` is set, a server MUST return labels in those languages, in that order, before the languages a client asks for (Section 9).
 - A client MAY keep its own preferences instead of the server's. Keeping the two in step is the client's choice.
@@ -399,14 +415,35 @@ The binding chooses, among others: JSON-LD responses with the actions available 
 
 ## 7. Plugin Contracts
 
-A contract is what a server sends to a plugin of one kind, and what the plugin returns. This document does not define an HTTP binding for these contracts.
+A plugin declares what it is and what it offers (Section 7.1), when the server initializes it (Section 7.2). Its endpoints are canonical, implementing a kind defined by this document or by the Tabellion project, such as term matching (Section 7.3), or custom, for its own features.
 
-### 7.1. Common to all plugins
+### 7.1. Declaration
 
-- A plugin MUST describe itself: the kinds it implements, the revision of this document it follows, and the options of each kind.
+| Field | Type | Requirement |
+|---|---|---|
+| name | string (Section 3.12) | required; unique on a server |
+| version | string | required; the version of the plugin |
+| specification | string | required; the revision of this document it follows, e.g. draft-tabellion-curriculum-00 |
+| endpoints | OpenAPI description [OPENAPI] | required; every endpoint of the plugin. A canonical endpoint names the kind it implements; any other is custom: an API on its resources, or a screen |
+| resources | list of plugin resources (Section 3.12) | optional |
+| menu | list of items, each a label and an endpoint | optional; each endpoint MUST be one of the plugin's |
+| external | list of uri | required, MAY be empty; the external endpoints the plugin calls |
+| probes | readiness and health, each an endpoint | required |
+
+- A server MUST refuse a declaration with a name already used on the server, a name or resource name holding `_`, a revision of this document it does not follow, or a menu item pointing outside the plugin.
 - A plugin that cannot do a call MUST return a problem detail [RFC9457]. The task that made the call is then interrupted (Section 4.7).
 
-### 7.2. Term matching
+### 7.2. Initialization
+
+1. The server sends the plugin an initialization request: the revision of this document it follows, the address of its API, and a credential for the plugin's calls to it.
+2. The plugin answers with its declaration (Section 7.1), or with a problem detail if it cannot run with this server.
+3. The server checks the declaration (Section 7.1), creates the scopes of the declared resources (Section 4.11), and records which external endpoints need the owner's consent (Section 4.12).
+4. The server routes no request to the plugin until its readiness probe answers ready.
+5. The server calls the health probe while the plugin runs. A plugin that is not healthy is not offered (Section 4.10).
+
+A server initializes a plugin again when the plugin's version changes.
+
+### 7.3. Term matching
 
 Proposes facts from a text, such as the text of a document read by another plugin.
 
@@ -428,7 +465,7 @@ A conforming server implements Sections 3 and 4.
 
 A conforming client sends only changes allowed by Section 4, and handles the refusal of any change.
 
-A conforming plugin implements Sections 4.10 and 7.1, and the contract of each kind it declares. A plugin with features also implements, for the tasks it manages, Section 4.7, and for the data it sends to endpoints, Section 4.12.
+A conforming plugin implements Sections 4.10, 7.1 and 7.2, and the contract of each kind its canonical endpoints implement. A plugin with features also implements, for the tasks it manages, Section 4.7, and for the data it sends to endpoints, Section 4.12.
 
 Test data for conformance, a record and the document it was written from, is published by the Tabellion project [TABELLION-TESTDATA].
 
@@ -479,6 +516,8 @@ This document has no IANA actions.
 - [COMMONMARK] MacFarlane, J., "CommonMark Spec", Version 0.31.2, January 2024, <https://spec.commonmark.org/0.31.2/>.
 - [ESCO] European Commission, "ESCO: European Skills, Competences, Qualifications and Occupations", <https://esco.ec.europa.eu>.
 - [WIKIDATA] Wikimedia Foundation, "Wikidata", <https://www.wikidata.org>.
+- [JSON-SCHEMA] Wright, A., Andrews, H., Hutton, B., and G. Dennis, "JSON Schema: A Media Type for Describing JSON Documents", draft-bhutton-json-schema-01, June 2022, <https://json-schema.org/draft/2020-12/json-schema-core>.
+- [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
 - [JSON-LD11] Sporny, M., Longley, D., Kellogg, G., Lanthaler, M., Champin, P., and N. Lindström, "JSON-LD 1.1", W3C Recommendation, July 2020, <https://www.w3.org/TR/json-ld11/>.
 
 ### 13.2. Informative References
@@ -490,7 +529,6 @@ This document has no IANA actions.
 - [TABELLION-API] Tabellion project, "Tabellion HTTP binding: OpenAPI contract and JSON-LD context", <https://github.com/tabellionhq/tabellion/tree/main/api>.
 - [TABELLION-TESTDATA] Tabellion project, "Tabellion conformance test data", <https://github.com/tabellionhq/tabellion/tree/main/testdata>.
 - [VCARD-RDF] Iannella, R. and J. McKinney, "vCard Ontology - for describing People and Organizations", W3C Interest Group Note, May 2014, <https://www.w3.org/TR/vcard-rdf/>.
-- [OPENAPI] OpenAPI Initiative, "OpenAPI Specification v3.1.0", February 2021, <https://spec.openapis.org/oas/v3.1.0>.
 
 ## Author's Address
 

@@ -50,7 +50,7 @@ Screens 03 and 06 were drafted in the role-play and are not saved as screens yet
 | Progress bar, stage ④ Check | `getTask`: `stages` | change: cv-import has no check stage (extract, confirm, find) |
 | Record completion | `getPerson`: `completion` | ok |
 | Identity line | `listIdentities` | ok |
-| Identity from the CV | term matching (RFC 7.2) | change: matching returns no identity |
+| Identity from the CV | term matching (RFC 7.3) | change: matching returns no identity |
 | Occupations list | `listOccupations` | ok |
 | Skill cards, buckets Complete and To complete | `listPractices`, grouped by `completion` | ok |
 | Not matched cards | `getTask`: `result.unresolved` | ok |
